@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EShop.Model.Abstract
 {
-    public class Auditable : IAuditable
+    public class Auditable : IAuditable 
     {
         public DateTime? CreatedDate { set; get; }
 

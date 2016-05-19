@@ -17,6 +17,6 @@ namespace EShop.Model.Models
         [MaxLength(50)]
         public string ValueString { set; get; }
 
-        public int? ValueInt { set; get; }
+        public int? ValueInt { set; get; } 
     }
 }

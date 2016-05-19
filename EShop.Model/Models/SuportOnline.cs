@@ -27,7 +27,7 @@ namespace EShop.Model.Models
         public string Email { set; get; }
 
         [MaxLength(50)]
-        public string Yahoo { set; get; }
+        public string Yahoo { set; get; } 
 
         [MaxLength(50)]
         public string Facebook { set; get; }

@@ -11,7 +11,7 @@ namespace EShop.Model.Models
 
         [Key]
         public int ProductID { set; get; }
-
+         
         public int Quantitty { set; get; }
 
         [ForeignKey("OrderID")]

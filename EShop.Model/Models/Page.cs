@@ -9,7 +9,7 @@ namespace EShop.Model.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { set; get; }
+        public int ID { set; get; } 
 
         [Required]
         [MaxLength(256)]

@@ -9,7 +9,7 @@ namespace EShop.Model.Models
     public class Order
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
         public int ID { set; get; }
 
         [Required]

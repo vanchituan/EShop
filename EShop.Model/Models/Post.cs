@@ -13,7 +13,7 @@ namespace EShop.Model.Models
 
         [Required]
         [MaxLength(256)]
-        public string Name { set; get; }
+        public string Name { set; get; } 
 
         [Required]
         [MaxLength(256)]
