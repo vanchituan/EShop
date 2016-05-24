@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EShop.Data.Repositories
 {
-    public interface IMenuRepository
+    public interface IMenuRepository : IRepository<Menu>
     {
 
     }
