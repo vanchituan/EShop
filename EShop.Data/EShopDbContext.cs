@@ -1,4 +1,5 @@
 ﻿using EShop.Model.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EShop.Data
 {
-    public class EShopDbContext : DbContext
+    public class EShopDbContext : IdentityDbContext<ApplicationUser>
     {
         public EShopDbContext() : base("EShopConnection")
         {
@@ -37,9 +38,15 @@ namespace EShop.Data
         public DbSet<VisitorStatistic> VisitorStatistics { set; get; }
         public DbSet<Error> Errors { set; get; }
 
+
+        public static EShopDbContext Create()
+        {
+            return new EShopDbContext();
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
+            modelBuilder.Entity<IdentityUserRole>().HasKey(i => new { i.UserId, i.RoleId });
+            modelBuilder.Entity<IdentityUserLogin>().HasKey(i => i.UserId);
         }
     }
 }
