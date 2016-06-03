@@ -274,6 +274,10 @@
     <Content Include="app\shared\modules\eShop.common.js" />
     <Content Include="app\shared\services\apiService.js" />
     <Content Include="app\shared\services\notificationService.js" />
+    <Content Include="App_Data\EShopConnection.mdf" />
+    <Content Include="App_Data\EShopConnection_log.ldf">
+      <DependentUpon>EShopConnection.mdf</DependentUpon>
+    </Content>
     <Content Include="Assets\admin\css\AdminLTE.css" />
     <Content Include="Assets\admin\css\AdminLTE.min.css" />
     <Content Include="Assets\admin\css\custom.css" />

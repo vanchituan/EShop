@@ -29,7 +29,6 @@ namespace EShop.Web.Api
                 int totalRow = 0;
                 var model = _productService.GetProductList(search);
                 totalRow = search.TotalRow;
-                //var query = model.Skip(search.Page * search.PageSize).Take(search.PageSize);
                 var paginationSet = new PaginationSet<Product>()
                 {
                     Items = model,
