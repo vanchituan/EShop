@@ -10,7 +10,7 @@ namespace EShop.Model.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { set; get; }
+        public int Id { set; get; }
 
         [Required]
         [MaxLength(256)]
@@ -22,7 +22,7 @@ namespace EShop.Model.Models
         public string Alias { set; get; }
 
         [Required]
-        public int CategoryID { set; get; }
+        public int CategoryId { set; get; }
 
         [MaxLength(256)]
         public string Image { set; get; }
@@ -37,7 +37,7 @@ namespace EShop.Model.Models
         public int? ViewCount { set; get; }
 
 
-        [ForeignKey("CategoryID")]
+        [ForeignKey("CategoryId")]
         public virtual PostCategory PostCategory { set; get; }
 
         public virtual IEnumerable<PostTag> PostTags { set; get; }

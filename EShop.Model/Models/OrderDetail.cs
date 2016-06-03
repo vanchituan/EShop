@@ -8,18 +8,18 @@ namespace EShop.Model.Models
     {
         [Key]
         [Column(Order = 1)]
-        public int OrderID { set; get; }
+        public int OrderId { set; get; }
 
         [Key]
         [Column(Order = 2)]
-        public int ProductID { set; get; }
+        public int ProductId { set; get; }
          
         public int Quantitty { set; get; }
 
-        [ForeignKey("OrderID")]
+        [ForeignKey("OrderId")]
         public virtual Order Order { set; get; }
 
-        [ForeignKey("ProductID")]
+        [ForeignKey("ProductId")]
         public virtual Product Product { set; get; }
     }
 }

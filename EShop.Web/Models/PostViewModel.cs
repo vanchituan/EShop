@@ -7,13 +7,13 @@ namespace EShop.Web.Models
 {
     public class PostViewModel
     {
-        public int ID { set; get; }
+        public int Id { set; get; }
 
         public string Name { set; get; }
 
         public string Alias { set; get; }
 
-        public int CategoryID { set; get; }
+        public int CategoryId { set; get; }
 
         public string Image { set; get; }
 

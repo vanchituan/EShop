@@ -7,9 +7,9 @@ namespace EShop.Web.Models
 {
     public class PostTagViewModel
     {
-        public int PostID { set; get; }
+        public int PostId { set; get; }
 
-        public string TagID { set; get; }
+        public string TagId { set; get; }
 
         public virtual PostViewModel Post { set; get; }
 

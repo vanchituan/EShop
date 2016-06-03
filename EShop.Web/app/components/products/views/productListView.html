@@ -1,0 +1,128 @@
+﻿<div class="box box-danger">
+    <div class="box-header">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label col-md-4">Tên SP</label>
+                    <div class="col-md-8">
+                        <input type="text" ng-model="ProductName" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label col-md-4">Thuộc loại</label>
+                    <div class="col-md-8">
+                        <select ng-options="c.Id as c.Name for c in productCategories" ng-model="CategoryId" class="form-control"
+                                ng-change="loadProductList()">
+                            <option selected value="" class="text-center"> -- Tất cả sản phẩm -- </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <button type="submit" ng-click="loadProductList()" class="btn bg-navy">
+                        <i class="fa fa-search" aria-hidden="true"></i>&nbsp;Tìm kiếm
+                    </button>
+                    <button class="btn bg-olive" ng-click="exportExcel()">
+                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp; Xuất ra Excel
+                    </button>
+                    <button class="btn bg-maroon" ng-click="showModalAdd()">
+                        <i class="fa fa-plus-square fa-lg"></i>&nbsp; Thêm SP
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <!--searching form-->
+
+        <div class="col-md-12">
+            <div class="pull-left">
+                <p>Hiện có <strong>{{totalCount}}</strong> sản phẩm ứng với điều kiện tìm kiếm</p>
+            </div>
+            <div class="pull-right col-md-3">
+                <label class="pull-right"> SP / trang</label>
+                <div class="col-md-7 pull-right">
+                    <select class="form-control" ng-init="pageSize='10'" ng-change="loadProductList()" ng-model="pageSize">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                        <option value="60">60</option>
+                        <option value="70">70</option>
+                        <option value="80">80</option>
+                        <option value="90">90</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th ng-click="sort('Name')" class="pointer">
+                        Tên SP
+                        <span class="glyphicon sort-icon" ng-show="sortKey=='productName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                    <th ng-click="sort('ProductCategory.Name')" class="pointer">
+                        Thuộc loại
+                        <span class="glyphicon sort-icon" ng-show="sortKey=='categoryName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                    <th ng-click="sort('PriceImport')" class="pointer">
+                        Giá nhập
+                        <span class="glyphicon sort-icon" ng-show="sortKey=='priceImport'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                    <th ng-click="sort('Price')" class="pointer">
+                        Giá bán
+                        <span class="glyphicon sort-icon" ng-show="sortKey=='price'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                    <th ng-click="sort('OrderedDate')" class="pointer">
+                        Ngày ĐH
+                        <span class="glyphicon sort-icon" ng-show="sortKey=='orderedDate'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                    <th>BH</th>
+                    <th ng-repeat="w in warehouses">{{w.WarehouseName}}</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="p in products |orderBy: sortKey: reverse">
+                    <td>{{p.Name}}</td>
+                    <td>{{p.ProductCategory.Name}}</td>
+                    <td>{{p.PriceImport | currency : '': '0'}}</td>
+                    <td>{{p.Price | currency : '' : '0'}}</td>
+                    <td>{{p.OrderedDate | date : 'dd/MM/yyyy'}}</td>
+                    <td>{{p.Warranty}}</td>
+                    <td ng-repeat="w in p.WarehouseDetails">{{w.Quantity}}</td>
+                    <td>
+                        <span ng-class="{'badge bg-green' : p.Status == true, 'badge bg-red' : p.Status == false}">
+                            {{p.Status | statusFilter}}
+                        </span>
+                    </td>
+                    <td>
+                        <i class="fa fa-pencil-square-o fa-lg pointer" style="color:#0b2641"
+                           title="Sửa SP này" ng-click="showModalEdit(p)"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!--paging control-->
+        <div pager-directive page="{{page}}" custom-path="{{customPath}}" pages-count="{{pagesCount}}"
+             total-count="{{totalCount}}" search-func="loadProductList(page)">
+        </div>
+    </div>
+</div>
+
+<!--modal add view-->
+<ng-include src="'/app/components/products/views/productAddView.html'"></ng-include>
+
+<!--modal edit view-->
+<ng-include src="'/app/components/products/views/productEditView.html'"></ng-include>

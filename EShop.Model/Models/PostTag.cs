@@ -8,17 +8,17 @@ namespace EShop.Model.Models
     {
         [Key]
         [Column(Order = 1)]
-        public int PostID { set; get; }
+        public int PostId { set; get; }
 
         [Key]
         [Column(TypeName = "varchar", Order =2)]
         [MaxLength(50)]
-        public string TagID { set; get; } 
+        public string TagId { set; get; } 
 
-        [ForeignKey("PostID")]
+        [ForeignKey("PostId")]
         public virtual Post Post { set; get; }
 
-        [ForeignKey("TagID")]
+        [ForeignKey("TagId")]
         public virtual Tag Tag { set; get; }
     }
 }

@@ -6,12 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Data.Entity;
+
 namespace EShop.Data.Repositories
 {
 
     public interface IProductCategoryRepository : IRepository<ProductCategory>
     {
         IEnumerable<ProductCategory> GetByAlias(string alias);
+
 
     }
     public class ProductCategoryRepository : RepositoryBase<ProductCategory>, IProductCategoryRepository
@@ -25,5 +28,6 @@ namespace EShop.Data.Repositories
         {
             return this.DbContext.ProductCategories.Where(q => q.Alias == alias);
         }
+
     }
 }

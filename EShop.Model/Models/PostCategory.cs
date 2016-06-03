@@ -10,7 +10,7 @@ namespace EShop.Model.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { set; get; }
+        public int Id { set; get; }
 
         [Required]
         [MaxLength(256)]
@@ -24,7 +24,7 @@ namespace EShop.Model.Models
         [MaxLength(500)]
         public string Description { set; get; }
 
-        public int? ParentID { set; get; }
+        public int? ParentId { set; get; }
         public int? DisplayOrder { set; get; }
 
         [MaxLength(256)]

@@ -10,7 +10,7 @@ namespace EShop.Model.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
-        public int ID { set; get; }
+        public int Id { set; get; }
 
         [Required]
         [MaxLength(256)]
@@ -34,6 +34,8 @@ namespace EShop.Model.Models
 
         [MaxLength(256)]
         public string PaymentMethod { set; get; }
+
+        public decimal Profit { get; set; }
 
         public DateTime? CreatedDate { set; get; }
         public string CreatedBy { set; get; }

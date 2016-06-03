@@ -46,7 +46,7 @@ namespace EShop.UnitTest.RepositoryTest
             var result = objRepository.Add(category);
             unitOfWork.Commit();
             Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.ID);
+            Assert.AreEqual(2, result.Id);
         }
     }
 }

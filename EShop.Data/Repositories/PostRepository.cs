@@ -23,8 +23,8 @@ namespace EShop.Data.Repositories
         public IEnumerable<Post> GetAllByTag(string tag, int pageIndex, int pageSize, out int totalRow)
         {
             var model = from a in DbContext.Posts
-                        join b in DbContext.PostTags on a.ID equals b.PostID
-                        where b.TagID == tag && a.Status
+                        join b in DbContext.PostTags on a.Id equals b.PostId
+                        where b.TagId == tag && a.Status
                         orderby a.CreatedDate descending
                         select a;
             totalRow = model.Count();

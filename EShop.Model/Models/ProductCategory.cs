@@ -10,7 +10,7 @@ namespace EShop.Model.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { set; get; }
+        public int Id { set; get; }
 
         [Required]
         [MaxLength(256)]
@@ -23,13 +23,17 @@ namespace EShop.Model.Models
         [MaxLength(500)]
         public string Description { set; get; }
 
-        public int? ParentID { set; get; }
+
+        public int? ParentCategoryId { set; get; }
         public int? DisplayOrder { set; get; } 
 
         [MaxLength(256)]
         public string Image { set; get; }
 
         public bool? HomeFlag { set; get; }
+
+        [ForeignKey("ParentCategoryId")]
+        public virtual ParentProductCategory ParentProductCategory { set; get; }
 
         public virtual IEnumerable<Product> Products { set; get; }
     }

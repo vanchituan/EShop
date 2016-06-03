@@ -7,7 +7,7 @@ namespace EShop.Model.Models
     public class SystemConfig
     {
         [Key]
-        public int ID { set; get; }
+        public int Id { set; get; }
 
         [Required]
         [Column(TypeName = "varchar")]

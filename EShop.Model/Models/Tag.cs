@@ -9,7 +9,7 @@ namespace EShop.Model.Models
         [Key]
         [MaxLength(50)]
         [Column(TypeName ="varchar")]
-        public string ID { set; get; }
+        public string Id { set; get; }
 
         [MaxLength(50)]
         [Required]

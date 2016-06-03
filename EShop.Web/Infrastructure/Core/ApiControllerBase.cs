@@ -47,6 +47,8 @@ namespace EShop.Web.Infrastructure.Core
             {
                 response = function.Invoke();
             }
+
+            #region catch
             catch (DbEntityValidationException ex)
             {
                 foreach (var eve in ex.EntityValidationErrors)
@@ -70,6 +72,8 @@ namespace EShop.Web.Infrastructure.Core
                 LogError(ex);
                 response = requestMessage.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
             }
+            #endregion
+
             return response;
         }
 

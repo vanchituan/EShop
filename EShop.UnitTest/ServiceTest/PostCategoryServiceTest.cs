@@ -28,12 +28,12 @@ namespace EShop.UnitTest.ServiceTest
             _categoryService = new PostCategoryService(_mockRepository.Object, _mockUnitOfWork.Object);
             _listCategory = new List<PostCategory>
             {
-                new PostCategory { ID = 1, Name ="mock1",Status =true},
-            new PostCategory { ID = 2, Name = "mock 1a", Status = true },
-            new PostCategory { ID = 3, Name = "mock 2", Status = true },
-            new PostCategory { ID = 4, Name = "mock 3", Status = true },
-            new PostCategory { ID = 5, Name = "mock 4", Status = true },
-            new PostCategory { ID = 6, Name = "mock 5", Status = true }
+                new PostCategory { Id = 1, Name ="mock1",Status =true},
+            new PostCategory { Id = 2, Name = "mock 1a", Status = true },
+            new PostCategory { Id = 3, Name = "mock 2", Status = true },
+            new PostCategory { Id = 4, Name = "mock 3", Status = true },
+            new PostCategory { Id = 5, Name = "mock 4", Status = true },
+            new PostCategory { Id = 6, Name = "mock 5", Status = true }
             };
         }
 
@@ -61,14 +61,14 @@ namespace EShop.UnitTest.ServiceTest
 
             _mockRepository.Setup(m => m.Add(category)).Returns((PostCategory p) =>
             {
-                p.ID = 1;
+                p.Id = 1;
                 return p;
             });
 
             var result = _categoryService.Add(category);
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.ID);
+            Assert.AreEqual(1, result.Id);
         }
 
 

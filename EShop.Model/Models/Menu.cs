@@ -8,7 +8,7 @@ namespace EShop.Model.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { set; get; }
+        public int Id { set; get; }
 
 
         [Required]
@@ -22,9 +22,9 @@ namespace EShop.Model.Models
         public int? DisplayOrder { set; get; }
 
         [Required]
-        public int GroupID { set; get; }
+        public int GroupId { set; get; }
 
-        [ForeignKey("GroupID")]
+        [ForeignKey("GroupId")]
         public virtual MenuGroup MenuGroup { set; get; }
 
         [MaxLength(10)]

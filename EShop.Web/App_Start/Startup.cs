@@ -32,9 +32,11 @@ namespace EShop.Web.App_Start
         private void ConfigAutofac(IAppBuilder app)
         {
             var builder = new ContainerBuilder();
-            builder.RegisterControllers(Assembly.GetExecutingAssembly());
             // Register your Web API controllers.
-            builder.RegisterApiControllers(Assembly.GetExecutingAssembly()); //Register WebApi Controllers
+            builder.RegisterControllers(Assembly.GetExecutingAssembly());
+            //Register WebApi Controllers
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly()); 
+
 
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
             builder.RegisterType<DbFactory>().As<IDbFactory>().InstancePerRequest();
@@ -60,9 +62,14 @@ namespace EShop.Web.App_Start
                .AsImplementedInterfaces().InstancePerRequest();
 
             Autofac.IContainer container = builder.Build();
+
+            // DI for MVC
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 
-            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver((IContainer)container); //Set the WebApi DependencyResolver
+            //DI for Web API
+            //Set the WebApi DependencyResolver
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver((IContainer)container); 
+
 
         }
     }

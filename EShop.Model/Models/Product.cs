@@ -1,4 +1,6 @@
 ﻿using EShop.Model.Abstract;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Xml.Linq;
@@ -10,7 +12,7 @@ namespace EShop.Model.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { set; get; }
+        public int Id { set; get; }
 
         [Required]
         [MaxLength(256)]
@@ -21,7 +23,7 @@ namespace EShop.Model.Models
         public string Alias { set; get; }
 
         [Required]
-        public int CategoryID { set; get; }
+        public int CategoryId { set; get; }
 
         [MaxLength(256)]
         public string Image { set; get; }
@@ -29,7 +31,10 @@ namespace EShop.Model.Models
         [Column(TypeName ="xml")]
         public string MoreImages { set; get; } 
         public decimal Price { set; get; }
+        public decimal PriceImport { get; set; }
 
+        public string Unit { get; set; }
+        public DateTime OrderedDate{ get; set; }
         public decimal? PromotionPrice { set; get; }
         public int? Warranty { set; get; }
 
@@ -42,7 +47,9 @@ namespace EShop.Model.Models
         public bool? HotFlag { set; get; }
         public int? ViewCount { set; get; }
 
-        [ForeignKey("CategoryID")]
+        [ForeignKey("CategoryId")]
         public virtual ProductCategory ProductCategory { set; get; }
+
+        public virtual IEnumerable<WarehouseDetail> WarehouseDetails{ get; set; }
     }
 }

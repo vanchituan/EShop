@@ -7,10 +7,12 @@ namespace EShop.Data.Migrations
     {
         public override void Up()
         {
+            RenameTable("Footers", "Footersss");
         }
         
         public override void Down()
         {
+            RenameTable("Footersss", "Footers");
         }
     }
 }

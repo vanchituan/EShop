@@ -11,11 +11,11 @@ namespace EShop.Web.Infrastructure.Extensions
     {
         public static void UpdatePostCategory(this PostCategory postCategory, PostCategoryViewModel postCategoryVm)
         {
-            postCategory.ID = postCategoryVm.ID;
+            postCategory.Id = postCategoryVm.Id;
             postCategory.Name = postCategoryVm.Name;
             postCategory.Description = postCategoryVm.Description;
             postCategory.Alias = postCategoryVm.Alias;
-            postCategory.ParentID = postCategoryVm.ParentID;
+            postCategory.ParentId = postCategoryVm.ParentId;
             postCategory.DisplayOrder = postCategoryVm.DisplayOrder;
             postCategory.Image = postCategoryVm.Image;
             postCategory.HomeFlag = postCategoryVm.HomeFlag;
@@ -27,15 +27,35 @@ namespace EShop.Web.Infrastructure.Extensions
             postCategory.MetaKeyword = postCategoryVm.MetaKeyword;
             postCategory.MetaDescription = postCategoryVm.MetaDescription;
             postCategory.Status = postCategoryVm.Status;
-        }
 
+        }
+        public static void UpdateProductCategory(this ProductCategory productCategory, ProductCategoryViewModel productCategoryVm)
+        {
+            productCategory.Id = productCategoryVm.Id;
+            productCategory.Name = productCategoryVm.Name;
+            productCategory.Description = productCategoryVm.Description;
+            productCategory.Alias = productCategoryVm.Alias;
+            productCategory.ParentCategoryId = productCategoryVm.ParentCategoryId;
+            productCategory.DisplayOrder = productCategoryVm.DisplayOrder;
+            productCategory.Image = productCategoryVm.Image;
+            productCategory.HomeFlag = productCategoryVm.HomeFlag;
+
+            productCategory.CreatedDate = productCategoryVm.CreatedDate;
+            productCategory.CreatedBy = productCategoryVm.CreatedBy;
+            productCategory.UpdatedDate = productCategoryVm.UpdatedDate;
+            productCategory.UpdatedBy = productCategoryVm.UpdatedBy;
+            productCategory.MetaKeyword = productCategoryVm.MetaKeyword;
+            productCategory.MetaDescription = productCategoryVm.MetaDescription;
+            productCategory.Status = productCategoryVm.Status;
+
+        }
         public static void UpdatePost(this Post post, PostViewModel postVm)
         {
-            post.ID = postVm.ID;
+            post.Id = postVm.Id;
             post.Name = postVm.Name;
             post.Description = postVm.Description;
             post.Alias = postVm.Alias;
-            post.CategoryID = postVm.CategoryID;
+            post.CategoryId = postVm.CategoryId;
             post.Content = postVm.Content;
             post.Image = postVm.Image;
             post.HomeFlag = postVm.HomeFlag;

@@ -1,0 +1,33 @@
+﻿<div class="box box-primary">
+    <div class="box-header">Loại sản phẩm</div>
+    <div class="box-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Tên</th>
+                    <th>Thuộc loại</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="c in productCategories">
+                    <td>{{c.Id}}</td>
+                    <td>{{c.Name}}</td>
+                    <td>{{c.ParentProductCategory.ParentCategoryName}}</td>
+                    <td>
+                        <span ng-class="{'badge bg-green' : c.Status == true, 'badge bg-red' : c.Status == false}">
+                            {{c.Status | statusFilter}}
+                        </span>
+                    </td>
+                    <td>
+                        <i class="fa fa-pencil-square-o fa-lg pointer" style="color:#3883cc"
+                           title="Sửa SP này" ui-sref="edit_product_category({id:c.Id})"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<button class="btn btn-success" ui-sref="add_product_category">Thêm mới</button>

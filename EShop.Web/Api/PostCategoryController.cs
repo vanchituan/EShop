@@ -76,7 +76,7 @@ namespace EShop.Web.Api
                 }
                 else
                 {
-                    var postCategoryDb = _postCategoryService.GetById(postCategoryVm.ID);
+                    var postCategoryDb = _postCategoryService.GetById(postCategoryVm.Id);
                     postCategoryDb.UpdatePostCategory(postCategoryVm);
                     _postCategoryService.Update(postCategoryDb);
                     _postCategoryService.Save();
