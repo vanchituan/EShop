@@ -1,4 +1,5 @@
-﻿/// <reference path="D:\Git\EShop.Web\Assets/admin/libs/angular/angular.js" />
+﻿/// <reference path="\Assets/admin/libs/angular/angular.min.js" />
+
 
 (function () {
     var app = angular.module('eshop', ['eshop.products', 'eshop.product_categories', 'eshop.common']);
@@ -9,7 +10,7 @@
                 templateUrl: "/app/components/home/homeView.html",
                 controller: "homeController"
             });
-
+            
             $urlRouterProvider.otherwise('/admin');
 
             //ngProgressLiteProvider.settings.speed = 1500;

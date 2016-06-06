@@ -1,4 +1,4 @@
-﻿/// <reference path="D:\Git\EShop.Web\Assets/admin/libs/angular/angular.min.js" />
+﻿/// <reference path="\Assets/admin/libs/angular/angular.min.js" />
 (function (app) {
     app.controller('productEditController', ['$scope', '$uibModalInstance', 'apiService', 'notificationService', 'currentProduct',
         function ($scope, $uibModalInstance, apiService, notificationService, currentProduct) {

@@ -18,6 +18,8 @@ namespace EShop.Model.ViewModel.Admin.Product
 
         public int PageSize { get; set; }
 
+        public bool IsHomePage { get; set; }
+
         //public string OrderBy { get; set; }
 
         //public bool? SortBy { get; set; }

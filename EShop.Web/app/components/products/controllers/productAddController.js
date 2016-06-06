@@ -1,4 +1,4 @@
-﻿/// <reference path="D:\Git\EShop.Web\Assets/admin/libs/angular/angular.js" />
+﻿/// <reference path="\Assets/admin/libs/angular/angular.js" />
 
 (function (app) {
     app.controller('productAddController', ['$scope', '$uibModalInstance', 'apiService', 'notificationService', 'warehouseList',

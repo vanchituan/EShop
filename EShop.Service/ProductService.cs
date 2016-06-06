@@ -14,6 +14,8 @@ namespace EShop.Service
     {
         IEnumerable<Product> GetProductList(SearchingViewModel search);
 
+        IEnumerable<Product> GetAll();
+
         Product GetById(int id);
 
         Product Add(Product product);
@@ -23,7 +25,7 @@ namespace EShop.Service
         Product Delete(int id);
 
         void Save();
-        
+
     }
     public class ProductService : IProductService
     {
@@ -43,6 +45,11 @@ namespace EShop.Service
         public Product Delete(int id)
         {
             return _productRepository.Delete(id);
+        }
+
+        public IEnumerable<Product> GetAll()
+        {
+            return _productRepository.GetAll(new string[] { "ProductCategory" });
         }
 
         public Product GetById(int id)

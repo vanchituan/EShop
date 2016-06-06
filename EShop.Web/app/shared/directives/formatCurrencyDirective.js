@@ -1,4 +1,4 @@
-﻿/// <reference path="D:\Git\EShop.Web\Assets/admin/libs/angular/angular.min.js" />
+﻿/// <reference path="\Assets/admin/libs/angular/angular.min.js" />
 (function (app) {
     app.directive('formatCurrency', ['$filter', function ($filter) {
         return {

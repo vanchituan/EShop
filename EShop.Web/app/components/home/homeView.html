@@ -1,1 +1,65 @@
-﻿<h1>this is home page</h1>
+﻿<div class="page-header">Lập đơn hàngxxx</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="box box-danger">
+            <div class="box-header">
+                <div class="box-title">Danh sách sản phẩm</div>
+            </div>
+            <div class="box-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Tên SP</th>
+                            <th>Thuộc loại</th>
+                            <th>Đơn giá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="p in products" class="pointer">
+                            <td>{{p.Name}}</td>
+                            <td>{{p.ProductCategory.Name}}</td>
+                            <td>{{p.Price}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!--paging control-->
+                <div pager-directive page="{{page}}" custom-path="{{customPath}}" pages-count="{{pagesCount}}"
+                     total-count="{{totalCount}}" search-func="loadProductList(page)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="box box-info">
+            <div class="box-header">
+                <div class="box-title">
+                    Giỏ hàng
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên SP</th>
+                            <th>Đơn giá</th>
+                            <th>SL</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Senko B3</td>
+                            <td>120,000</td>
+                            <td>2</td>
+                            <td>240,000</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-﻿/// <reference path="D:\Git\EShop.Web\Assets/admin/libs/angular/angular.js" />
+﻿/// <reference path="\Assets/admin/libs/angular/angular.js" />
 (function (app) {
     app.filter('statusFilter', function () {
         return function (input) {

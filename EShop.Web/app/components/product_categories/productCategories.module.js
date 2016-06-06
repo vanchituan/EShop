@@ -1,4 +1,4 @@
-﻿/// <reference path="D:\Git\EShop.Web\Assets/admin/libs/angular/angular.js" />
+﻿/// <reference path="\Assets/admin/libs/angular/angular.js" />
 (function () {
     angular.module('eshop.product_categories', ['eshop.common']).
         config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {

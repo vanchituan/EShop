@@ -1,4 +1,4 @@
-﻿/// <reference path="D:\Git\EShop.Web\Assets/admin/libs/angular/angular.js" />
+﻿/// <reference path="\Assets/admin/libs/angular/angular.js" />
 
 (function (app) {
     app.controller('productListController', ['$scope', '$uibModal', 'apiService', 'notificationService', function ($scope, $uibModal, apiService, notificationService) {
@@ -24,10 +24,6 @@
             });
         }
 
-        $scope.search = search;
-
-        $scope.loadProductList = loadProductList;
-
         $scope.showModalEdit = function (currentProduct) {
             var modalInstance = $uibModal.open({
                 backdrop: 'static',
@@ -42,13 +38,18 @@
             });
         }
 
+        $scope.search = search;
+
+        $scope.loadProductList = loadProductList;
+
         function loadProductList(page) {
-            page = page || 0;
+            //page = ;
             var searchingVm = {
-                Page: page,
-                PageSize: 10,
+                Page: page || 0,
+                PageSize: $scope.pageSize || 10,
                 ProductName: $scope.ProductName || '',
-                CategoryId : $scope.CategoryId 
+                CategoryId: $scope.CategoryId,
+                IsHomePage : false 
             }
             console.log(searchingVm);
             apiService.post('/api/product/getlist', searchingVm, function (res) {

@@ -26,8 +26,16 @@ namespace EShop.Web.Api
         {
             return CreateHttpResponse(request, () =>
             {
+                IEnumerable<Product> model;
+                if (search.IsHomePage) // custom order
+                {
+                    model = _productService.GetAll();
+                }
+                else // product management
+                {
+                    model = _productService.GetProductList(search);
+                }
                 int totalRow = 0;
-                var model = _productService.GetProductList(search);
                 totalRow = search.TotalRow;
                 var paginationSet = new PaginationSet<Product>()
                 {
@@ -40,6 +48,8 @@ namespace EShop.Web.Api
                 return response;
             });
         }
+
+
 
         [Route("add")]
         [HttpPost]
