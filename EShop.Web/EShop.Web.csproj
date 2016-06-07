@@ -270,9 +270,11 @@
     <Content Include="app\shared\directives\formatCurrencyDirective.js" />
     <Content Include="app\shared\directives\pagerDirective.html" />
     <Content Include="app\shared\directives\pagerDirective.js" />
+    <Content Include="app\shared\filters\capitalizeFilter.js" />
     <Content Include="app\shared\filters\statusFilter.js" />
     <Content Include="app\shared\modules\eShop.common.js" />
     <Content Include="app\shared\services\apiService.js" />
+    <Content Include="app\shared\services\commonService.js" />
     <Content Include="app\shared\services\notificationService.js" />
     <Content Include="Assets\admin\css\AdminLTE.css" />
     <Content Include="Assets\admin\css\AdminLTE.min.css" />

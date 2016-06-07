@@ -1,8 +1,8 @@
 ﻿/// <reference path="\Assets/admin/libs/angular/angular.js" />
 
 (function (app) {
-    app.controller('productAddController', ['$scope', '$uibModalInstance', 'apiService', 'notificationService', 'warehouseList',
-        function ($scope, $uibModalInstance, apiService, notificationService, warehouseList) {
+    app.controller('productAddController', ['$scope', '$filter', '$uibModalInstance', 'apiService', 'notificationService', 'commonService', 'warehouseList',
+        function ($scope, $filter, $uibModalInstance, apiService, notificationService, commonService, warehouseList) {
 
             $scope.cancel = function () {
                 $uibModalInstance.dismiss('cancel');
@@ -10,14 +10,15 @@
 
             $scope.addProduct = function (form) {
                 if (form.$valid) {
-                    var arr = new Array();
-                    var whDetailList = $scope.warehouses;
-                    for (var item in whDetailList) {
-                        arr.push(whDetailList[item]);
-                    }
+                    //var arr = new Array();
+                    //var whDetailList = $scope.warehouses;
+                    //for (var item in whDetailList) {
+                    //    arr.push(whDetailList[item]);
+                    //}
 
                     var product = {
-                        Name: $scope.Name,
+                        Name: $filter('capitalizeFilter')($scope.Name),
+                        Alias : commonService.getSeoTitle($scope.Name),
                         Unit: $scope.Unit,
                         Warranty: $scope.Warranty,
                         Status: $scope.Status,
@@ -25,9 +26,21 @@
                         PriceImport: $scope.PriceImport,
                         CategoryId: $scope.CategoryId,
                         Description: $scope.Description || '',
-                        WarehouseDetails: arr
+                        WarehouseDetails: function () {
+                            return function () {
+                                var arr = new Array();
+                                var whDetailList = $scope.warehouses;
+                                for (var item in whDetailList) {
+                                    arr.push(whDetailList[item]);
+                                }
+                                return arr;
+                            }
+                        },
+
                     }
+
                     console.log(product);
+                    return false;
 
                     apiService.post('/api/product/add', product, function (res) {
                         notificationService.displaySuccess(res.data.Name + ' đã được thêm thành công');

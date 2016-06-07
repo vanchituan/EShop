@@ -1,30 +1,30 @@
 ﻿<div class="box box-danger">
     <div class="box-header">
-        <div class="col-md-12">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label class="control-label col-md-4">Tên SP</label>
-                    <div class="col-md-8">
-                        <input type="text" ng-model="ProductName" class="form-control" />
+        <div class="row">
+            <form ng-submit="loadProductList()">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Tên SP</label>
+                        <div class="col-md-8">
+                            <input type="text" ng-model="ProductName" class="form-control" />
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label class="control-label col-md-4">Thuộc loại</label>
-                    <div class="col-md-8">
-                        <select ng-options="c.Id as c.Name for c in productCategories" ng-model="CategoryId" class="form-control"
-                                ng-change="loadProductList()">
-                            <option selected value="" class="text-center"> -- Tất cả sản phẩm -- </option>
-                        </select>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Thuộc loại</label>
+                        <div class="col-md-8">
+                            <select ng-options="c.Id as c.Name for c in productCategories" ng-model="CategoryId" class="form-control"
+                                    ng-change="loadProductList()">
+                                <option selected value="" class="text-center"> -- Tất cả sản phẩm -- </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-4">
-                <div class="form-group">
-                    <button type="submit" ng-click="loadProductList()" class="btn bg-navy">
+                <div class="col-md-4">
+                    <button type="submit" class="btn bg-navy">
                         <i class="fa fa-search" aria-hidden="true"></i>&nbsp;Tìm kiếm
                     </button>
                     <button class="btn bg-olive" ng-click="exportExcel()">
@@ -34,13 +34,13 @@
                         <i class="fa fa-plus-square fa-lg"></i>&nbsp; Thêm SP
                     </button>
                 </div>
-            </div>
-
+            </form>
         </div>
+
         <!--searching form-->
 
-        <div class="col-md-12">
-            <div class="pull-left">
+        <div class="row" style="padding-top:10px;">
+            <div class=" col-md-4 pull-left">
                 <p>Hiện có <strong>{{totalCount}}</strong> sản phẩm ứng với điều kiện tìm kiếm</p>
             </div>
             <div class="pull-right col-md-3">

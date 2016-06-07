@@ -1,9 +1,24 @@
-﻿<div class="page-header">Lập đơn hàngxxx</div>
+﻿<div class="page-header">Lập đơn hàng</div>
 <div class="row">
     <div class="col-md-6">
         <div class="box box-danger">
             <div class="box-header">
                 <div class="box-title">Danh sách sản phẩm</div>
+                <form class="form-inline" ng-submit="search">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Tên SP</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="ProductName" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-4"></label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="ProductName" ng-change="" />
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="box-body">
                 <table class="table table-hover">

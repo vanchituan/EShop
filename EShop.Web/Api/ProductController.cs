@@ -15,8 +15,10 @@ namespace EShop.Web.Api
     public class ProductController : ApiControllerBase
     {
         private IProductService _productService;
-        public ProductController(IErrorService errorService, IProductService productService) : base(errorService)
+        private IWarehouseDetailService _whDetailService;
+        public ProductController(IErrorService errorService, IProductService productService, IWarehouseDetailService whDetailService) : base(errorService)
         {
+            this._whDetailService = whDetailService;
             this._productService = productService;
         }
 
@@ -58,6 +60,20 @@ namespace EShop.Web.Api
             return CreateHttpResponse(request, () => 
             {
                 var model = _productService.Add(product);
+                WarehouseDetail whDetail = new WarehouseDetail
+                {
+                    ProductId = model.Id
+                };
+
+                foreach (var item in product.WarehouseDetails)
+                {
+                    whDetail.Quantity = item.Quantity;
+                    whDetail.WarehouseId = item.WarehouseId;
+                    _whDetailService.Add(whDetail);
+                }
+
+                _productService.Save();
+                _whDetailService.Save();
                 var response = request.CreateResponse(HttpStatusCode.OK, model);
                 return response;
             });
