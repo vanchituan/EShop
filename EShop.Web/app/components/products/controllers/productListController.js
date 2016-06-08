@@ -1,6 +1,8 @@
-﻿/// <reference path="\Assets/admin/libs/angular/angular.js" />
+﻿/// <reference path="D:\Git\EShop.Web\Assets/admin/libs/angular/angular.min.js" />
 
 (function (app) {
+    'use strict';
+
     app.controller('productListController', ['$scope', '$uibModal', 'apiService', 'notificationService', function ($scope, $uibModal, apiService, notificationService) {
         $scope.page = 0;
         $scope.pagesCount = 0;
@@ -11,7 +13,7 @@
         }
 
         $scope.showModalAdd = function () {
-            var modalInstance = $uibModal.open({
+            $uibModal.open({
                 templateUrl: '/app/components/products/views/productAddView.html',
                 controller: 'productAddController',
                 backdrop: 'static',
@@ -25,7 +27,7 @@
         }
 
         $scope.showModalEdit = function (currentProduct) {
-            var modalInstance = $uibModal.open({
+            $uibModal.open({
                 backdrop: 'static',
                 templateUrl: '/app/components/products/views/productEditView.html',
                 controller: 'productEditController',
@@ -37,6 +39,15 @@
                 }
             });
         }
+
+        $scope.showModalUpdateWarehouse = function () {
+            $uibModal.open({
+                templateUrl: '/app/components/products/views/updateWarehouseView.html',
+                controller: 'updateWarehouseController',
+                backdrop: 'static',
+                size: 'lg'
+            });
+        };
 
         $scope.search = search;
 
@@ -51,7 +62,7 @@
                 CategoryId: $scope.CategoryId,
                 IsHomePage : false 
             }
-            console.log(searchingVm);
+            //console.log(searchingVm);
             apiService.post('/api/product/getlist', searchingVm, function (res) {
                 $scope.products = res.data.Items;
                 $scope.page = res.data.Page;

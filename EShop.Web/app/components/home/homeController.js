@@ -1,5 +1,6 @@
-﻿/// <reference path="D:\Git\EShop.Web\Assets/admin/libs/angular/angular.min.js" />
-(function (app) {
+﻿(function (app) {
+    'use strict';
+
     app.controller('homeController', ['$scope', 'notificationService', 'apiService',
         function ($scope, notificationService, apiService) {
 
@@ -22,7 +23,7 @@
                     notificationService.displayError('Có lỗi gì đó rồi ông bạn');
                 });
             }
-
+            
             loadProductList();
         }]);
 })(angular.module('eshop'));

@@ -1,7 +1,6 @@
-﻿/// <reference path="\Assets/admin/libs/angular/angular.js" />
-
-(function (app) {
+﻿(function (app) {
     'use strict';
+
     app.controller('productAddController', ['$scope', '$filter', '$uibModalInstance', 'apiService', 'notificationService', 'commonService', 'warehouseList',
         function ($scope, $filter, $uibModalInstance, apiService, notificationService, commonService, warehouseList) {
 

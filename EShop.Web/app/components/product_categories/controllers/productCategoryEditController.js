@@ -1,4 +1,6 @@
 ﻿(function (app) {
+    'use strict';
+
     app.controller('productCategoryEditController', ['$scope', '$state', '$stateParams', 'notificationService', 'apiService',
         function ($scope, $state, $stateParams, notificationService, apiService) {
             $scope.productCategory = {

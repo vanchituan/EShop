@@ -15,6 +15,8 @@ namespace EShop.Data.Repositories
     {
         IEnumerable<ProductCategory> GetByAlias(string alias);
 
+        IEnumerable<ProductCategory> GetByParentCategory(int id);
+
 
     }
     public class ProductCategoryRepository : RepositoryBase<ProductCategory>, IProductCategoryRepository
@@ -29,5 +31,9 @@ namespace EShop.Data.Repositories
             return this.DbContext.ProductCategories.Where(q => q.Alias == alias);
         }
 
+        public IEnumerable<ProductCategory> GetByParentCategory(int id)
+        {
+            return this.DbContext.ProductCategories.Where(q => q.ParentCategoryId == id);
+        }
     }
 }

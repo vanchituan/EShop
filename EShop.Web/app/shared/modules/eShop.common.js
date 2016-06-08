@@ -1,5 +1,5 @@
-﻿/// <reference path="\Assets/admin/libs/angular/angular.js" />
+﻿(function () {
+    'use strict';
 
-(function () {
     angular.module('eshop.common', ['ui.router', 'angularUtils.directives.dirPagination', 'ngAnimate', 'ui.bootstrap']);
 })();

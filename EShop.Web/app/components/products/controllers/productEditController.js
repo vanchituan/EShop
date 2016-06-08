@@ -1,5 +1,6 @@
-﻿/// <reference path="\Assets/admin/libs/angular/angular.min.js" />
-(function (app) {
+﻿(function (app) {
+    'use strict';
+    
     app.controller('productEditController', ['$scope', '$uibModalInstance', 'apiService', 'notificationService', 'currentProduct',
         function ($scope, $uibModalInstance, apiService, notificationService, currentProduct) {
             $scope.cancel = function () {

@@ -1,5 +1,6 @@
-﻿/// <reference path="D:\Git\EShop.Web\Assets/admin/libs/angular/angular.min.js" />
-(function (app) {
+﻿(function (app) {
+    'use strict';
+    
     app.filter('capitalizeFilter', [function () {
         return function (input) {
             return (!!input) ? input.split(' ').map(function (wrd) {

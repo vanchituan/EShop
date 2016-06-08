@@ -13,9 +13,15 @@ namespace EShop.Service
     {
         ProductCategory Add(ProductCategory productCategory);
         void Update(ProductCategory productCategory);
+
         int Delete(int productCategoryId);
+
         IEnumerable<ProductCategory> GetAll();
+
         ProductCategory GetById(int id);
+
+        IEnumerable<ProductCategory> GetByParentCategory(int id);
+
         void Save();
     }
 
@@ -57,6 +63,11 @@ namespace EShop.Service
         public void Save()
         {
             _unitOfWork.Commit();
+        }
+
+        public IEnumerable<ProductCategory> GetByParentCategory(int id)
+        {
+            return _productCategoryRepository.GetByParentCategory(id);
         }
     }
 }

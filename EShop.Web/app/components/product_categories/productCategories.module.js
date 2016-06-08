@@ -1,5 +1,6 @@
-﻿/// <reference path="\Assets/admin/libs/angular/angular.js" />
-(function () {
+﻿(function () {
+    'use strict';
+
     angular.module('eshop.product_categories', ['eshop.common']).
         config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
             $stateProvider

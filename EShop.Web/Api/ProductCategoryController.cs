@@ -71,6 +71,18 @@ namespace EShop.Web.Api
             });
         }
 
+        [Route("x")]
+        [HttpPost]
+        public HttpResponseMessage x(HttpRequestMessage request, int valueInitForParentCategory)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                IEnumerable<ProductCategory> model = _productCategoryService.GetByParentCategory(valueInitForParentCategory);
+                var response = request.CreateResponse(HttpStatusCode.OK, model);
+                return response;
+            });
+        }
+
 
         [Route("create")]
         [HttpPost]

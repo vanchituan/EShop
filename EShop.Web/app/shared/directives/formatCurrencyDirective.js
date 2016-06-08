@@ -1,5 +1,6 @@
-﻿/// <reference path="\Assets/admin/libs/angular/angular.min.js" />
-(function (app) {
+﻿(function (app) {
+    'use strict';
+    
     app.directive('formatCurrency', ['$filter', function ($filter) {
         return {
             require: '?ngModel',

@@ -1,6 +1,6 @@
-﻿/// <reference path="\Assets/admin/libs/angular/angular.js" />
+﻿(function (app) {
+    'use strict';
 
-(function (app) {
     app.factory('notificationService',  function () {
         toastr.options = {
             "closeButton": true,

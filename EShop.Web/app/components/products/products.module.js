@@ -1,6 +1,6 @@
-﻿/// <reference path="D:\Git\EShop.Web\Assets/admin/libs/angular/angular.js" />
+﻿(function () {
+    'use strict';
 
-(function () {
     angular.module('eshop.products', ['eshop.common']).config(['$stateProvider', '$urlRouterProvider',
         function ($stateProvider, $urlRouterProvider) {
             $stateProvider.state('products', {

@@ -1,7 +1,6 @@
-﻿/// <reference path="\Assets/admin/libs/angular/angular.min.js" />
+﻿(function () {
+    'use strict';
 
-
-(function () {
     var app = angular.module('eshop', ['eshop.products', 'eshop.product_categories', 'eshop.common']);
     app.config(['$stateProvider', '$urlRouterProvider',
         function ($stateProvider, $urlRouterProvider) {

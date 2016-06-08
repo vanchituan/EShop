@@ -1,5 +1,6 @@
-﻿/// <reference path="D:\Git\EShop.Web\Assets/admin/libs/angular/angular.min.js" />
-(function (app) {
+﻿(function (app) {
+    'use strict';
+
     app.factory('commonService', [function () {
         return {
             getSeoTitle: function (input) {

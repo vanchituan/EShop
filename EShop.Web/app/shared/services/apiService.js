@@ -1,6 +1,6 @@
-﻿/// <reference path="\Assets/admin/libs/angular/angular.js" />
+﻿(function (app) {
+    'use strict';
 
-(function (app) {
     app.factory('apiService', ['$http', 'notificationService', function ($http, notificationService) {
         return {
             get: function (url, params, success, failure) {

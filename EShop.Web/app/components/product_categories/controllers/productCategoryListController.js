@@ -1,5 +1,6 @@
-﻿/// <reference path="\Assets/admin/libs/angular/angular.js" />
-(function (app) {
+﻿(function (app) {
+    'use strict';
+
     app.controller('productCategoryListController', ['$scope', 'apiService', function ($scope, apiService) {
         apiService.get('/api/productcategory/getall', null, function (res) {
             console.log(res.data);

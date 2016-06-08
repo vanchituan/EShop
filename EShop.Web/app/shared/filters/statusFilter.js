@@ -1,5 +1,6 @@
-﻿/// <reference path="\Assets/admin/libs/angular/angular.js" />
-(function (app) {
+﻿(function (app) {
+    'use strict';
+    
     app.filter('statusFilter', function () {
         return function (input) {
             if (input) {
