@@ -28,15 +28,7 @@ namespace EShop.Web.Api
         {
             return CreateHttpResponse(request, () =>
             {
-                IEnumerable<Product> model;
-                if (search.IsHomePage) // custom order
-                {
-                    model = _productService.GetAll();
-                }
-                else // product management
-                {
-                    model = _productService.GetProductList(search);
-                }
+                IEnumerable<Product> model = search.IsHomePage ? _productService.GetAll() : _productService.GetProductList(search);
                 int totalRow = 0;
                 totalRow = search.TotalRow;
                 var paginationSet = new PaginationSet<Product>()
@@ -51,6 +43,17 @@ namespace EShop.Web.Api
             });
         }
 
+        [Route("getbycategory/{categoryId:int}")]
+        [HttpPost]
+        public HttpResponseMessage GetByCategory(HttpRequestMessage request, int categoryId)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                IEnumerable<Product> model = _productService.GetByCategory(categoryId);
+                var response = request.CreateResponse(HttpStatusCode.OK, model);
+                return response;
+            });
+        }
 
 
         [Route("add")]
@@ -79,6 +82,29 @@ namespace EShop.Web.Api
                 return response;
             });
         }
+
+        [Route("update")]
+        [HttpPut]
+        public HttpResponseMessage Update(HttpRequestMessage request, Product product)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                this._productService.Update(product);
+                this._productService.Save();
+
+                foreach (var item in product.WarehouseDetails)
+                {
+                    WarehouseDetail whDetail = this._whDetailService.GetByPairOfKey(item.ProductId, item.WarehouseId);
+                    whDetail.Quantity = item.Quantity;
+                    this._whDetailService.Update(whDetail);
+                    this._whDetailService.Save();
+                }
+                var response = request.CreateResponse(HttpStatusCode.OK, product.Name);
+                return response;
+            });
+        }
+
+
 
 
     }

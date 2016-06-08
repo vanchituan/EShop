@@ -71,13 +71,14 @@ namespace EShop.Web.Api
             });
         }
 
-        [Route("x")]
+        [Route("getbyparent/{parentCategory:int}")]
         [HttpPost]
-        public HttpResponseMessage x(HttpRequestMessage request, int valueInitForParentCategory)
+        public HttpResponseMessage GetByParent(HttpRequestMessage request, int parentCategory)
         {
             return CreateHttpResponse(request, () =>
             {
-                IEnumerable<ProductCategory> model = _productCategoryService.GetByParentCategory(valueInitForParentCategory);
+                
+                IEnumerable<ProductCategory> model = _productCategoryService.GetByParentCategory(parentCategory);
                 var response = request.CreateResponse(HttpStatusCode.OK, model);
                 return response;
             });

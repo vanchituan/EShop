@@ -18,6 +18,8 @@ namespace EShop.Service
 
         Product GetById(int id);
 
+        IEnumerable<Product>  GetByCategory(int categoryId);
+
         Product Add(Product product);
 
         void Update(Product product);
@@ -71,5 +73,10 @@ namespace EShop.Service
         {
             _productRepository.Update(product);
         }
+
+        public IEnumerable<Product> GetByCategory(int categoryId)
+        {
+            return _productRepository.GetMulti(q => q.CategoryId == categoryId);
+        } 
     }
 }

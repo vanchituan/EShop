@@ -3,7 +3,7 @@
 
     app.factory('commonService', [function () {
         return {
-            getSeoTitle: function (input) {
+            getSeoTitle: function(input) {
                 if (input == undefined || input == '')
                     return '';
                 //Đổi chữ hoa thành chữ thường
@@ -34,23 +34,23 @@
                 return slug;
             },
 
-            getCurrentDate: function () {
+            getCurrentDate: function() {
                 var today = new Date();
                 var dd = today.getDate();
                 var mm = today.getMonth() + 1; //January is 0!
                 var yyyy = today.getFullYear();
 
                 if (dd < 10) {
-                    dd = '0' + dd
+                    dd = '0' + dd;
                 }
 
                 if (mm < 10) {
-                    mm = '0' + mm
+                    mm = '0' + mm;
                 }
 
                 today = mm + '/' + dd + '/' + yyyy;
                 return today;
             }
-        }
+        };
     }]);
 })(angular.module('eshop.common'));

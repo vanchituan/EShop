@@ -3,7 +3,7 @@
         <div class="modal-header">
             <h4 class="modal-title">Sửa sản phẩm : <strong>{{product.Name}}</strong></h4>
         </div>
-        <form novalidate class="form-horizontal" name="frmProduct" ng-submit="modifyProduct(product)">
+        <form novalidate class="form-horizontal" name="frmProduct" ng-submit="updateProduct(frmProduct)">
             <div class="modal-body">
 
                 <div class="col-md-12">
@@ -29,7 +29,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Giá nhập</label>
                             <div class="col-md-8">
-                                <input class="form-control" currency type="text" ng-model="product.PriceImport" />
+                                <input ng-model="product.PriceImport" pattern="[0-9]+([\.,][0-9]+)*" format-currency type="text"class="form-control"/>
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Giá bán</label>
                             <div class="col-md-8">
-                                <input class="form-control" currency type="text" ng-model="product.Price" />
+                                <input ng-model="product.Price" pattern="[0-9]+([\.,][0-9]+)*" format-currency type="text" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">{{w.Warehouse.WarehouseName}}</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" ng-model="w.Quantity" placeholder="Nhập SL.." />
+                                <input class="form-control" ng-model="w.Quantity" pattern="[0-9]+([\.,][0-9]+)*" format-currency type="text"  placeholder="Nhập SL.." />
                             </div>
                         </div>
                     </div>

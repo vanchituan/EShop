@@ -11,7 +11,11 @@ namespace EShop.Service
 {
     public interface IWarehouseDetailService
     {
+        void Update(WarehouseDetail whDetail);
+
         void Add(WarehouseDetail whDetail);
+
+        WarehouseDetail GetByPairOfKey(int productId, int warehouseId);
         void Save();
 
     }
@@ -26,9 +30,19 @@ namespace EShop.Service
             this._whRepository = whRepository;
         }
 
+        public void Update(WarehouseDetail whDetail)
+        {
+            _whRepository.Update(whDetail);
+        }
+
         public void Add(WarehouseDetail whDetail)
         {
-            _whRepository.Add(whDetail);
+            this._whRepository.Add(whDetail);
+        }
+
+        public WarehouseDetail GetByPairOfKey(int productId, int warehouseId)
+        {
+            return this._whRepository.GetSingleByCondition(q => q.ProductId == productId && q.WarehouseId == warehouseId);
         }
 
         public void Save()

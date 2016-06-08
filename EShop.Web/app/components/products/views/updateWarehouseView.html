@@ -10,8 +10,9 @@
                         <label class="control-label col-md-3">Tên danh mục</label>
                         <div class="col-md-5">
                             <select class="form-control" ng-model="ParentCategory" required tabindex="1" 
-                                    ng-change="getCategoryByParent(ParentCategory)"
-                                    ng-options="<!--p.ParentCategoryId as p.ParentCategoryName for p in parentCategories-->">
+                                    ng-change="getCategoriesByParent(ParentCategory)" 
+                                    ng-options="p.ParentCategoryId as p.ParentCategoryName for p in parentCategories">
+                                <option value="" selected> -- Chọn tên danh mục -- </option>
                             </select>
                         </div>
                     </div>
@@ -19,9 +20,9 @@
                     <div class="form-group">
                         <label class="control-label col-md-3">Loại sản phẩm</label>
                         <div class="col-md-5">
-                            <select ng-options="<!--c.Id as c.Name for c in productCategories-->"
-                                    ng-model="ProductCategory" required class="form-control" tabindex="2">
-                                <option selected disabled value="">--Chọn loại sản phẩm--</option>
+                            <select ng-options="c.Id as c.Name for c in productCategories"class="form-control" tabindex="2" required 
+                                    ng-model="ProductCategory" ng-change="getProductsByCategory(ProductCategory)">
+                                <option value="" selected> -- Chọn loại SP -- </option>
                             </select>
                         </div>
                     </div>
@@ -30,8 +31,8 @@
                         <label class="control-label col-md-3">Sản phẩm</label>
                         <div class="col-md-5">
                             <select ng-model="ProductName" class="form-control" tabindex="3" required
-                                    ng-options="">
-
+                                    ng-options="product.Id as product.Name for product in productList">
+                                <option value="" selected> -- Chọn sản phẩm -- </option>
                             </select>
                         </div>
                     </div>
@@ -39,7 +40,7 @@
                     <div class="form-group" ng-repeat="w in warehouses">
                         <label class="control-label col-md-3">{{w.WarehouseName}}</label>
                         <div class="col-md-5">
-                            <input type="number" class="form-control" ng-model="w.Quantity" placeholder="Nhập SL.."/>
+                            <input ng-model="w.Quantity" pattern="[0-9]+([\.,][0-9]+)*" format-currency type="text" class="form-control"  placeholder="Nhập SL.."/>
                         </div>
                     </div>
                 </div>

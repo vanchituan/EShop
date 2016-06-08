@@ -18,3 +18,13 @@
 input.ng-invalid-required, select.ng-invalid-required {
     border: 1px inset #870c1f;
 }
+
+
+.modal-open {
+    overflow: hidden;
+    padding-right: 17px;
+}
+
+.override{
+    min-height: 500px !important;
+}
