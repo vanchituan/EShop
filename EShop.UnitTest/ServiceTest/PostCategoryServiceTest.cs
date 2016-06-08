@@ -71,6 +71,5 @@ namespace EShop.UnitTest.ServiceTest
             Assert.AreEqual(1, result.Id);
         }
 
-
     }
 }

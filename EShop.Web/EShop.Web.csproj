@@ -255,13 +255,11 @@
     <Content Include="app\components\home\homeView.html" />
     <Content Include="app\components\products\controllers\productListController.js" />
     <Content Include="app\components\products\controllers\productAddController.js" />
-    <Content Include="app\components\products\controllers\updateWarehouseController.js" />
     <Content Include="app\components\products\views\productAddView.html" />
     <Content Include="app\components\products\controllers\productEditController.js" />
     <Content Include="app\components\products\views\productEditView.html" />
     <Content Include="app\components\products\products.module.js" />
     <Content Include="app\components\products\views\productListView.html" />
-    <Content Include="app\components\products\views\updateWarehouseView.html" />
     <Content Include="app\components\product_categories\productCategories.module.js" />
     <Content Include="app\components\product_categories\controllers\productCategoryAddController.js" />
     <Content Include="app\components\product_categories\views\productCategoryAddView.html" />
@@ -278,6 +276,7 @@
     <Content Include="app\shared\services\apiService.js" />
     <Content Include="app\shared\services\commonService.js" />
     <Content Include="app\shared\services\notificationService.js" />
+    <None Include="app\_references.js" />
     <Content Include="Assets\admin\css\AdminLTE.css" />
     <Content Include="Assets\admin\css\AdminLTE.min.css" />
     <Content Include="Assets\admin\css\custom.css" />
@@ -1882,7 +1881,9 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -2185,7 +2186,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>5531</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

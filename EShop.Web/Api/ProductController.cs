@@ -57,9 +57,11 @@ namespace EShop.Web.Api
         [HttpPost]
         public HttpResponseMessage Create(HttpRequestMessage request, Product product)
         {
-            return CreateHttpResponse(request, () => 
+            return CreateHttpResponse(request, () =>
             {
-                var model = _productService.Add(product);
+                Product model = _productService.Add(product);
+                _productService.Save();
+
                 WarehouseDetail whDetail = new WarehouseDetail
                 {
                     ProductId = model.Id
@@ -70,10 +72,9 @@ namespace EShop.Web.Api
                     whDetail.Quantity = item.Quantity;
                     whDetail.WarehouseId = item.WarehouseId;
                     _whDetailService.Add(whDetail);
+                    _whDetailService.Save();
                 }
 
-                _productService.Save();
-                _whDetailService.Save();
                 var response = request.CreateResponse(HttpStatusCode.OK, model);
                 return response;
             });

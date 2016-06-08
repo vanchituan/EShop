@@ -1,6 +1,7 @@
 ﻿/// <reference path="\Assets/admin/libs/angular/angular.js" />
 
 (function (app) {
+    'use strict';
     app.controller('productAddController', ['$scope', '$filter', '$uibModalInstance', 'apiService', 'notificationService', 'commonService', 'warehouseList',
         function ($scope, $filter, $uibModalInstance, apiService, notificationService, commonService, warehouseList) {
 
@@ -10,15 +11,17 @@
 
             $scope.addProduct = function (form) {
                 if (form.$valid) {
-                    //var arr = new Array();
-                    //var whDetailList = $scope.warehouses;
-                    //for (var item in whDetailList) {
-                    //    arr.push(whDetailList[item]);
-                    //}
+                    var arr = new Array();
+                    var whDetailList = $scope.warehouses;
+                    for (var item in whDetailList) {
+                        arr.push(whDetailList[item]);
+                    }
 
                     var product = {
                         Name: $filter('capitalizeFilter')($scope.Name),
-                        Alias : commonService.getSeoTitle($scope.Name),
+                        Alias: commonService.getSeoTitle($scope.Name),
+                        OrderedDate: commonService.getCurrentDate(),
+                        CreatedDate: commonService.getCurrentDate(),
                         Unit: $scope.Unit,
                         Warranty: $scope.Warranty,
                         Status: $scope.Status,
@@ -26,16 +29,7 @@
                         PriceImport: $scope.PriceImport,
                         CategoryId: $scope.CategoryId,
                         Description: $scope.Description || '',
-                        WarehouseDetails: function () {
-                            return function () {
-                                var arr = new Array();
-                                var whDetailList = $scope.warehouses;
-                                for (var item in whDetailList) {
-                                    arr.push(whDetailList[item]);
-                                }
-                                return arr;
-                            }
-                        },
+                        WarehouseDetails: arr
 
                     }
 
