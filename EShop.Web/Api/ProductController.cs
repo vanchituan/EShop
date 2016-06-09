@@ -28,7 +28,7 @@ namespace EShop.Web.Api
         {
             return CreateHttpResponse(request, () =>
             {
-                IEnumerable<Product> model = search.IsHomePage ? _productService.GetAll() : _productService.GetProductList(search);
+                IEnumerable<Product> model = _productService.GetProductList(search);
                 int totalRow = 0;
                 totalRow = search.TotalRow;
                 var paginationSet = new PaginationSet<Product>()

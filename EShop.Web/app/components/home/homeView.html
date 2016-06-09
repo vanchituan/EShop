@@ -1,9 +1,7 @@
-﻿<div class="page-header">Lập đơn hàng</div>
-<div class="row">
+﻿<div class="row">
     <div class="col-md-6">
-        <div class="box box-danger">
+        <div class="box box-primary">
             <div class="box-header">
-                <div class="box-title">Danh sách sản phẩm</div>
                 <form class="form-inline" ng-submit="search">
                     <div class="form-group">
                         <label class="control-label col-md-4">Tên SP</label>
@@ -13,7 +11,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-md-4"></label>
+                        <label class="control-label col-md-4">Loại sản phẩm</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control" ng-model="ProductName" ng-change="" />
                         </div>
@@ -33,7 +31,7 @@
                         <tr ng-repeat="p in products" class="pointer">
                             <td>{{p.Name}}</td>
                             <td>{{p.ProductCategory.Name}}</td>
-                            <td>{{p.Price}}</td>
+                            <td>{{p.Price | currency : '' : '0'}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -59,8 +57,7 @@
                         <tr>
                             <th>STT</th>
                             <th>Tên SP</th>
-                            <th>Đơn giá</th>
-                            <th>SL</th>
+                            <th></th>
                             <th>Thành tiền</th>
                         </tr>
                     </thead>
@@ -68,8 +65,7 @@
                         <tr>
                             <td>1</td>
                             <td>Senko B3</td>
-                            <td>120,000</td>
-                            <td>2</td>
+                            <td>120,000  x  2</td>
                             <td>240,000</td>
                         </tr>
                     </tbody>

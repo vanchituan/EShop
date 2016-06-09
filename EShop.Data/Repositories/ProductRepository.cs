@@ -26,7 +26,39 @@ namespace EShop.Data.Repositories
 
         public IEnumerable<Product> GetProductList(SearchingViewModel search)
         {
-            var model = (from a in DbContext.Products
+            var model = search.IsHomePage ?
+                (from a in DbContext.Products
+                 where
+                 (search.ProductName == null || a.Name.Contains(search.ProductName)) &&
+                 (search.CategoryId == null || a.CategoryId == search.CategoryId)
+                 select new
+                 {
+                     Name = a.Name,
+                     OrderedDate = a.OrderedDate,
+                     Price = a.Price,
+                     PriceImport = a.PriceImport,
+                     Warranty = a.Warranty,
+                     Status = a.Status,
+                     Unit = a.Unit,
+                     CategoryId = a.CategoryId,
+                     Id = a.Id,
+                     ProductCategory = DbContext.ProductCategories.FirstOrDefault(m => m.Id == a.CategoryId)
+                 }).AsEnumerable().
+                         Select(m => new Product
+                         {
+                             Name = m.Name,
+                             Id = m.Id,
+                             OrderedDate = m.OrderedDate,
+                             Price = m.Price,
+                             PriceImport = m.PriceImport,
+                             Unit = m.Unit,
+                             Warranty = m.Warranty,
+                             Status = m.Status,
+                             CategoryId = m.CategoryId,
+                             ProductCategory = m.ProductCategory
+                         })
+            :
+            (from a in DbContext.Products
                          where
                          (search.ProductName == null || a.Name.Contains(search.ProductName)) &&
                          (search.CategoryId == null || a.CategoryId == search.CategoryId)

@@ -49,7 +49,7 @@
             });
         };
 
-        $scope.search = search;
+        $scope.getPage = loadProductList;
 
         $scope.loadProductList = loadProductList;
 
@@ -80,10 +80,6 @@
                 notificationService.displayError(error);
             })
         };
-
-        function search() {
-            loadProductList();
-        }
 
         function loadCategoryList() {
             apiService.get('/api/productcategory/getall', null, function (res) {

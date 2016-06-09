@@ -16,7 +16,7 @@
             restrict: 'EA',
             templateUrl: '/app/shared/directives/pagerDirective.html',
             controller: ['$scope', function ($scope) {
-                $scope.search = function (i) {
+                $scope.getPage = function (i) {
                     if ($scope.searchFunc) {
                         $scope.searchFunc({ page: i });
                     }
@@ -41,9 +41,7 @@
                 $scope.pagePlus = function (count) {
                     return +$scope.page + count;
                 }
-
             }]
         }
     }
-
 })(angular.module('eshop.common'));

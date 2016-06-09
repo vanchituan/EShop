@@ -3,7 +3,9 @@
 
     app.controller('homeController', ['$scope', 'notificationService', 'apiService',
         function ($scope, notificationService, apiService) {
+            $scope.getPage = loadProductList;
 
+            $scope.loadProductList = loadProductList;
 
             function loadProductList(page) {
                 var searchingVm = {

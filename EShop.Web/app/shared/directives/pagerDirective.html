@@ -1,14 +1,14 @@
 ﻿<div>
     <div ng-hide="(!pagesCount || pagesCount < 2)" style="display:inline">
         <ul class="pagination pointer">
-            <li><a ng-hide="page == 0" ng-click="search(0)">trang đầu</a></li>
-            <li><a ng-hide="page == 0" ng-click="search(page-1)">lùi</a></li>
+            <li><a ng-hide="page == 0" ng-click="getPage(0)">trang đầu</a></li>
+            <li><a ng-hide="page == 0" ng-click="getPage(page-1)">lùi</a></li>
             <li ng-repeat="n in range()" ng-class="{active: n == page}">
-                <a ng-click="search(n)" ng-if="n != page">{{n+1}}</a>
+                <a ng-click="getPage(n)" ng-if="n != page">{{n+1}}</a>
                 <span ng-if="n == page">{{n+1}}</span>
             </li>
-            <li><a ng-hide="page == pagesCount - 1" ng-click="search(pagePlus(1))">tới</a></li>
-            <li><a ng-hide="page == pagesCount - 1" ng-click="search(pagesCount - 1)">trang cuối</a></li>
+            <li><a ng-hide="page == pagesCount - 1" ng-click="getPage(pagePlus(1))">tới</a></li>
+            <li><a ng-hide="page == pagesCount - 1" ng-click="getPage(pagesCount - 1)">trang cuối</a></li>
         </ul>
     </div>
 </div>
