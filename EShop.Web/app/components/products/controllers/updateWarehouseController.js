@@ -22,7 +22,7 @@
                         });
                     }
                     //console.log(whDetail);
-
+                    
                     apiService.post('/api/warehousedetail/updatewarehouse', whDetail, function (res) {
                         notificationService.displaySuccess(res.data + ' đã được cập nhật số lượng ');
                         $uibModalInstance.dismiss('cancel');

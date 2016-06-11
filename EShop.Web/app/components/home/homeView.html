@@ -28,7 +28,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="p in products" class="pointer">
+                        <tr ng-repeat="p in products" class="pointer" ng-dblclick="addToCart(p)">
                             <td>{{p.Name}}</td>
                             <td>{{p.ProductCategory.Name}}</td>
                             <td>{{p.Price | currency : '' : '0'}}</td>
@@ -47,8 +47,11 @@
     <div class="col-md-6">
         <div class="box box-info">
             <div class="box-header">
-                <div class="box-title">
-                    Giỏ hàng
+                <div class="box-title pull-left">
+                    <i class="fa fa-cart-arrow-down fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;Giỏ hàng
+                </div>
+                <div class="box-title pull-right">
+                    Tổng cộng : <strong>{{total | currency : '' : '0'}}</strong>
                 </div>
             </div>
             <div class="box-body">
@@ -57,19 +60,36 @@
                         <tr>
                             <th>STT</th>
                             <th>Tên SP</th>
-                            <th></th>
+                            <th>Đơn giá</th>
+                            <th>SL</th>
                             <th>Thành tiền</th>
+                            <th>Xóa</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>1</td>
-                            <td>Senko B3</td>
-                            <td>120,000  x  2</td>
-                            <td>240,000</td>
+                            <td colspan="5" ng-show="productInCart">
+                                <div class="text-danger text-center" >Chưa có sản phẩm trong giỏ hàng</div>
+                            </td>
+                        </tr>
+
+                        <tr ng-repeat="c in cart">
+                            <td>{{$index + 1}}</td>
+                            <td>{{c.Name}}</td>
+                            <td>{{c.Price | currency : '' : '0'}}</td>
+                            <td>
+                                <input ng-model="c.Quantity" ng-change="updateQuantity()" type="number"  min="1" class="form-control" style="width:80px;"  />
+                            </td>
+                            <td>{{c.Amount | currency : '' : '0'}}</td>
+                            <td>
+                                <i ng-click="deleteProduct(c)" class="fa fa-times fa-lg" aria-hidden="true" style="cursor:pointer;"></i>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
+                <div  ng-show="!productInCart" class="col-md-offset-9 col-md-2" style="margin-top:20px;">
+                    <button ng-click="addOrder()" type="button" class="btn bg-maroon-active">Hoàn thành</button>
+                </div>
             </div>
         </div>
     </div>
