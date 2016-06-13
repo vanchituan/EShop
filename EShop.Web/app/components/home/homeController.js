@@ -1,28 +1,43 @@
 ﻿(function (app) {
     'use strict';
 
-    app.controller('homeController', ['$scope', 'notificationService', 'apiService',
-        function ($scope, notificationService, apiService) {
-            $scope.cart = [];
-            $scope.productInCart = true;
-            $scope.getPage = loadProductList;
-            $scope.total = 0;
+    app.controller('homeController', ['notificationService', 'apiService',
+        function (notificationService, apiService) {
+            var vm = this;
+            vm.cart = [];
+            vm.productInCart = true;
+            vm.total = 0;
+            vm.searchingVm = {
+                Page: 0,
+                PageSize: 10,
+                ProductName:'',
+                IsHomePage: true
+            }
+            //binding event for control pagination
+            vm.getPage = function (page) {
+                vm.searchingVm.page = page
+                loadProductList(vm.searchingVm);
+            };
 
-            $scope.loadProductList = loadProductList;
+            //binding event for a method of control pagination
+            vm.loadProductList = function (page) {
+                vm.searchingVm.page = page
+                loadProductList(vm.searchingVm);
+            };
 
-            $scope.addToCart = function (product) {
+            vm.addToCart = function (product) {
                 var productIsExisted = false;
-                $scope.productInCart = false;
+                vm.productInCart = false;
                 //check this product is available in cart
-                for (var i = 0; i < $scope.cart.length; i++) {
-                    if ($scope.cart[i].Name === product.Name) {
+                for (var i = 0; i < vm.cart.length; i++) {
+                    if (vm.cart[i].Name === product.Name) {
                         productIsExisted = true;
                     }
                 }
 
                 // add new this product
                 if (!productIsExisted) {
-                    $scope.cart.push({
+                    vm.cart.push({
                         Name: product.Name,
                         Price: product.Price,
                         Quantity: 1,
@@ -30,10 +45,10 @@
                     });
                 }
                 else { // just increase quantity this product
-                    for (var i = 0; i < $scope.cart.length; i++) {
-                        if ($scope.cart[i].Name === product.Name) {
-                            $scope.cart[i].Quantity += 1;
-                            $scope.cart[i].Amount = $scope.cart[i].Quantity * $scope.cart[i].Price;
+                    for (var i = 0; i < vm.cart.length; i++) {
+                        if (vm.cart[i].Name === product.Name) {
+                            vm.cart[i].Quantity += 1;
+                            vm.cart[i].Amount = vm.cart[i].Quantity * vm.cart[i].Price;
                         }
                     }
                 }
@@ -41,36 +56,44 @@
                 updateTotal();
             };
 
-            $scope.updateQuantity = function () {
-                for (var i = 0; i < $scope.cart.length; i++) {
-                    $scope.cart[i].Amount = $scope.cart[i].Quantity * $scope.cart[i].Price;
+            vm.updateQuantity = function () {
+                for (var i = 0; i < vm.cart.length; i++) {
+                    vm.cart[i].Amount = vm.cart[i].Quantity * vm.cart[i].Price;
                 }
                 updateTotal();
             }
 
-            $scope.deleteProduct = function (product) {
-                console.log(product);
-                //for (var i = 0; i < $scope.cart.length; i++) {
-                //    if ($scope.cart[i].Name === productName) {
-                        
-                //    }
-                //}
+            vm.deleteProduct = function (productName) {
+                var index = -1;
+                for (var i = 0; i < vm.cart.length; i++) {
+                    if (vm.cart[i].Name === productName) {
+                        index = i;
+                        break;
+                    }
+                }
+                vm.cart.splice(index, 1);//1 is number is removed
+                updateTotal();
             }
 
-            function loadProductList(page) {
-                var searchingVm = {
-                    Page: page || 0,
-                    PageSize: $scope.pageSize || 10,
-                    ProductName: $scope.ProductName || '',
-                    CategoryId: $scope.CategoryId,
-                    IsHomePage: true
-                }
+            vm.getProductByCategory = function (category) {
+                vm.searchingVm.CategoryId = category.Id;
+                console.log(vm.searchingVm);
+                loadProductList(vm.searchingVm);
+            }
+
+            function loadCategory() {
+                apiService.get('/api/productcategory/getall', null, function (res) {
+                    vm.categories = res.data;
+                });
+            }
+
+            function loadProductList(searchingVm) {
 
                 apiService.post('/api/product/getlist', searchingVm, function (res) {
-                    $scope.products = res.data.Items;
-                    $scope.page = res.data.Page;
-                    $scope.pagesCount = res.data.TotalPages;
-                    $scope.totalCount = res.data.TotalCount;
+                    vm.products = res.data.Items;
+                    vm.page = res.data.Page;
+                    vm.pagesCount = res.data.TotalPages;
+                    vm.totalCount = res.data.TotalCount;
                 }, function (error) {
                     notificationService.displayError('Có lỗi gì đó rồi ông bạn');
                 });
@@ -78,13 +101,13 @@
 
             function updateTotal() {
                 var total = 0;
-                for (var i = 0; i < $scope.cart.length; i++) {
-                    total += $scope.cart[i].Amount;
+                for (var i = 0; i < vm.cart.length; i++) {
+                    total += vm.cart[i].Amount;
                 }
-                $scope.total = total;
-                console.log(total);
+                vm.total = total;
             }
 
-            loadProductList();
+            loadCategory();
+            loadProductList(vm.searchingVm);
         }]);
 })(angular.module('eshop'));

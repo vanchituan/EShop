@@ -254,6 +254,9 @@
     <Content Include="app\app.js" />
     <Content Include="app\components\home\homeController.js" />
     <Content Include="app\components\home\homeView.html" />
+    <Content Include="app\components\order\orderListController.js" />
+    <Content Include="app\components\order\orderListView.html" />
+    <Content Include="app\components\order\orders.module.js" />
     <Content Include="app\components\products\controllers\productListController.js" />
     <Content Include="app\components\products\controllers\productAddController.js" />
     <Content Include="app\components\products\controllers\updateWarehouseController.js" />
@@ -363,6 +366,18 @@
     <Content Include="Assets\admin\libs\angular-ui-router\src\view.js" />
     <Content Include="Assets\admin\libs\angular-ui-router\src\viewDirective.js" />
     <Content Include="Assets\admin\libs\angular-ui-router\src\viewScroll.js" />
+    <Content Include="Assets\admin\libs\angular-ui-select\dist\select.css" />
+    <Content Include="Assets\admin\libs\angular-ui-select\dist\select.js" />
+    <Content Include="Assets\admin\libs\angular-ui-select\dist\select.min.css" />
+    <Content Include="Assets\admin\libs\angular-ui-select\dist\select.min.js" />
+    <Content Include="Assets\admin\libs\angular-ui-select\docs\assets\app.js" />
+    <Content Include="Assets\admin\libs\angular-ui-select\docs\assets\demo.js" />
+    <Content Include="Assets\admin\libs\angular-ui-select\docs\assets\docs.css" />
+    <Content Include="Assets\admin\libs\angular-ui-select\docs\assets\plunkr.js" />
+    <Content Include="Assets\admin\libs\angular-ui-select\docs\index.html" />
+    <Content Include="Assets\admin\libs\angular-ui-select\docs\partials\_footer.html" />
+    <Content Include="Assets\admin\libs\angular-ui-select\docs\partials\_header.html" />
+    <Content Include="Assets\admin\libs\angular-ui-select\index.js" />
     <Content Include="Assets\admin\libs\angular\angular-csp.css" />
     <Content Include="Assets\admin\libs\angular\angular.js" />
     <Content Include="Assets\admin\libs\angular\angular.min.js" />
@@ -1894,6 +1909,20 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
+    <Content Include="Assets\admin\libs\angular-ui-select\.bower.json" />
+    <Content Include="Assets\admin\libs\angular-ui-select\bower.json" />
+    <Content Include="Assets\admin\libs\angular-ui-select\CHANGELOG.md" />
+    <Content Include="Assets\admin\libs\angular-ui-select\composer.json" />
+    <Content Include="Assets\admin\libs\angular-ui-select\CONTRIBUTING.md" />
+    <Content Include="Assets\admin\libs\angular-ui-select\deploy-docs.sh" />
+    <Content Include="Assets\admin\libs\angular-ui-select\dist\select.min.css.map" />
+    <Content Include="Assets\admin\libs\angular-ui-select\dist\select.min.js.map" />
+    <Content Include="Assets\admin\libs\angular-ui-select\LICENSE" />
+    <Content Include="Assets\admin\libs\angular-ui-select\package.json" />
+    <Content Include="Assets\admin\libs\angular-ui-select\README.md" />
+    <Content Include="Views\Admin\Header.cshtml" />
+    <Content Include="Views\Admin\Navigation.cshtml" />
+    <Content Include="Views\Admin\ControlSidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\components\orders\" />

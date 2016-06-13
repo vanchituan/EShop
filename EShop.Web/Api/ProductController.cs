@@ -43,17 +43,17 @@ namespace EShop.Web.Api
             });
         }
 
-        [Route("getbycategory/{categoryId:int}")]
-        [HttpPost]
-        public HttpResponseMessage GetByCategory(HttpRequestMessage request, int categoryId)
-        {
-            return CreateHttpResponse(request, () =>
-            {
-                IEnumerable<Product> model = _productService.GetByCategory(categoryId);
-                var response = request.CreateResponse(HttpStatusCode.OK, model);
-                return response;
-            });
-        }
+        //[Route("getbycategory/{categoryId:int}")]
+        //[HttpPost]
+        //public HttpResponseMessage GetByCategory(HttpRequestMessage request, SearchingViewModel search)
+        //{
+        //    return CreateHttpResponse(request, () =>
+        //    {
+        //        IEnumerable<Product> model = _productService.GetByCategory(categoryId);
+        //        var response = request.CreateResponse(HttpStatusCode.OK, model);
+        //        return response;
+        //    });
+        //}
 
 
         [Route("add")]

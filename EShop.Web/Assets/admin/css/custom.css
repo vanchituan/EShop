@@ -15,6 +15,10 @@
     user-select: none;
 }
 
+    .table-hover tbody tr:hover td, .table tbody tr:hover th {
+        background-color: #428BCA;
+    }
+
 input.ng-invalid-required, select.ng-invalid-required {
     border: 1px inset #870c1f;
 }
@@ -25,6 +29,27 @@ input.ng-invalid-required, select.ng-invalid-required {
     padding-right: 17px;
 }
 
-.override{
+.override {
     min-height: 500px !important;
+}
+
+.select2 > .select2-choice.ui-select-match {
+    /* Because of the inclusion of Bootstrap */
+    height: 29px;
+}
+
+.selectize-control > .selectize-dropdown {
+    top: 36px;
+}
+/* Some additional styling to demonstrate that append-to-body helps achieve the proper z-index layering. */
+.select-box {
+    background: #fff;
+    position: relative;
+    z-index: 1;
+}
+
+.alert-info.positioned {
+    margin-top: 1em;
+    position: relative;
+    z-index: 10000; /* The select2 dropdown has a z-index of 9999 */
 }

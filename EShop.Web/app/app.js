@@ -7,7 +7,7 @@
             $stateProvider.state('home', {
                 url: "/admin",
                 templateUrl: "/app/components/home/homeView.html",
-                controller: "homeController"
+                controller: "homeController as ctrl"
             });
             
             $urlRouterProvider.otherwise('/admin');
