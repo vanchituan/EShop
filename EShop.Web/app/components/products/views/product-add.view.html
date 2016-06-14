@@ -1,9 +1,9 @@
-﻿<script type="text/ng-template" id="/app/components/products/views/productEditView.html">
+﻿<script type="text/ng-template" id="/app/components/products/views/product-add.view.html">
     <div class="box box-success">
         <div class="modal-header">
-            <h4 class="modal-title">Sửa sản phẩm : <strong>{{product.Name}}</strong></h4>
+            <h4 class="modal-title">Thêm mới sản phẩm</h4>
         </div>
-        <form novalidate class="form-horizontal" name="frmProduct" ng-submit="updateProduct(frmProduct)">
+        <form novalidate class="form-horizontal" name="frmProduct" ng-submit="product.addProduct(frmProduct)">
             <div class="modal-body">
 
                 <div class="col-md-12">
@@ -11,7 +11,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Tên SP</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" ng-model="product.Name" />
+                                <input class="form-control" type="text" ng-model="product.Name" required autofocus tabindex="1"/>
                             </div>
                         </div>
                     </div>
@@ -20,7 +20,10 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Loại</label>
                             <div class="col-md-8">
-                                <select ng-options="c.Id as c.Name for c in productCategories" ng-model="product.CategoryId" class="form-control"></select>
+                                <select ng-options="c.Id as c.Name for c in product.productCategories" 
+                                        ng-model="product.CategoryId" required class="form-control" tabindex="2">
+                                    <option selected disabled value="">--Chọn loại sản phẩm--</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -29,7 +32,8 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Giá nhập</label>
                             <div class="col-md-8">
-                                <input ng-model="product.PriceImport" pattern="[0-9]+([\.,][0-9]+)*" format-currency type="text"class="form-control"/>
+                                <input class="form-control" type="text" pattern="[0-9]+([\.,][0-9]+)*" format-currency 
+                                       ng-model="product.PriceImport" required tabindex="3"/>
                             </div>
                         </div>
                     </div>
@@ -38,7 +42,8 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Giá bán</label>
                             <div class="col-md-8">
-                                <input ng-model="product.Price" pattern="[0-9]+([\.,][0-9]+)*" format-currency type="text" class="form-control" />
+                                <input class="form-control" pattern="[0-9]+([\.,][0-9]+)*" format-currency 
+                                       type="text" ng-model="product.Price" required tabindex="4"/>
                             </div>
                         </div>
                     </div>
@@ -47,7 +52,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Đơn vị</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" ng-model="product.Unit" />
+                                <input class="form-control" type="text" ng-model="product.Unit" required tabindex="5"/>
                             </div>
                         </div>
                     </div>
@@ -56,16 +61,17 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">B.hành</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" ng-model="product.Warranty" />
+                                <input class="form-control" type="text" ng-model="product.Warranty" tabindex="6"/>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-4" ng-repeat="w in product.WarehouseDetails">
+                    <div class="col-md-4" ng-repeat="w in product.warehouses">
                         <div class="form-group">
-                            <label class="control-label col-md-4">{{w.Warehouse.WarehouseName}}</label>
+                            <label class="control-label col-md-4">{{w.WarehouseName}}</label>
                             <div class="col-md-8">
-                                <input class="form-control" ng-model="w.Quantity" pattern="[0-9]+([\.,][0-9]+)*" format-currency type="text"  placeholder="Nhập SL.." />
+                                <input ng-model="w.Quantity" class="form-control" type="number"  
+                                       placeholder="Nhập SL.." required tabindex="7 + $index"/>
                             </div>
                         </div>
                     </div>
@@ -84,7 +90,7 @@
                             <label class="control-label col-md-4">Trạng thái</label>
                             <div class="col-md-8">
                                 <label>
-                                    <input type="checkbox" ng-checked="product.Status" ng-model="product.Status" />&nbsp;Đang kinh doanh
+                                    <input type="checkbox" ng-init="Status = true" ng-checked="true" ng-model="product.Status" />&nbsp;Đang kinh doanh
                                 </label>
                             </div>
                         </div>
@@ -97,7 +103,7 @@
                     <i class="fa fa-check" aria-hidden="true"></i>&nbsp;Lưu
                 </button>
 
-                <button class="btn bg-navy" type="button" ng-click="cancel()">
+                <button class="btn bg-navy" type="button" ng-click="product.cancel()">
                     <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Hủy
                 </button>
             </div>

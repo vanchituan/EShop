@@ -1,7 +1,9 @@
 ﻿(function (app) {
     'use strict';
 
-    app.factory('notificationService',  function () {
+    app.factory('notificationService', notificationService);
+
+    function notificationService() {
         toastr.options = {
             "closeButton": true,
             "debug": false,
@@ -21,28 +23,38 @@
         }
 
         return {
-            displaySuccess: function (msg) {
-                toastr.success(msg);
-            },
+            displaySuccess: success,
 
-            displayError: function (error) {
-                if (Array.isArray(error)) {
-                    error.each(function () {
-                        toastr.error(error);
-                    })
-                }
-                else {
+            displayError: error,
+
+            displayInfo: info,
+
+            displayWarning: warning
+        }
+
+        function success(msg) {
+            toastr.success(msg);
+        }
+
+        function warning(msg) {
+            toastr.warning(msg);
+        }
+
+        function info(msg) {
+            toastr.info(msg);
+        }
+
+        function error(msg) {
+            if (Array.isArray(error)) {
+                error.each(function () {
                     toastr.error(error);
-                }
-            },
-
-            displayInfo: function (msg) {
-                toastr.info(msg);
-            },
-
-            displayWarning: function (msg) {
-                toastr.warning(msg);
+                })
+            }
+            else {
+                toastr.error(error);
             }
         }
-    });
+
+
+    }
 })(angular.module('eshop.common'));

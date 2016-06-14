@@ -58,9 +58,9 @@ namespace EShop.Data
 
         public DbSet<WarehouseDetail> WarehouseDetails{ set; get; }
 
-        public DbSet<Invoice> Invoices { set; get; }
+        //public DbSet<Invoice> Invoices { set; get; }
 
-        public DbSet<InvoiceDetail> InvoiceDetails { set; get; }
+        //public DbSet<InvoiceDetail> InvoiceDetails { set; get; }
 
         public static EShopDbContext Create()
         {

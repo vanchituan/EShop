@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="/Assets/admin/css/skins/_all-skins.min.css">
     <link href="~/Assets/admin/css/custom.css" rel="stylesheet" />
 </head>
-<body class="hold-transition skin-blue sidebar-mini sidebar-collapse" ng-app="eshop">
+<body ng-app="eshop" class="hold-transition skin-blue sidebar-mini sidebar-collapse" @*style="overflow-y:scroll;"*@>
     <!-- Site wrapper -->
     <div class="wrapper">
         <!--main-header-->
@@ -88,34 +88,41 @@
     <!--select2-->
     <script src="~/Assets/admin/libs/angular-ui-select/dist/select.min.js"></script>
 
+
+
     <!--begin custom JS-->
-    <script src="~/app/shared/modules/eshop.common.js"></script>
-    <!--Services-->
-    <script src="~/app/shared/services/apiService.js"></script>
-    <script src="~/app/shared/services/notificationService.js"></script>
-    <script src="~/app/shared/services/commonService.js"></script>
-
-    <!--Directives-->
-    <script src="~/app/shared/directives/formatCurrencyDirective.js"></script>
-    <script src="~/app/shared/directives/pagerDirective.js"></script>
-
-    <!--Filters-->
-    <script src="~/app/shared/filters/statusFilter.js"></script>
-    <script src="~/app/shared/filters/capitalizeFilter.js"></script>
-
-    <script src="~/app/components/products/products.module.js"></script>
-    <script src="~/app/components/product_categories/productCategories.module.js"></script>
     <script src="~/app/app.js"></script>
 
-    <!--Controllers-->
-    <script src="~/app/components/products/controllers/productListController.js"></script>
-    <script src="~/app/components/products/controllers/productAddController.js"></script>
-    <script src="~/app/components/products/controllers/productEditController.js"></script>
-    <script src="~/app/components/products/controllers/updateWarehouseController.js"></script>
+    <script src="~/app/shared/modules/eshop.common.js"></script>
 
-    <script src="~/app/components/home/homeController.js"></script>
-    <script src="~/app/components/product_categories/controllers/productCategoryListController.js"></script>
-    <script src="~/app/components/product_categories/controllers/productCategoryAddController.js"></script>
-    <script src="~/app/components/product_categories/controllers/productCategoryEditController.js"></script>
+    <!--Services-->
+    <script src="~/app/shared/services/api.service.js"></script>
+    <script src="~/app/shared/services/prep.service.js"></script>
+    <script src="~/app/shared/services/notification.service.js"></script>
+    <script src="~/app/shared/services/common.service.js"></script>
+
+    <!--Directives-->
+    <script src="~/app/shared/directives/format-currency.directive.js"></script>
+    <script src="~/app/shared/directives/pager.directive.js"></script>
+    <script src="~/app/shared/directives/include-replace.directive.js"></script>
+
+    <!--Filters-->
+    <script src="~/app/shared/filters/capitalize.filter.js"></script>
+    <script src="~/app/shared/filters/status.filter.js"></script>
+
+    <script src="~/app/components/products/products.module.js"></script>
+    <script src="~/app/components/categories/categories.module.js"></script>
+
+
+    <!--Controllers-->
+    <script src="~/app/components/products/controllers/product-list.controller.js"></script>
+    <script src="~/app/components/products/controllers/product-add.controller.js"></script>
+    <script src="~/app/components/products/controllers/product-edit.controller.js"></script>
+    <script src="~/app/components/products/controllers/update-warehouse.controller.js"></script>
+
+    <script src="~/app/components/home/home.controller.js"></script>
+    <script src="~/app/components/categories/controllers/category.list.controller.js"></script>
+    <script src="~/app/components/categories/controllers/category-add.controller.js"></script>
+    <script src="~/app/components/categories/controllers/category-edit.controller.js"></script>
 </body>
 </html>

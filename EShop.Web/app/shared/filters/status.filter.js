@@ -1,7 +1,9 @@
 ﻿(function (app) {
     'use strict';
     
-    app.filter('statusFilter', function () {
+    app.filter('statusFilter', statusFilter);
+
+    function statusFilter() {
         return function (input) {
             if (input) {
                 return 'Kích hoạt';
@@ -10,5 +12,5 @@
                 return 'Khóa';
             }
         }
-    });
+    }
 })(angular.module('eshop.common'));

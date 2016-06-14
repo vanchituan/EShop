@@ -1,17 +1,33 @@
 ﻿(function () {
     'use strict';
 
-    var app = angular.module('eshop', ['eshop.products', 'eshop.product_categories', 'eshop.common']);
-    app.config(['$stateProvider', '$urlRouterProvider',
-        function ($stateProvider, $urlRouterProvider) {
-            $stateProvider.state('home', {
-                url: "/admin",
-                templateUrl: "/app/components/home/homeView.html",
-                controller: "homeController as ctrl"
-            });
-            
-            $urlRouterProvider.otherwise('/admin');
+    var app = angular.module('eshop', [
+        'eshop.products',
+        'eshop.categories',
+        'eshop.common'
+    ]);
 
-            //ngProgressLiteProvider.settings.speed = 1500;
-        }]);
+    config.$inject = [
+        '$stateProvider',
+        '$urlRouterProvider'
+    ];
+    app.config(config);
+
+    function config($stateProvider, $urlRouterProvider) {
+        $stateProvider.state('home', {
+            url: "/admin",
+            templateUrl: "/app/components/home/home.view.html",
+            controller: "HomeController",
+            controllerAs : 'ctrl',
+            resolve: {
+                productsPrepService: function (apiService) {
+                    return null;
+                }
+            }
+        });
+
+        $urlRouterProvider.otherwise('/admin');
+
+        //ngProgressLiteProvider.settings.speed = 1500;
+    }
 })();

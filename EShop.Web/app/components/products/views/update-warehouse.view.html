@@ -1,17 +1,18 @@
-﻿<script type="text/ng-template" id="/app/components/products/views/updateWarehouseView.html">
+﻿<script type="text/ng-template" id="/app/components/products/views/update.warehouse.view.html">
     <div class="box box-success">
         <div class="modal-header">
             <h4 class="modal-title">Nhập hàng</h4>
         </div>
-        <form novalidate class="form-horizontal" name="frmProduct" ng-submit="updateWarehouse(frmProduct)">
+        <!--<form novalidate class="form-horizontal" name="frmProduct" ng-submit="product.updateWarehouse(frmProduct)">-->
             <div class="modal-body">
-                <div class="row">
+                this is modal update
+                <!--<div class="row">
                     <div class="form-group">
                         <label class="control-label col-md-3">Tên danh mục</label>
                         <div class="col-md-5">
-                            <select class="form-control" ng-model="ParentCategory" required tabindex="1" 
-                                    ng-change="getCategoriesByParent(ParentCategory)" 
-                                    ng-options="p.ParentCategoryId as p.ParentCategoryName for p in parentCategories">
+                            <select class="form-control" ng-model="product.ParentCategory" required tabindex="1" 
+                                    ng-change="product.getCategoriesByParent(product.ParentCategory)" 
+                                    ng-options="p.ParentCategoryId as p.ParentCategoryName for p in product.parentCategories">
                                 <option value="" selected> -- Chọn tên danh mục -- </option>
                             </select>
                         </div>
@@ -20,8 +21,8 @@
                     <div class="form-group">
                         <label class="control-label col-md-3">Loại sản phẩm</label>
                         <div class="col-md-5">
-                            <select ng-options="c.Id as c.Name for c in productCategories"class="form-control" tabindex="2" required 
-                                    ng-model="ProductCategory" ng-change="getProductsByCategory(ProductCategory)">
+                            <select ng-options="c.Id as c.Name for c in product.productCategories"class="form-control" tabindex="2" required 
+                                    ng-model="product.ProductCategory" ng-change="product.getProductsByCategory(product.ProductCategory)">
                                 <option value="" selected> -- Chọn loại SP -- </option>
                             </select>
                         </div>
@@ -30,20 +31,20 @@
                     <div class="form-group">
                         <label class="control-label col-md-3">Sản phẩm</label>
                         <div class="col-md-5">
-                            <select ng-model="ProductName" class="form-control" tabindex="3" required
-                                    ng-options="product.Id as product.Name for product in productList">
+                            <select ng-model="product.ProductName" class="form-control" tabindex="3" required
+                                    ng-options="product.Id as product.Name for product in product.productList">
                                 <option value="" selected> -- Chọn sản phẩm -- </option>
                             </select>
                         </div>
                     </div>
 
-                    <div class="form-group" ng-repeat="w in warehouses">
+                    <div class="form-group" ng-repeat="w in product.warehouses">
                         <label class="control-label col-md-3">{{w.WarehouseName}}</label>
                         <div class="col-md-5">
                             <input ng-model="w.Quantity" pattern="[0-9]+([\.,][0-9]+)*" format-currency type="text" class="form-control"  placeholder="Nhập SL.."/>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
 
             <div class="modal-footer">
@@ -51,10 +52,10 @@
                     <i class="fa fa-check" aria-hidden="true"></i>&nbsp;Lưu
                 </button>
 
-                <button class="btn bg-navy" type="button" ng-click="cancel()">
+                <!--<button class="btn bg-navy" type="button" ng-click="product.cancel()">
                     <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Hủy
-                </button>
+                </button>-->
             </div>
-        </form>
+        <!--</form>-->
     </div>
 </script>

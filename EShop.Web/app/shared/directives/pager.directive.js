@@ -14,7 +14,7 @@
             },
             replace: false,
             restrict: 'EA',
-            templateUrl: '/app/shared/directives/pagerDirective.html',
+            templateUrl: '/app/shared/directives/pager.directive.html',
             controller: ['$scope', function ($scope) {
                 $scope.getPage = function (i) {
                     if ($scope.searchFunc) {
@@ -44,4 +44,5 @@
             }]
         }
     }
+
 })(angular.module('eshop.common'));

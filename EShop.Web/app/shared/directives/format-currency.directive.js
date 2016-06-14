@@ -1,7 +1,10 @@
 ﻿(function (app) {
     'use strict';
     
-    app.directive('formatCurrency', ['$filter', function ($filter) {
+    app.directive('formatCurrency', formatCurrency);
+    formatCurrency.$inject = ['$filter'];
+
+    function formatCurrency($filter) {
         return {
             require: '?ngModel',
             link: function (scope, elem, attrs, ctrl) {
@@ -23,5 +26,6 @@
                 });
             }
         }
-    }]);
+    }
+
 })(angular.module('eshop.common'));

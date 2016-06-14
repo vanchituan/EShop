@@ -1,0 +1,248 @@
+﻿<div class="box box-danger">
+    <div class="box-header">
+        <div class="row">
+            <form ng-submit="product.loadProductList()">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Tên SP</label>
+                        <div class="col-md-8">
+                            <input type="text" ng-model="product.ProductName" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Thuộc loại</label>
+                        <div class="col-md-8">
+                            <select ng-options="c.Id as c.Name for c in product.productCategories" ng-model="product.CategoryId" class="form-control"
+                                    ng-change="product.loadProductList()">
+                                <option selected value="" class="text-center"> Tất cả sản phẩm </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <button type="submit" class="btn bg-navy">
+                        <i class="fa fa-search" aria-hidden="true"></i>&nbsp; Tìm kiếm
+                    </button>
+                    <button class="btn bg-olive" ng-click="exportExcel()">
+                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp; Xuất ra Excel
+                    </button>
+                    <button class="btn bg-maroon" ng-click="product.showModalAdd()">
+                        <i class="fa fa-plus-square "></i>&nbsp; Thêm SP
+                    </button>
+
+                    <button class="btn bg-purple" ng-click="product.showModalUpdateWarehouse()">
+                        <i class="fa fa-plus-square" aria-hidden="true"></i>&nbsp; Nhập hàng
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!--searching form-->
+
+        <div class="row" style="padding-top:10px;">
+            <div class="col-md-4 pull-left">
+                <p>Hiện có <strong>{{product.totalCount}}</strong> sản phẩm ứng với điều kiện tìm kiếm</p>
+            </div>
+            <div class="pull-right col-md-3">
+                <label class="pull-right"> SP / trang</label>
+                <div class="col-md-7 pull-right">
+                    <select class="form-control" ng-init="product.pageSize='10'" ng-change="product.loadProductList()" ng-model="product.pageSize">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                        <option value="60">60</option>
+                        <option value="70">70</option>
+                        <option value="80">80</option>
+                        <option value="90">90</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th ng-click="sort('Name')" class="pointer">
+                        Tên SP
+                        <span class="glyphicon sort-icon" ng-show="sortKey=='productName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                    <th ng-click="sort('ProductCategory.Name')" class="pointer">
+                        Thuộc loại
+                        <span class="glyphicon sort-icon" ng-show="sortKey=='categoryName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                    <th ng-click="sort('PriceImport')" class="pointer">
+                        Giá nhập
+                        <span class="glyphicon sort-icon" ng-show="sortKey=='priceImport'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                    <th ng-click="sort('Price')" class="pointer">
+                        Giá bán
+                        <span class="glyphicon sort-icon" ng-show="sortKey=='price'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                    <th ng-click="sort('OrderedDate')" class="pointer">
+                        Ngày ĐH
+                        <span class="glyphicon sort-icon" ng-show="sortKey=='orderedDate'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                    </th>
+                    <th>BH</th>
+                    <th ng-repeat="w in warehouses">{{w.WarehouseName}}</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="p in product.list |orderBy: sortKey: reverse">
+                    <td>{{p.Name}}</td>
+                    <td>{{p.ProductCategory.Name}}</td>
+                    <td>{{p.PriceImport | currency : '': '0'}}</td>
+                    <td>{{p.Price | currency : '' : '0'}}</td>
+                    <td>{{p.OrderedDate | date : 'dd/MM/yyyy'}}</td>
+                    <td>{{p.Warranty}}</td>
+                    <td ng-repeat="w in p.WarehouseDetails">{{w.Quantity}}</td>
+                    <td>
+                        <span ng-class="{'badge bg-green' : p.Status == true, 'badge bg-red' : p.Status == false}">
+                            {{p.Status | statusFilter}}
+                        </span>
+                    </td>
+                    <td>
+                        <i class="fa fa-pencil-square-o fa-lg pointer" style="color:#0b2641"
+                           title="Sửa SP này" ng-click="product.showModalEdit(p)"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!--paging control-->
+        <div pager-directive page="{{product.page}}" custom-path="{{product.customPath}}" pages-count="{{product.pagesCount}}"
+             total-count="{{product.totalCount}}" search-func="product.loadProductList(page)">
+        </div>
+    </div>
+</div>
+
+<!--modal add view-->
+<!--<div ng-include src="'/app/components/products/views/product-add.view.html'" include-replace></div>-->
+<script type="text/ng-template" id="/app/components/products/views/product-add.view.html">
+    <div class="box box-success">
+        <div class="modal-header">
+            <h4 class="modal-title">Thêm mới sản phẩm</h4>
+        </div>
+        <form novalidate class="form-horizontal" name="frmProduct" ng-submit="product.addProduct(frmProduct)">
+            <div class="modal-body">
+
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Tên SP</label>
+                            <div class="col-md-8">
+                                <input class="form-control" type="text" ng-model="product.Name" required autofocus tabindex="1" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Loại</label>
+                            <div class="col-md-8">
+                                <select ng-options="c.Id as c.Name for c in product.productCategories"
+                                        ng-model="product.CategoryId" required class="form-control" tabindex="2">
+                                    <option selected disabled value="">--Chọn loại sản phẩm--</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Giá nhập</label>
+                            <div class="col-md-8">
+                                <input class="form-control" type="text" pattern="[0-9]+([\.,][0-9]+)*" format-currency
+                                       ng-model="product.PriceImport" required tabindex="3" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Giá bán</label>
+                            <div class="col-md-8">
+                                <input class="form-control" pattern="[0-9]+([\.,][0-9]+)*" format-currency
+                                       type="text" ng-model="product.Price" required tabindex="4" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Đơn vị</label>
+                            <div class="col-md-8">
+                                <input class="form-control" type="text" ng-model="product.Unit" required tabindex="5" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">B.hành</label>
+                            <div class="col-md-8">
+                                <input class="form-control" type="text" ng-model="product.Warranty" tabindex="6" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" ng-repeat="w in product.warehouses">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">{{w.WarehouseName}}</label>
+                            <div class="col-md-8">
+                                <input ng-model="w.Quantity" class="form-control" type="number"
+                                       placeholder="Nhập SL.." required tabindex="7 + $index" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Mô tả</label>
+                            <div class="col-md-8">
+                                <input class="form-control" type="text" ng-model="product.Description" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Trạng thái</label>
+                            <div class="col-md-8">
+                                <label>
+                                    <input type="checkbox" ng-init="Status = true" ng-checked="true" ng-model="product.Status" />&nbsp;Đang kinh doanh
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn bg-maroon" type="submit">
+                    <i class="fa fa-check" aria-hidden="true"></i>&nbsp;Lưu
+                </button>
+
+                <button class="btn bg-navy" type="button" ng-click="product.cancel()">
+                    <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Hủy
+                </button>
+            </div>
+        </form>
+    </div>
+</script>
+
+
+<!--modal edit view-->
+<div ng-include src="'/app/components/products/views/product-edit.view.html'" include-replace></div>
+
+<!--modal update warehouse-->
+<div ng-include src="'/app/components/products/views/update-warehouse.view.html'" include-replace></div>
