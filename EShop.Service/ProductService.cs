@@ -12,7 +12,7 @@ namespace EShop.Service
 {
     public interface IProductService
     {
-        IEnumerable<Product> GetProductList(SearchingViewModel search);
+        IEnumerable<Product> GetList(SearchingViewModel search);
 
         IEnumerable<Product> GetAll();
 
@@ -57,9 +57,9 @@ namespace EShop.Service
             return _productRepository.GetSingleByCondition(x => x.Id == id, new string[] { "ProductCategory" });
         }
 
-        public IEnumerable<Product> GetProductList(SearchingViewModel search)
+        public IEnumerable<Product> GetList(SearchingViewModel search)
         {
-            return _productRepository.GetProductList(search);
+            return _productRepository.GetList(search);
         }
 
         public void Save()

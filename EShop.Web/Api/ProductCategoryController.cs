@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EShop.Model.Models;
+using EShop.Model.ViewModel.Admin.ProductCategory;
 using EShop.Service;
 using EShop.Web.Infrastructure.Core;
 using EShop.Web.Infrastructure.Extensions;
@@ -16,13 +17,17 @@ namespace EShop.Web.Api
     [RoutePrefix("api/productcategory")]
     public class ProductCategoryController : ApiControllerBase
     {
-        IProductCategoryService _productCategoryService;
-        public ProductCategoryController(IErrorService errorService, IProductCategoryService productCategoryService)
+        private IProductCategoryService _productCategoryService;
+        private IParentProductCategoryService _parentCategoryService;
+        public ProductCategoryController(
+            IErrorService errorService, 
+            IProductCategoryService productCategoryService, 
+            IParentProductCategoryService parentCategoryService )
             : base(errorService)
         {
             this._productCategoryService = productCategoryService;
+            this._parentCategoryService = parentCategoryService;
         }
-
 
         [Route("getall")]
         [HttpGet]
@@ -31,8 +36,29 @@ namespace EShop.Web.Api
             return CreateHttpResponse(request, () =>
             {
                 var model = _productCategoryService.GetAll();
-                //var responseData = Mapper.Map<IEnumerable<ProductCategory>, IEnumerable<ProductCategoryViewModel>>(model);
+
                 var response = request.CreateResponse(HttpStatusCode.OK, model);
+                return response;
+            });
+        }
+
+        [Route("getlist")]
+        [HttpPost]
+        public HttpResponseMessage GetList(HttpRequestMessage request, SearchingViewModel search)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                IEnumerable<ProductCategory> model = _productCategoryService.GetList(search);
+                int totalRow = 0;
+                totalRow = search.TotalRow;
+                var paginationSet = new PaginationSet<ProductCategory>()
+                {
+                    Items = model,
+                    Page = search.Page,
+                    TotalCount = totalRow,
+                    TotalPages = (int)Math.Ceiling((decimal)totalRow / search.PageSize)
+                };
+                var response = request.CreateResponse(HttpStatusCode.OK, paginationSet);
                 return response;
             });
         }
@@ -45,11 +71,11 @@ namespace EShop.Web.Api
         {
             return CreateHttpResponse(request, () =>
             {
-                var model = _productCategoryService.GetAll();
+                var model = _parentCategoryService.GetAll();
 
-                var responseData = Mapper.Map<IEnumerable<ProductCategory>, IEnumerable<ProductCategoryViewModel>>(model);
+                //var responseData = Mapper.Map<IEnumerable<ProductCategory>, IEnumerable<ProductCategoryViewModel>>(model);
 
-                var response = request.CreateResponse(HttpStatusCode.OK, responseData);
+                var response = request.CreateResponse(HttpStatusCode.OK, model);
                 return response;
             });
         }
@@ -142,7 +168,5 @@ namespace EShop.Web.Api
                 return response;
             });
         }
-
-
     }
 }

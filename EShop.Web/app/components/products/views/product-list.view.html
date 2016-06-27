@@ -2,34 +2,42 @@
     <div class="box-header">
         <div class="row">
             <form ng-submit="product.loadProductList()">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Tên SP</label>
-                        <div class="col-md-8">
-                            <input type="text" ng-model="product.ProductName" class="form-control" />
-                        </div>
-                    </div>
+                <div class="col-md-2">
+                    <ui-select ng-model="product.category.selected" autofocus on-select="product.getProductByCategory($item)" tabindex="1">
+                        <ui-select-match placeholder="Nhập loại SP.." autofocus>
+                            {{$select.selected.Name}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in product.categories| filter: $select.search">
+                            <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
                 </div>
 
                 <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Thuộc loại</label>
-                        <div class="col-md-8">
-                            <select ng-options="c.Id as c.Name for c in product.productCategories" ng-model="product.CategoryId" class="form-control"
-                                    ng-change="product.loadProductList()">
-                                <option selected value="" class="text-center"> Tất cả sản phẩm </option>
-                            </select>
-                        </div>
+                    <ui-select ng-model="product.product.selected" on-select="product.getProductByName($item)" tabindex="2">
+                        <ui-select-match placeholder="Nhập tên SP..">
+                            {{$select.selected.Name}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in product.list| filter: $select.search">
+                            <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="col-md-6" ng-repeat="w in product.warehouses">
+                        <label class="control-label">
+                            <input type="checkbox" ng-model="w.WarehouseId" ng-checked="true" />
+                            &nbsp;&nbsp;&nbsp;{{w.WarehouseName}}
+                        </label>
                     </div>
                 </div>
 
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <button type="submit" class="btn bg-navy">
                         <i class="fa fa-search" aria-hidden="true"></i>&nbsp; Tìm kiếm
                     </button>
-                    <button class="btn bg-olive" ng-click="exportExcel()">
-                        <i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp; Xuất ra Excel
-                    </button>
+
                     <button class="btn bg-maroon" ng-click="product.showModalAdd()">
                         <i class="fa fa-plus-square "></i>&nbsp; Thêm SP
                     </button>
@@ -50,7 +58,7 @@
             <div class="pull-right col-md-3">
                 <label class="pull-right"> SP / trang</label>
                 <div class="col-md-7 pull-right">
-                    <select class="form-control" ng-init="product.pageSize='10'" ng-change="product.loadProductList()" ng-model="product.pageSize">
+                    <select class="form-control" ng-init="product.pageSize='10'" ng-change="product.changePageSize(product.pageSize)" ng-model="product.pageSize">
                         <option value="5">5</option>
                         <option value="10">10</option>
                         <option value="20">20</option>
@@ -68,7 +76,7 @@
         </div>
     </div>
     <div class="box-body">
-        <table class="table">
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th ng-click="sort('Name')" class="pointer">
@@ -92,7 +100,7 @@
                         <span class="glyphicon sort-icon" ng-show="sortKey=='orderedDate'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
                     </th>
                     <th>BH</th>
-                    <th ng-repeat="w in warehouses">{{w.WarehouseName}}</th>
+                    <th ng-repeat="w in product.warehouses">{{w.WarehouseName}}</th>
                     <th>Trạng thái</th>
                     <th></th>
                 </tr>
@@ -105,7 +113,11 @@
                     <td>{{p.Price | currency : '' : '0'}}</td>
                     <td>{{p.OrderedDate | date : 'dd/MM/yyyy'}}</td>
                     <td>{{p.Warranty}}</td>
-                    <td ng-repeat="w in p.WarehouseDetails">{{w.Quantity}}</td>
+                    <td ng-repeat="w in p.WarehouseDetails">
+                        <span ng-class="{'label label-danger' : w.Quantity <= 2, 'label label-warning' : w.Quantity <= 5 && w.Quantity > 2, 'label label-success' : w.Quantity >= 10}">
+                            {{w.Quantity}}
+                        </span>
+                    </td>
                     <td>
                         <span ng-class="{'badge bg-green' : p.Status == true, 'badge bg-red' : p.Status == false}">
                             {{p.Status | statusFilter}}
@@ -119,130 +131,25 @@
             </tbody>
         </table>
         <!--paging control-->
-        <div pager-directive page="{{product.page}}" custom-path="{{product.customPath}}" pages-count="{{product.pagesCount}}"
-             total-count="{{product.totalCount}}" search-func="product.loadProductList(page)">
+        <div class="row">
+            <div class="col-md-6" pager-directive page="{{product.page}}" custom-path="{{product.customPath}}" pages-count="{{product.pagesCount}}"
+                 total-count="{{product.totalCount}}" search-func="product.getPage(page)">
+            </div>
+
+            <div class="col-md-6">
+                <div class="text-right" style="margin-top:20px;">
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <!--modal add view-->
-<!--<div ng-include src="'/app/components/products/views/product-add.view.html'" include-replace></div>-->
-<script type="text/ng-template" id="/app/components/products/views/product-add.view.html">
-    <div class="box box-success">
-        <div class="modal-header">
-            <h4 class="modal-title">Thêm mới sản phẩm</h4>
-        </div>
-        <form novalidate class="form-horizontal" name="frmProduct" ng-submit="product.addProduct(frmProduct)">
-            <div class="modal-body">
-
-                <div class="col-md-12">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Tên SP</label>
-                            <div class="col-md-8">
-                                <input class="form-control" type="text" ng-model="product.Name" required autofocus tabindex="1" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Loại</label>
-                            <div class="col-md-8">
-                                <select ng-options="c.Id as c.Name for c in product.productCategories"
-                                        ng-model="product.CategoryId" required class="form-control" tabindex="2">
-                                    <option selected disabled value="">--Chọn loại sản phẩm--</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Giá nhập</label>
-                            <div class="col-md-8">
-                                <input class="form-control" type="text" pattern="[0-9]+([\.,][0-9]+)*" format-currency
-                                       ng-model="product.PriceImport" required tabindex="3" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Giá bán</label>
-                            <div class="col-md-8">
-                                <input class="form-control" pattern="[0-9]+([\.,][0-9]+)*" format-currency
-                                       type="text" ng-model="product.Price" required tabindex="4" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Đơn vị</label>
-                            <div class="col-md-8">
-                                <input class="form-control" type="text" ng-model="product.Unit" required tabindex="5" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">B.hành</label>
-                            <div class="col-md-8">
-                                <input class="form-control" type="text" ng-model="product.Warranty" tabindex="6" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4" ng-repeat="w in product.warehouses">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">{{w.WarehouseName}}</label>
-                            <div class="col-md-8">
-                                <input ng-model="w.Quantity" class="form-control" type="number"
-                                       placeholder="Nhập SL.." required tabindex="7 + $index" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Mô tả</label>
-                            <div class="col-md-8">
-                                <input class="form-control" type="text" ng-model="product.Description" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Trạng thái</label>
-                            <div class="col-md-8">
-                                <label>
-                                    <input type="checkbox" ng-init="Status = true" ng-checked="true" ng-model="product.Status" />&nbsp;Đang kinh doanh
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button class="btn bg-maroon" type="submit">
-                    <i class="fa fa-check" aria-hidden="true"></i>&nbsp;Lưu
-                </button>
-
-                <button class="btn bg-navy" type="button" ng-click="product.cancel()">
-                    <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Hủy
-                </button>
-            </div>
-        </form>
-    </div>
-</script>
-
+<div ng-include src="'/app/components/products/views/product-add.view.html'" ng-show="modalIsOpened"></div>
 
 <!--modal edit view-->
-<div ng-include src="'/app/components/products/views/product-edit.view.html'" include-replace></div>
+<div ng-include src="'/app/components/products/views/product-edit.view.html'" ng-show="modalIsOpened"></div>
 
 <!--modal update warehouse-->
-<div ng-include src="'/app/components/products/views/update-warehouse.view.html'" include-replace></div>
+<div ng-include src="'/app/components/products/views/update-warehouse.view.html'" ng-show="modalIsOpened"></div>

@@ -10,16 +10,18 @@
 
     function UpdateWarehouseController($uibModalInstance, apiService, notificationService) {
         var vm = this;
-        vm.updateWarehouse = updateWarehouse
+
+        //binding events
         vm.cancel = cancel;
+        vm.updateWarehouse = updateWarehouse
         vm.getCategoriesByParent = getCategoriesByParent;
         vm.getProductsByCategory = getProductsByCategory;
 
         function cancel() {
-            $uibModalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss();
         }
 
-        function updateWarehouse(frmProduct){
+        function updateWarehouse(frmProduct) {
             var frmIsValid = false;
             var warehouseDetailList = vm.warehouses;
             for (var i = 0; i < warehouseDetailList.length; i++) {
@@ -41,21 +43,13 @@
 
                 apiService.post('/api/warehousedetail/updatewarehouse', whDetail, function (res) {
                     notificationService.displaySuccess(res.data + ' đã được cập nhật số lượng ');
-                    $uibModalInstance.dismiss('cancel');
+                    $uibModalInstance.dismiss();
                 }, function (error) {
                     notificationService.displayError(error);
                 });
             } else {
                 notificationService.displayWarning('Chưa điền đầy đủ thông tin!!');
             }
-        }
-
-        function loadWarehouse() {
-            apiService.get('/api/warehouse/getall', null, function (res) {
-                vm.warehouses = res.data;
-            }, function (error) {
-                notificationService.displayError(error);
-            });
         }
 
         function getProductsByCategory(categoryId) {
@@ -81,16 +75,24 @@
             });
         }
 
+        function loadWarehouses(){
+            apiService.get('/api/warehouse/getall', null, function (res) {
+                vm.warehouses = res.data;
+            }, function (error) {
+                notificationService.displayError('Lỗi lấy dữ liệu');
+            });
+        }
+
         function loadParentCategories() {
             apiService.get('/api/parentcategory/getall', null, function (res) {
                 vm.parentCategories = res.data;
             }, function (error) {
-                notificationService.displayError(error);
+                notificationService.displayError('Lỗi lấy dữ liệu');
             });
         }
 
-        loadWarehouse();
         loadParentCategories();
+        loadWarehouses();
     };
 
 })(angular.module('eshop.products'));

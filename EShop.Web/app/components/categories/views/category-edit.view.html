@@ -1,24 +1,9 @@
-﻿  <!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>
-        Cập nhật danh mục: {{productCategory.Name}}
-
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
-        <li><a href="#">Sản phẩm</a></li>
-        <li><a ui-sref="product_categories">Danh mục</a></li>
-        <li class="active">Cập nhật</li>
-    </ol>
-</section>
-<!-- Main content -->
-<section class="content">
-    <!-- Horizontal Form -->
+﻿<script type="text/ng-template" id="/app/components/products/views/category-edit.view.html">
     <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title">{{productCategory.Name}}</h3>
-        </div><!-- /.box-header -->
-        <!-- form start -->
+            <h3 class="box-title">{{currentCategory.Name}}</h3>
+        </div>
+
         <form class="form-horizontal" novalidate name="frmUpdateProductCategory" role="form" ng-submit="UpdateProductCategory()">
             <div class="box-body">
                 <div class="col-md-12">
@@ -84,7 +69,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Danh mục cha</label>
                             <div class="col-md-8">
-                                <select class="form-control" ng-model="productCategory.ParentProductCategory" 
+                                <select class="form-control" ng-model="productCategory.ParentProductCategory"
                                         ng-options="p.ParentCategoryId as p.ParentCategoryName for p in parentCategories"></select>
                             </div>
                         </div>
@@ -105,5 +90,7 @@
                 <button type="submit" class="btn btn-success pull-right">Lưu</button>
             </div><!-- /.box-footer -->
         </form>
-    </div><!-- /.box -->
-</section><!-- /.content -->
+    </div>
+</script>
+    
+

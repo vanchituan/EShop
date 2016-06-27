@@ -34,7 +34,6 @@
                     for (var i = start; i != end; ++i) {
                         ret.push(i);
                     }
-
                     return ret;
                 };
 
@@ -44,5 +43,4 @@
             }]
         }
     }
-
 })(angular.module('eshop.common'));

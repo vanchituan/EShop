@@ -13,21 +13,7 @@
             url: '/products',
             templateUrl: '/app/components/products/views/product-list.view.html',
             controller: 'ProductListController',
-            controllerAs : 'product',
-            resolve: {
-                productsPrepService: productsPrepService
-            }
+            controllerAs: 'product'
         });
-    }
-
-    function productsPrepService(prepService){
-        var searchingVm = {
-            Page: 0,
-            PageSize: 10,
-            IsHomePage: false
-        }
-        var response = prepService.post('/api/product/getlist', searchingVm);
-        //var response = prepService.getProductList(searchingVm);
-        return response;
     }
 })();

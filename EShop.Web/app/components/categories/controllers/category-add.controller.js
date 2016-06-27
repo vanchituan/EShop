@@ -4,19 +4,22 @@
     app.controller('CategoryAddController', CategoryAddController);
 
     CategoryAddController.$inject = [
-        '$scope',
-        '$state',
+        '$uibModalInstance',
         'notificationService',
-        'apiService'
+        'apiService',
     ];
 
-    function CategoryAddController($scope, $state, notificationService, apiService) {
-        $scope.productCategory = {
-            CreatedDate: new Date(),
-            Status: true
-        };
+    function CategoryAddController($uibModalInstance, notificationService, apiService) {
+        var vm = this;
 
-        $scope.AddProductCategory = function () {
+        vm.AddCategory = addCategory;
+
+        function addCategory() {
+            var productCategory = {
+                CreatedDate: new Date(),
+                Status: true
+            }
+
             apiService.post('/api/productcategory/create', $scope.productCategory,
                 function (result) {
                     notificationService.displaySuccess(result.data.Name + ' đã được lưu !!');
@@ -25,9 +28,7 @@
                 function (error) {
                     notificationService.displayError('Thêm mới không thành công');
                 })
-        };
-
-
+        }
 
         function loadParentCategory() {
             apiService.get('/api/parentcategory/getall', null,

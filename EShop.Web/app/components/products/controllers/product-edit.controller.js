@@ -5,25 +5,32 @@
 
     ProductEditController.$inject = [
         '$uibModalInstance',
-        '$filter',
         'apiService',
         'notificationService',
-        'currentProduct'
+        'currentProduct',
+        'categoriesPrepService'
     ];
 
-    function ProductEditController($uibModalInstance, $filter, apiService, notificationService, currentProduct) {
+    function ProductEditController($uibModalInstance, apiService, notificationService, currentProduct, categoriesPrepService) {
+        var vm = this;
+        vm.categories = categoriesPrepService.data;
+        vm.product = {
+            Id: currentProduct.Id,
+            CategoryId: currentProduct.CategoryId,
+            Name: currentProduct.Name,
+            OrderedDate: currentProduct.OrderedDate,
+            Price: currentProduct.Price,
+            PriceImport: currentProduct.PriceImport,
+            Status: currentProduct.Status,
+            Unit: currentProduct.Unit,
+            Warranty: currentProduct.Warranty,
+            WarehouseDetails: currentProduct.WarehouseDetails
+        }
+
         vm.cancel = cancel;
         vm.updateProduct = updateProduct;
 
-        function categoryList() {
-            apiService.get('/api/productcategory/getall', null, function (res) {
-                vm.productCategories = res.data;
-            }, function (error) {
-                notificationService.displayError('Có lỗi gì đó rồi ông bạn ơi!!');
-            });
-        }
-
-        function updateProduct(frmProduct){
+        function updateProduct(frmProduct) {
             if (frmProduct.$valid) {
                 var product = {
                     CategoryId: vm.CategoryId,
@@ -41,27 +48,9 @@
                 notificationService.displayWarning('Chưa điền đầy đủ thông tin!!');
             }
         }
-        function loadProductToInput() {
-            vm.product = {
-                Id: currentProduct.Id,
-                CategoryId: currentProduct.CategoryId,
-                Name: currentProduct.Name,
-                OrderedDate: currentProduct.OrderedDate,
-                Price: currentProduct.Price,
-                PriceImport: currentProduct.PriceImport,
-                Status: currentProduct.Status,
-                Unit: currentProduct.Unit,
-                Warranty: currentProduct.Warranty,
-                WarehouseDetails: currentProduct.WarehouseDetails
-            }
-        }
 
         function cancel() {
-            $uibModalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss();
         }
-
-        categoryList();
-        loadProductToInput();
-
     };
 })(angular.module('eshop.products'));

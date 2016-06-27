@@ -18,12 +18,7 @@
             url: "/admin",
             templateUrl: "/app/components/home/home.view.html",
             controller: "HomeController",
-            controllerAs : 'ctrl',
-            resolve: {
-                productsPrepService: function (apiService) {
-                    return null;
-                }
-            }
+            controllerAs : 'ctrl'
         });
 
         $urlRouterProvider.otherwise('/admin');

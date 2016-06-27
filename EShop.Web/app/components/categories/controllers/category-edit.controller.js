@@ -3,29 +3,26 @@
 
     app.controller('CategoryEditController', CategoryEditController);
     CategoryEditController.$inject = [
-        '$scope',
-        '$state',
-        '$stateParams', 
+        '$uibModalInstance',
         'notificationService', 
-        'apiService'
+        'apiService',
+        'currentCategory'
     ];
 
-    function CategoryEditController($scope, $state, $stateParams, notificationService, apiService) {
-        $scope.productCategory = {
-            CreatedDate: new Date(),
-            Status: true
-        };
+    function CategoryEditController($uibModalInstance, notificationService, apiService, currentCategory) {
+        var vm = this;
 
-        $scope.UpdateProductCategory = function () {
+        vm.UpdateProductCategory = updateCategory;
+
+        function updateCategory() {
             apiService.put('/api/productcategory/update', $scope.productCategory,
                 function (result) {
                     notificationService.displaySuccess(result.data.Name + ' đã được lưu !!');
-                    $state.go('product_categories');
                 },
                 function (error) {
                     notificationService.displayError('Sửa không thành công');
                 })
-        };
+        }
 
         function loadProductCategoryDetail() {
             apiService.get('api/productcategory/getbyid/' + $stateParams.id, null, function (result) {
@@ -47,7 +44,6 @@
                     notificationService.displayError('Có lỗi gì đấy rồi ông bạn ơi');
                 })
         }
-
 
         loadProductCategoryDetail();
         loadParentCategory();

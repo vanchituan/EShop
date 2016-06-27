@@ -1,104 +1,103 @@
-﻿<div class="box box-success">
-    <div class="modal-header">
-        <h3 class="modal-title">Thêm mới sản phẩm</h3>
-    </div>
-    <form class="form-horizontal" name="frmProduct" novalidate ng-submit="AddProductCategory(productCategory)">
-        <div class="modal-body">
-            <div class="col-md-12">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Tên danh mục</label>
-                        <div class="col-md-8">
-                            <input class="form-control" name="name" type="text" ng-model="productCategory.Name" />
+﻿<script type="text/ng-template" id="/app/components/categories/views/category-add.view.html">
+    <div class="box box-success">
+        <div class="modal-header">
+            <h3 class="modal-title">Thêm mới sản phẩm</h3>
+        </div>
+        <form class="form-horizontal" name="frmProduct" novalidate ng-submit="category.addCategory(productCategory)">
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Tên danh mục</label>
+                            <div class="col-md-8">
+                                <input class="form-control" name="name" type="text" ng-model="category.Name" />
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Tiêu đề Seo</label>
-                        <div class="col-md-8">
-                            <input type="text" name="alias" ng-model="productCategory.Alias" class="form-control" />
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Tiêu đề Seo</label>
+                            <div class="col-md-8">
+                                <input type="text" name="alias" ng-model="category.Alias" class="form-control" />
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Mô tả ngắn</label>
-                        <div class="col-md-8">
-                            <input name="description" class="form-control" type="text"
-                                   ng-model="productCategory.Description" required />
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Mô tả ngắn</label>
+                            <div class="col-md-8">
+                                <input name="description" class="form-control" type="text"
+                                       ng-model="category.Description" required />
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Thứ tự</label>
-                        <div class="col-md-8">
-                            <input name="description" class="form-control" type="text"
-                                   ng-model="productCategory.DisplayOrder" required />
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Thứ tự</label>
+                            <div class="col-md-8">
+                                <input name="description" class="form-control" type="text"
+                                       ng-model="category.DisplayOrder" required />
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Meta Keyword</label>
-                        <div class="col-md-8">
-                            <input name="description" class="form-control" type="text"
-                                   ng-model="productCategory.MetaKeyword" required />
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Meta Keyword</label>
+                            <div class="col-md-8">
+                                <input name="description" class="form-control" type="text"
+                                       ng-model="category.MetaKeyword" required />
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Meta Description</label>
-                        <div class="col-md-8">
-                            <input name="description" class="form-control" type="text"
-                                   ng-model="productCategory.MetaDescription" required />
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Meta Description</label>
+                            <div class="col-md-8">
+                                <input name="description" class="form-control" type="text"
+                                       ng-model="category.MetaDescription" required />
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Danh mục cha</label>
-                        <div class="col-md-8">
-                            <select class="form-control" ng-model="productCategory.ParentCategoryId"
-                                    ng-options="c.ParentCategoryId as c.ParentCategoryName for c in ParentCategories">
-                                <option value="" selected>-- Chọn danh mục cha --</option>
-                            </select>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Danh mục cha</label>
+                            <div class="col-md-8">
+                                <select class="form-control" ng-model="category.ParentCategoryId"
+                                        ng-options="c.ParentCategoryId as c.ParentCategoryName for c in category.ParentCategories">
+                                    <option value="" selected>-- Chọn danh mục cha --</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Trạng thái</label>
-                        <div class="col-md-8">
-                            <input type="checkbox" ng-checked="productCategory.Status" ng-model="productCategory.Status" name="status" />
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Trạng thái</label>
+                            <div class="col-md-8">
+                                <input type="checkbox" ng-checked="category.Status" ng-model="category.Status" name="status" />
+                            </div>
                         </div>
                     </div>
+
                 </div>
 
             </div>
+            
+            <div class="modal-footer">
+                <button class="btn bg-maroon" type="submit">
+                    <i class="fa fa-check" aria-hidden="true"></i>&nbsp;Lưu
+                </button>
 
-        </div>
-        <!--end modal body-->
-
-        <div class="modal-footer">
-            <button class="btn bg-maroon" type="submit">
-                <i class="fa fa-check" aria-hidden="true"></i>&nbsp;Lưu
-            </button>
-
-            <button class="btn bg-navy" type="button" ui-sref="product_categories">
-                <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Hủy
-            </button>
-
-        </div>
-
-    </form>
-</div>
+                <button class="btn bg-navy" type="button" ui-sref="product_categories">
+                    <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Hủy
+                </button>
+            </div>
+        </form>
+    </div>
+</script>

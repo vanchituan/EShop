@@ -6,17 +6,14 @@
     <title>Trang quản trị</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    @*<link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">*@
     <link href="~/Assets/admin/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Assets/admin/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Assets/admin/libs/ionicons/css/ionicons.min.css" rel="stylesheet" />
     <link href="~/Assets/admin/libs/toastr/toastr.min.css" rel="stylesheet" />
     <link href="~/Assets/admin/libs/angular-ui-select/dist/select.min.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+    @*<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">*@
+    @*<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">*@
     <!-- Theme style -->
     <link rel="stylesheet" href="/Assets/admin/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -43,12 +40,12 @@
 
 
         <!-- /.content-wrapper -->
-        @*<footer class="main-footer">
+        <footer class="main-footer">
             <div class="pull-right hidden-xs">
                 <b>Version</b> 2.3.0
             </div>
             <strong>Tan Hung EShop</strong> All rights reserved.
-        </footer>*@
+        </footer>
 
         <!-- Control Sidebar -->
         @{Html.RenderPartial("ControlSidebar");}
@@ -56,6 +53,8 @@
         <!-- Add the sidebar's background. This div must be placed
              immediately after the control sidebar -->
         <div class="control-sidebar-bg"></div>
+
+
     </div>
     <!-- ./wrapper -->
     <!-- jQuery 2.1.4 -->
@@ -72,24 +71,18 @@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <!-- AdminLTE for demo purposes -->
     <script src="/Assets/admin/js/demo.js"></script>
+
+
     <!-- Begin embed angularJS -->
     <script src="~/Assets/admin/libs/angular/angular.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-sanitize.js"></script>
+    <script src="~/Assets/admin/libs/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="~/Assets/admin/libs/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="~/Assets/admin/libs/toastr/toastr.min.js"></script>
-    <script src="~/Assets/admin/libs/dirPagination/dirPagination.js"></script>
-    @*<script src="~/Assets/admin/libs/bootbox/bootbox.js"></script>
-        <script src="~/Assets/admin/libs/ngBootbox/ngBootbox.js"></script>*@
-
     <!--for modal bootstrap-->
     <script src="~/Assets/admin/libs/angular-animate/angular-animate.min.js"></script>
     <script src="~/Assets/admin/libs/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-
     <!--select2-->
     <script src="~/Assets/admin/libs/angular-ui-select/dist/select.min.js"></script>
-
-
-
     <!--begin custom JS-->
     <script src="~/app/app.js"></script>
 
@@ -104,7 +97,6 @@
     <!--Directives-->
     <script src="~/app/shared/directives/format-currency.directive.js"></script>
     <script src="~/app/shared/directives/pager.directive.js"></script>
-    <script src="~/app/shared/directives/include-replace.directive.js"></script>
 
     <!--Filters-->
     <script src="~/app/shared/filters/capitalize.filter.js"></script>

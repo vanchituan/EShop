@@ -12,7 +12,7 @@ namespace EShop.Data.Repositories
 {
     public interface IProductRepository : IRepository<Product>
     {
-        IEnumerable<Product> GetProductList(SearchingViewModel search);
+        IEnumerable<Product> GetList(SearchingViewModel search);
 
         Product Create(Product product);
     }
@@ -24,7 +24,7 @@ namespace EShop.Data.Repositories
 
         }
 
-        public IEnumerable<Product> GetProductList(SearchingViewModel search)
+        public IEnumerable<Product> GetList(SearchingViewModel search)
         {
             var model = search.IsHomePage ?
                 (from a in DbContext.Products

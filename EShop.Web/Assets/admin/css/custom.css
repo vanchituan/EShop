@@ -53,3 +53,7 @@ input.ng-invalid-required, select.ng-invalid-required {
     position: relative;
     z-index: 10000; /* The select2 dropdown has a z-index of 9999 */
 }
+
+.hidden-modal{
+    display:inline;
+}

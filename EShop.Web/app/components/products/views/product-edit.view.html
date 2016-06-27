@@ -1,9 +1,9 @@
 ﻿<script type="text/ng-template" id="/app/components/products/views/product-edit.view.html">
-    <div class="box box-success" style="display:none;">
+    <div class="box box-success" >
         <div class="modal-header">
-            <h4 class="modal-title">Sửa sản phẩm : <strong>{{product.Name}}</strong></h4>
+            <h4 class="modal-title">Sửa sản phẩm : <strong>{{currentProduct.product.Name}}</strong></h4>
         </div>
-        <form novalidate class="form-horizontal" name="frmProduct" ng-submit="updateProduct(frmProduct)">
+        <form novalidate class="form-horizontal" name="frmProduct" ng-submit="currentProduct.updateProduct(frmProduct)">
             <div class="modal-body">
 
                 <div class="col-md-12">
@@ -11,7 +11,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Tên SP</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" ng-model="product.Name" />
+                                <input class="form-control" type="text" ng-model="currentProduct.product.Name" />
                             </div>
                         </div>
                     </div>
@@ -20,7 +20,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Loại</label>
                             <div class="col-md-8">
-                                <select ng-options="c.Id as c.Name for c in productCategories" ng-model="product.CategoryId" class="form-control"></select>
+                                <select ng-options="c.Id as c.Name for c in currentProduct.categories" ng-model="currentProduct.product.CategoryId" class="form-control"></select>
                             </div>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Giá nhập</label>
                             <div class="col-md-8">
-                                <input ng-model="product.PriceImport" pattern="[0-9]+([\.,][0-9]+)*" format-currency type="text"class="form-control"/>
+                                <input ng-model="currentProduct.product.PriceImport" pattern="[0-9]+([\.,][0-9]+)*" format-currency type="text"class="form-control"/>
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Giá bán</label>
                             <div class="col-md-8">
-                                <input ng-model="product.Price" pattern="[0-9]+([\.,][0-9]+)*" format-currency type="text" class="form-control" />
+                                <input ng-model="currentProduct.product.Price" pattern="[0-9]+([\.,][0-9]+)*" format-currency type="text" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Đơn vị</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" ng-model="product.Unit" />
+                                <input class="form-control" type="text" ng-model="currentProduct.product.Unit" />
                             </div>
                         </div>
                     </div>
@@ -56,12 +56,12 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">B.hành</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" ng-model="product.Warranty" />
+                                <input class="form-control" type="text" ng-model="currentProduct.product.Warranty" />
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-4" ng-repeat="w in product.WarehouseDetails">
+                    <div class="col-md-4" ng-repeat="w in currentProduct.product.WarehouseDetails">
                         <div class="form-group">
                             <label class="control-label col-md-4">{{w.Warehouse.WarehouseName}}</label>
                             <div class="col-md-8">
@@ -74,7 +74,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Mô tả</label>
                             <div class="col-md-8">
-                                <input class="form-control" type="text" ng-model="product.Description" />
+                                <input class="form-control" type="text" ng-model="currentProduct.product.Description" />
                             </div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                             <label class="control-label col-md-4">Trạng thái</label>
                             <div class="col-md-8">
                                 <label>
-                                    <input type="checkbox" ng-checked="product.Status" ng-model="product.Status" />&nbsp;Đang kinh doanh
+                                    <input type="checkbox" ng-checked="currentProduct.product.Status" ng-model="currentProduct.product.Status" />&nbsp;Đang kinh doanh
                                 </label>
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                     <i class="fa fa-check" aria-hidden="true"></i>&nbsp;Lưu
                 </button>
 
-                <button class="btn bg-navy" type="button" ng-click="cancel()">
+                <button class="btn bg-navy" type="button" ng-click="currentProduct.cancel()">
                     <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Hủy
                 </button>
             </div>

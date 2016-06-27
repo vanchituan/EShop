@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Data.Entity;
+using EShop.Model.ViewModel.Admin.ProductCategory;
 
 namespace EShop.Data.Repositories
 {
@@ -17,6 +18,7 @@ namespace EShop.Data.Repositories
 
         IEnumerable<ProductCategory> GetByParentCategory(int id);
 
+        IEnumerable<ProductCategory> GetList(SearchingViewModel searching);
 
     }
     public class ProductCategoryRepository : RepositoryBase<ProductCategory>, IProductCategoryRepository
@@ -34,6 +36,31 @@ namespace EShop.Data.Repositories
         public IEnumerable<ProductCategory> GetByParentCategory(int id)
         {
             return this.DbContext.ProductCategories.Where(q => q.ParentCategoryId == id);
+        }
+
+        public IEnumerable<ProductCategory> GetList(SearchingViewModel searching)
+        {
+            var model = (from a in this.DbContext.ProductCategories
+                                                 select new
+                                                 {
+                                                     Id = a.Id,
+                                                     Alias = a.Alias,
+                                                     Name = a.Name,
+                                                     Status = a.Status,
+                                                     ParentProductCategory = DbContext.ParentProductCategories.FirstOrDefault(q => q.ParentCategoryId == a.ParentCategoryId)
+                                                 })
+                                                 .AsEnumerable().
+                                             Select(m => new ProductCategory
+                                             {
+                                                 Id = m.Id,
+                                                 Alias = m.Alias,
+                                                 Name = m.Name,
+                                                 Status = m.Status,
+                                                 ParentProductCategory = m.ParentProductCategory
+                                             });
+            searching.TotalRow = model.Count();
+            model = model.OrderByDescending(m=>m.Id).Skip(searching.Page * searching.PageSize).Take(searching.PageSize);
+            return model;
         }
     }
 }

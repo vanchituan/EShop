@@ -84,6 +84,8 @@
     <Compile Include="Models\Warehouse.cs" />
     <Compile Include="Models\WarehouseDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\Admin\PaginationBase.cs" />
+    <Compile Include="ViewModel\Admin\ProductCategory\SearchingViewModel.cs" />
     <Compile Include="ViewModel\Admin\Product\SearchingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -91,7 +93,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModel\Admin\ProductCategory\" />
     <Folder Include="ViewModel\Admin\WarehouseDetail\" />
     <Folder Include="ViewModel\Admin\Warehouse\" />
     <Folder Include="ViewModel\Client\" />

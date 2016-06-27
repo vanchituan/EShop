@@ -272,9 +272,11 @@
     <Content Include="app\components\categories\controllers\category-edit.controller.js" />
     <Content Include="app\components\categories\views\category-edit.view.html" />
     <Content Include="app\components\categories\controllers\category.list.controller.js" />
-    <Content Include="app\components\categories\views\category.list.view.html" />
+    <Content Include="app\components\categories\views\category-list.view.html" />
+    <Content Include="app\components\users\user-list.controller.js" />
+    <Content Include="app\components\users\user-list.view.html" />
+    <Content Include="app\components\users\users.module.js" />
     <Content Include="app\shared\directives\format-currency.directive.js" />
-    <Content Include="app\shared\directives\include-replace.directive.js" />
     <Content Include="app\shared\directives\pager.directive.html" />
     <Content Include="app\shared\directives\pager.directive.js" />
     <Content Include="app\shared\filters\capitalize.filter.js" />
@@ -355,6 +357,9 @@
     <Content Include="Assets\admin\libs\angular-bootstrap\ui-bootstrap-tpls.min.js" />
     <Content Include="Assets\admin\libs\angular-bootstrap\ui-bootstrap.js" />
     <Content Include="Assets\admin\libs\angular-bootstrap\ui-bootstrap.min.js" />
+    <Content Include="Assets\admin\libs\angular-sanitize\angular-sanitize.js" />
+    <Content Include="Assets\admin\libs\angular-sanitize\angular-sanitize.min.js" />
+    <Content Include="Assets\admin\libs\angular-sanitize\index.js" />
     <Content Include="Assets\admin\libs\angular-ui-router\release\angular-ui-router.js" />
     <Content Include="Assets\admin\libs\angular-ui-router\release\angular-ui-router.min.js" />
     <Content Include="Assets\admin\libs\angular-ui-router\src\common.js" />
@@ -413,8 +418,6 @@
     <Content Include="Assets\admin\libs\bootstrap\js\tooltip.js" />
     <Content Include="Assets\admin\libs\bootstrap\js\transition.js" />
     <Content Include="Assets\admin\libs\bootstrap\package.js" />
-    <Content Include="Assets\admin\libs\dirPagination\dirPagination.js" />
-    <Content Include="Assets\admin\libs\dirPagination\dirPagination.tpl.html" />
     <Content Include="Assets\admin\libs\fastclick\lib\fastclick.js" />
     <Content Include="Assets\admin\libs\font-awesome\.gitignore" />
     <Content Include="Assets\admin\libs\font-awesome\css\font-awesome.css" />
@@ -1925,12 +1928,17 @@
     <Content Include="Views\Admin\Header.cshtml" />
     <Content Include="Views\Admin\Navigation.cshtml" />
     <Content Include="Views\Admin\ControlSidebar.cshtml" />
+    <Content Include="Assets\admin\libs\angular-sanitize\.bower.json" />
+    <Content Include="Assets\admin\libs\angular-sanitize\angular-sanitize.min.js.map" />
+    <Content Include="Assets\admin\libs\angular-sanitize\bower.json" />
+    <Content Include="Assets\admin\libs\angular-sanitize\LICENSE.md" />
+    <Content Include="Assets\admin\libs\angular-sanitize\package.json" />
+    <Content Include="Assets\admin\libs\angular-sanitize\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\components\orders\" />
     <Folder Include="app\components\order_detail\" />
     <Folder Include="app\components\roles\" />
-    <Folder Include="app\components\users\" />
     <Folder Include="Assets\admin\js\pages\" />
     <Folder Include="Assets\client\" />
   </ItemGroup>
@@ -2088,11 +2096,6 @@
     <Content Include="Assets\admin\libs\jquery\external\sizzle\dist\sizzle.min.map" />
     <Content Include="Assets\admin\libs\jquery\README.md" />
     <Content Include="Assets\admin\libs\jquery\src\.jshintrc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\admin\libs\dirPagination\.bower.json" />
-    <Content Include="Assets\admin\libs\dirPagination\bower.json" />
-    <Content Include="Assets\admin\libs\dirPagination\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\admin\libs\toastr\.bower.json" />

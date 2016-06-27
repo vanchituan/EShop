@@ -20,19 +20,48 @@
             IsHomePage: true
         }
 
-        //binding event for control pagination
-        vm.getPage = function (page) {
-            vm.searchingVm.page = page
-            loadProductList(vm.searchingVm);
-        };
+        vm.getPage = getPage;
 
         //binding event for a method of control pagination
-        vm.loadProductList = function (page) {
-            vm.searchingVm.page = page
-            loadProductList(vm.searchingVm);
-        };
+        vm.loadProductList = loadProductList;
 
-        vm.addToCart = function (product) {
+        vm.addToCart = addToCart;
+
+        vm.updateQuantity = updateQuantity;
+
+        vm.deleteProduct = deleteProduct;
+
+        vm.getProductByCategory = getProductByCategory;
+
+        function getPage(page) {
+            vm.searchingVm.Page = page;
+            loadProductList(vm.searchingVm);
+        }
+
+        function loadProductList(searchingVm) {
+            apiService.post('/api/product/getlist', searchingVm, function (res) {
+                vm.products = res.data.Items;
+                vm.page = res.data.Page;
+                vm.pagesCount = res.data.TotalPages;
+                vm.totalCount = res.data.TotalCount;
+            }, function (error) {
+                notificationService.displayError('Có lỗi gì đó rồi ông bạn');
+            });
+        }
+
+        function getProductByCategory(category) {
+            vm.searchingVm.CategoryId = category.Id;
+            //console.log(vm.searchingVm);
+            loadProductList(vm.searchingVm);
+        }
+
+        function loadCategory() {
+            apiService.get('/api/productcategory/getall', null, function (res) {
+                vm.categories = res.data;
+            });
+        }
+
+        function addToCart(product) {
             var productIsExisted = false;
             vm.productInCart = false;
             //check this product is available in cart
@@ -61,16 +90,18 @@
             }
 
             updateTotal();
-        };
+        }
 
-        vm.updateQuantity = function () {
+        function updateQuantity(){
             for (var i = 0; i < vm.cart.length; i++) {
                 vm.cart[i].Amount = vm.cart[i].Quantity * vm.cart[i].Price;
             }
             updateTotal();
         }
 
-        vm.deleteProduct = function (productName) {
+
+
+        function deleteProduct(productName) {
             var index = -1;
             for (var i = 0; i < vm.cart.length; i++) {
                 if (vm.cart[i].Name === productName) {
@@ -81,30 +112,6 @@
             vm.cart.splice(index, 1);//1 is number is removed
             updateTotal();
         }
-
-        vm.getProductByCategory = function (category) {
-            vm.searchingVm.CategoryId = category.Id;
-            console.log(vm.searchingVm);
-            loadProductList(vm.searchingVm);
-        }
-
-        function loadCategory() {
-            apiService.get('/api/productcategory/getall', null, function (res) {
-                vm.categories = res.data;
-            });
-        }
-
-        function loadProductList(searchingVm) {
-
-            apiService.post('/api/product/getlist', searchingVm, function (res) {
-                vm.products = res.data.Items;
-                vm.page = res.data.Page;
-                vm.pagesCount = res.data.TotalPages;
-                vm.totalCount = res.data.TotalCount;
-            }, function (error) {
-                notificationService.displayError('Có lỗi gì đó rồi ông bạn');
-            });
-        };
 
         function updateTotal() {
             var total = 0;

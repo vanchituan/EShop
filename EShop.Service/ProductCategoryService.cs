@@ -1,6 +1,7 @@
 ﻿using EShop.Data.Infrastructure;
 using EShop.Data.Repositories;
 using EShop.Model.Models;
+using EShop.Model.ViewModel.Admin.ProductCategory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,14 @@ namespace EShop.Service
     public interface IProductCategoryService
     {
         ProductCategory Add(ProductCategory productCategory);
+
         void Update(ProductCategory productCategory);
 
         int Delete(int productCategoryId);
 
         IEnumerable<ProductCategory> GetAll();
+
+        IEnumerable<ProductCategory> GetList(SearchingViewModel searching);
 
         ProductCategory GetById(int id);
 
@@ -35,9 +39,11 @@ namespace EShop.Service
             this._productCategoryRepository = productCategoryRepository;
         }
 
-        public IEnumerable<ProductCategory> GetAll()
+
+
+        public IEnumerable<ProductCategory> GetList(SearchingViewModel search)
         {
-            return _productCategoryRepository.GetAll(new string[] { "ParentProductCategory"});
+            return _productCategoryRepository.GetList(search);
         }
 
         public ProductCategory GetById(int id)
@@ -68,6 +74,11 @@ namespace EShop.Service
         public IEnumerable<ProductCategory> GetByParentCategory(int id)
         {
             return _productCategoryRepository.GetByParentCategory(id);
+        }
+
+        public IEnumerable<ProductCategory> GetAll()
+        {
+            return _productCategoryRepository.GetAll();
         }
     }
 }
