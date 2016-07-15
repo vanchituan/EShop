@@ -47,6 +47,8 @@ namespace EShop.Data.Repositories
                                                      Alias = a.Alias,
                                                      Name = a.Name,
                                                      Status = a.Status,
+                                                     CreatedDate = a.CreatedDate,
+                                                     ParentCategoryId = a.ParentCategoryId,
                                                      ParentProductCategory = DbContext.ParentProductCategories.FirstOrDefault(q => q.ParentCategoryId == a.ParentCategoryId)
                                                  })
                                                  .AsEnumerable().
@@ -56,6 +58,8 @@ namespace EShop.Data.Repositories
                                                  Alias = m.Alias,
                                                  Name = m.Name,
                                                  Status = m.Status,
+                                                 CreatedDate = m.CreatedDate,
+                                                 ParentCategoryId = m.ParentCategoryId,
                                                  ParentProductCategory = m.ParentProductCategory
                                              });
             searching.TotalRow = model.Count();

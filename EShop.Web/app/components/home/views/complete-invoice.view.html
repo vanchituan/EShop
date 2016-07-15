@@ -1,0 +1,48 @@
+﻿<script type="text/ng-template" id="/app/components/home/views/complete-invoice.view.html">
+    <div class="box box-info">
+        <div class="modal-header">
+            <h4 class="box-title">
+                <span class="glyphicon glyphicon-usd"></span>&nbsp;Hoàn tất hóa đơn
+            </h4>
+        </div>
+
+        <form class="form-horizontal" name="frmPayment" ng-submit="ctrl.ok(frmPayment)" novalidate>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Tổng cộng</label>
+                    <div class="col-md-5">
+                        <p style="color: #C76C6C; font-size:20px;" count-to="{{ctrl.total}}"
+                           value="0" duration="1" filter="number"></p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Khách trả</label>
+                    <div class="col-md-5">
+                        <input autofocus ng-model="ctrl.receipt" pattern="[0-9]+([\.,][0-9]+)*" format-currency
+                               type="text" class="form-control" ng-required="true" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-3">Tiền thối</label>
+                    <div class="col-md-5" style="margin-top:13px;">
+                        <label style="font-size:18px;" ng-class="ctrl.setColorForCharge(ctrl.receipt - ctrl.total)">
+                            {{ctrl.receipt - ctrl.total | number}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn bg-maroon" type="submit">
+                    <i class="fa fa-check"></i>&nbsp;OK
+                </button>
+
+                <button class="btn bg-navy" type="button" ng-click="ctrl.cancel">
+                    <i class="fa fa-times"></i>&nbsp;Hủy
+                </button>
+            </div>
+        </form>
+    </div>
+</script>

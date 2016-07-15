@@ -1,0 +1,39 @@
+﻿<div class="row">
+    <!--chart data-->
+    <div class="col-md-8">
+        <div class="box box-warning">
+            <div class="box-header">
+                <i></i>
+                <h3 class="box-title">
+                    <i class="fa fa-line-chart"></i>&nbsp;
+                    Biểu đồ vốn đầu tư
+                </h3>
+            </div>
+            <div class="box-body">
+                <canvas id="base" class="chart-horizontal-bar"
+                        chart-data="investment.chart.data" chart-labels="investment.chart.labels"
+                        chart-series="investment.chart.series">
+                </canvas>
+            </div>
+        </div>
+    </div>
+
+    <!--table data-->
+    <div class="col-md-4">
+        <div class="box box-info">
+            <div class="box-header">
+                <h4 class="box-title">
+                    <i class="fa fa-usd"></i>&nbsp;
+                    Danh sách vốn đầu tư
+                </h4>
+            </div>
+            <div class="box-body">
+                <h1 style="color: #C76C6C;" count-to="{{investment.countTo}}" value="0"
+                    duration="2" filter="number"></h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

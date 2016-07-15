@@ -14,8 +14,8 @@ namespace EShop.Model.ViewModel.Admin
 
         public int PageSize { get; set; }
 
-        //public string OrderBy { get; set; }
+        public string OrderBy { get; set; }
 
-        //public bool? SortBy { get; set; }
+        public bool? SortBy { get; set; }
     }
 }

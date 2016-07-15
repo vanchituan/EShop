@@ -12,6 +12,6 @@ namespace EShop.Model.ViewModel.Admin.Product
 
         public int? CategoryId { get; set; }
 
-        public bool IsHomePage { get; set; }
+        public bool? Status { get; set; }
     }
 }

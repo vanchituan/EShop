@@ -14,11 +14,15 @@ namespace EShop.Service
     {
         IEnumerable<Product> GetList(SearchingViewModel search);
 
+        IEnumerable<Product> GetListByCategoryId(int categoryId);
+
         IEnumerable<Product> GetAll();
 
         Product GetById(int id);
 
         Product Add(Product product);
+
+        bool CheckContain(string name);
 
         void Update(Product product);
 
@@ -42,6 +46,11 @@ namespace EShop.Service
             return _productRepository.Add(product);
         }
 
+        public bool CheckContain(string name)
+        {
+            return this._productRepository.CheckContains(q => q.Name == name);
+        }
+
         public Product Delete(int id)
         {
             return _productRepository.Delete(id);
@@ -60,6 +69,11 @@ namespace EShop.Service
         public IEnumerable<Product> GetList(SearchingViewModel search)
         {
             return _productRepository.GetList(search);
+        }
+
+        public IEnumerable<Product> GetListByCategoryId(int categoryId)
+        {
+            return this._productRepository.GetListByCategoryId(categoryId);
         }
 
         public void Save()

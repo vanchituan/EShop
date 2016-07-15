@@ -1,0 +1,175 @@
+﻿<div class="row">
+    <div class="col-md-7">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h4 class="box-title"><i class="fa fa-list-alt"></i>&nbsp; Danh sách sản phẩm</h4>
+                <div class="pull-right box-title">
+                    Có <strong>{{ctrl.totalItems}}</strong> sản phẩm tương ứng
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row" style="margin-bottom:25px;">
+                    <div class="col-md-5">
+                        <div class="input-group">
+                            <ui-select ng-model="ctrl.category.selected" autofocus on-select="ctrl.getProductByCategory($item)" tabindex="1">
+                                <ui-select-match placeholder="Nhập loại SP.." autofocus>
+                                    {{$select.selected.Name}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="item in ctrl.categories| filter: $select.search">
+                                    <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                                <ui-select-no-choice>
+                                    <div class="text-center" style="color:#d34242"><em>Không tìm thấy..</em></div>
+                                </ui-select-no-choice>
+                            </ui-select>
+                            <span class="input-group-btn">
+                                <button type="button" ng-click="ctrl.clearCategory()" class="btn btn-default">
+                                    <span class="fa fa-times"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <ui-select ng-model="ctrl.product.selected" on-select="ctrl.addToCart($item)" tabindex="2"
+                                       ng-disabled="ctrl.category.selected == null">
+                                <ui-select-match placeholder="Nhập tên SP..">
+                                    {{$select.selected.Name}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="item in ctrl.productsByCategory| filter: $select.search">
+                                    <div class="row">
+                                        <div ng-bind-html="item.Name | highlight: $select.search" class="col-md-8"></div>
+                                        <div class="col-md-4">
+                                            <span ng-if="item.IsOutOfStock" class="pull-right" style="color:#d34242;">
+                                                Hết hàng
+                                            </span>
+                                        </div>
+                                    </div>
+                                </ui-select-choices>
+                                <ui-select-no-choice>
+                                    <div class="text-center" style="color:#d34242"><em>Không tìm thấy..</em></div>
+                                </ui-select-no-choice>
+                            </ui-select>
+                            <span class="input-group-btn">
+                                <button type="button" ng-click="ctrl.clearProduct()" class="btn btn-default">
+                                    <span class="fa fa-times"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th ng-click="ctrl.sort('Name')" class="pointer">
+                                    Tên SP
+                                    <span class="glyphicon sort-icon" ng-show="ctrl.searchingVm.OrderBy=='Name'"
+                                          ng-class="{'glyphicon-chevron-up':ctrl.searchingVm.SortBy,'glyphicon-chevron-down':!ctrl.searchingVm.SortBy}"></span>
+                                </th>
+
+                                <th ng-click="ctrl.sort('CategoryId')" class="pointer">
+                                    Thuộc loại
+                                    <span class="glyphicon sort-icon" ng-show="ctrl.searchingVm.OrderBy=='CategoryId'"
+                                          ng-class="{'glyphicon-chevron-up':ctrl.searchingVm.SortBy,'glyphicon-chevron-down':!ctrl.searchingVm.SortBy}"></span>
+                                </th>
+
+                                <th ng-repeat="w in ctrl.warehouses">{{w.WarehouseName}}</th>
+
+                                <th ng-click="ctrl.sort('Price')" class="pointer">
+                                    Đơn giá
+                                    <span class="glyphicon sort-icon" ng-show="ctrl.searchingVm.OrderBy=='Price'"
+                                          ng-class="{'glyphicon-chevron-up':ctrl.searchingVm.SortBy,'glyphicon-chevron-down':!ctrl.searchingVm.SortBy}"></span>
+                                </th>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tbody style="font-size:16px;">
+                            <tr ng-repeat="p in ctrl.products ">
+                                <td>
+                                    {{p.Name}}
+                                    <span ng-if="p.IsOutOfStock" class="label label-danger pull-right">Hết hàng</span>
+                                </td>
+                                <td>{{p.ProductCategory.Name}}</td>
+                                <td ng-repeat="w in p.WarehouseDetails">
+                                    <span ng-class="ctrl.setClass(w.Quantity)">
+                                        {{w.Quantity}}
+                                    </span>
+                                </td>
+                                <td>{{p.Price | number}}</td>
+                                <td>
+                                    <i ng-click="ctrl.addToCart(p)" class="fa fa-plus-square fa-lg pointer" aria-hidden="true"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <uib-pagination last-text="trang cuối" first-text="trang đầu" next-text="tới" previous-text="lùi" class="pagination-flat" boundary-links="true" rotate="false"
+                                total-items="ctrl.totalItems" ng-model="ctrl.currentPage"
+                                items-per-page="8" max-size="7" ng-change="ctrl.getPage(ctrl.currentPage)">
+                </uib-pagination>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="box box-info">
+            <div class="box-header">
+                <div class="box-title pull-left">
+                    <i class="fa fa-cart-arrow-down fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;Giỏ hàng
+                </div>
+                <div class="box-title pull-right">
+                    Tổng cộng : <strong>{{ctrl.total | number}}</strong>
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên SP</th>
+                            <th>Đơn giá</th>
+                            <th>SL</th>
+                            <th>Thành tiền</th>
+                            <th>Xóa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="5" ng-show="!ctrl.productInCart">
+                                <div class="text-danger text-center">Chưa có sản phẩm trong giỏ hàng</div>
+                            </td>
+                        </tr>
+
+                        <tr ng-repeat="c in ctrl.cart">
+                            <td>{{$index + 1}}</td>
+                            <td>{{c.Name}}</td>
+                            <td>{{c.Price | number}}</td>
+                            <td>
+                                <input ng-model="c.Quantity" ng-change="ctrl.updateQuantity()" type="number" min="1" class="form-control" style="width:60px;" />
+                            </td>
+                            <td>{{c.Amount | number}}</td>
+                            <td>
+                                <i ng-click="ctrl.deleteProduct(c.Name)" class="fa fa-times fa-lg" aria-hidden="true" style="cursor:pointer;"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div ng-show="ctrl.productInCart" class="col-md-offset-4 col-md-8" style="margin-top:20px;">
+                    <button ng-click="ctrl.completeInvoice()" type="button" class="btn bg-maroon-active">
+                        <i class="fa fa-usd fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;Hoàn thành
+                    </button>
+                    <button ng-click="ctrl.deleteOrder()" type="button" class="btn bg-navy-active">
+                        <i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>&nbsp;&nbsp;Hủy giỏ hàng
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--modal complete invoice-->
+<div ng-include src="'/app/components/home/views/complete-invoice.view.html'" ng-show="modalIsOpened"></div>
+

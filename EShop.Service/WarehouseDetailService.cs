@@ -13,15 +13,21 @@ namespace EShop.Service
     {
         void Update(WarehouseDetail whDetail);
 
+        void UpdateQuantityFromInvoice(int productId, int quantity);
+
         void Add(WarehouseDetail whDetail);
 
         WarehouseDetail GetByPairOfKey(int productId, int warehouseId);
+
+        bool CheckOutOfStock(int productId);
+
         void Save();
 
     }
     public class WarehouseDetailService : IWarehouseDetailService
     {
         IWarehouseDetailRepository _whRepository;
+        
         IUnitOfWork _unitOfWork;
 
         public WarehouseDetailService(IWarehouseDetailRepository whRepository, IUnitOfWork unitOfWork)
@@ -48,6 +54,19 @@ namespace EShop.Service
         public void Save()
         {
             _unitOfWork.Commit();
+        }
+
+        public void UpdateQuantityFromInvoice(int productId, int quantity)
+        {
+            //because update quantity from shop, warehouseId is 1
+            var productDetailCurrent = GetByPairOfKey(productId, 1);
+            productDetailCurrent.Quantity -= quantity;
+        }
+
+        public bool CheckOutOfStock(int productId)
+        {
+            //because update quantity from shop, warehouseId is 1
+            return GetByPairOfKey(productId, 1).Quantity == 0;
         }
     }
 }

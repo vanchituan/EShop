@@ -42,10 +42,12 @@
                 //console.log(whDetail);
 
                 apiService.post('/api/warehousedetail/updatewarehouse', whDetail, function (res) {
-                    notificationService.displaySuccess(res.data + ' đã được cập nhật số lượng ');
-                    $uibModalInstance.dismiss();
+                    if (res.statusText === 'OK') {
+                        notificationService.displaySuccess(res.data + ' đã được cập nhật số lượng ');
+                        cancel();
+                    }
                 }, function (error) {
-                    notificationService.displayError(error);
+                    notificationService.displayWarning(error.data);
                 });
             } else {
                 notificationService.displayWarning('Chưa điền đầy đủ thông tin!!');

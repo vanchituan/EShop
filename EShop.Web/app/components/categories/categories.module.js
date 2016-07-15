@@ -5,13 +5,14 @@
 
     config.$inject = [
         '$stateProvider',
-        '$urlRouterProvider'
+        
     ];
 
-    function config($stateProvider, $urlRouterProvider) {
+    function config($stateProvider) {
         $stateProvider
             .state('categories', {
                 url: '/categories',
+                parent : 'base',
                 templateUrl: '/app/components/categories/views/category-list.view.html',
                 controller: 'CategoryListController',
                 controllerAs : 'category'

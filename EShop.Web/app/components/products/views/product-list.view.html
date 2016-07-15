@@ -2,48 +2,63 @@
     <div class="box-header">
         <div class="row">
             <form ng-submit="product.loadProductList()">
-                <div class="col-md-2">
-                    <ui-select ng-model="product.category.selected" autofocus on-select="product.getProductByCategory($item)" tabindex="1">
-                        <ui-select-match placeholder="Nhập loại SP.." autofocus>
-                            {{$select.selected.Name}}
-                        </ui-select-match>
-                        <ui-select-choices repeat="item in product.categories| filter: $select.search">
-                            <div ng-bind-html="item.Name | highlight: $select.search"></div>
-                        </ui-select-choices>
-                    </ui-select>
-                </div>
-
                 <div class="col-md-3">
-                    <ui-select ng-model="product.product.selected" on-select="product.getProductByName($item)" tabindex="2">
-                        <ui-select-match placeholder="Nhập tên SP..">
-                            {{$select.selected.Name}}
-                        </ui-select-match>
-                        <ui-select-choices repeat="item in product.list| filter: $select.search">
-                            <div ng-bind-html="item.Name | highlight: $select.search"></div>
-                        </ui-select-choices>
-                    </ui-select>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="col-md-6" ng-repeat="w in product.warehouses">
-                        <label class="control-label">
-                            <input type="checkbox" ng-model="w.WarehouseId" ng-checked="true" />
-                            &nbsp;&nbsp;&nbsp;{{w.WarehouseName}}
-                        </label>
+                    <div class="input-group">
+                        <ui-select ng-model="product.category.selected" autofocus on-select="product.getProductByCategory($item)" tabindex="-1">
+                            <ui-select-match placeholder="Nhập loại SP.." autofocus>
+                                {{$select.selected.Name}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="item in product.categories| filter: $select.search">
+                                <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                            <ui-select-no-choice>
+                                <div class="text-center"><em>Không tìm thấy..</em></div>
+                            </ui-select-no-choice>
+                        </ui-select>
+                        <span class="input-group-btn">
+                            <button type="button" ng-click="product.category.selected = undefined"
+                                    class="btn btn-default" tooltip-placement="bottom" uib-tooltip="Xóa từ khóa này">
+                                <span class="fa fa-times"></span>
+                            </button>
+                        </span>
                     </div>
                 </div>
-
                 <div class="col-md-4">
-                    <button type="submit" class="btn bg-navy">
-                        <i class="fa fa-search" aria-hidden="true"></i>&nbsp; Tìm kiếm
-                    </button>
-
-                    <button class="btn bg-maroon" ng-click="product.showModalAdd()">
+                    <div class="input-group">
+                        <ui-select ng-model="product.product.selected" on-select="product.getProductByName($item)"
+                                   tabindex="2" ng-disabled="product.category.selected == null">
+                            <ui-select-match placeholder="Nhập tên SP..">
+                                {{$select.selected.Name}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="item in product.list| filter: $select.search">
+                                <div class="row">
+                                    <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                    <div class="col-md-4">
+                                        <span ng-if="item.IsOutOfStock" class="pull-right" style="color:#d34242;">
+                                            Hết hàng
+                                        </span>
+                                    </div>
+                                </div>
+                            </ui-select-choices>
+                            <ui-select-no-choice>
+                                <div class="text-center"><em>Không tìm thấy..</em></div>
+                            </ui-select-no-choice>
+                        </ui-select>
+                        <span class="input-group-btn">
+                            <button type="button" ng-click="product.category.selected = undefined"
+                                    class="btn btn-default" tooltip-placement="bottom" uib-tooltip="Xóa từ khóa này">
+                                <span class="fa fa-times"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn bg-maroon" ng-click="product.showModalAdd()">
                         <i class="fa fa-plus-square "></i>&nbsp; Thêm SP
                     </button>
 
-                    <button class="btn bg-purple" ng-click="product.showModalUpdateWarehouse()">
-                        <i class="fa fa-plus-square" aria-hidden="true"></i>&nbsp; Nhập hàng
+                    <button type="button" class="btn bg-navy" ng-click="product.showModalUpdateWarehouse()">
+                        <i class="ion-cube" style="font-size:15px;"></i>&nbsp; Nhập hàng
                     </button>
                 </div>
             </form>
@@ -79,53 +94,68 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th ng-click="sort('Name')" class="pointer">
+                    <th ng-click="product.sort('Name')" class="pointer">
                         Tên SP
-                        <span class="glyphicon sort-icon" ng-show="sortKey=='productName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        <span class="glyphicon sort-icon" ng-show="product.searchingVm.OrderBy=='Name'"
+                              ng-class="{'glyphicon-chevron-up':product.searchingVm.SortBy,'glyphicon-chevron-down':!product.searchingVm.SortBy}"></span>
                     </th>
-                    <th ng-click="sort('ProductCategory.Name')" class="pointer">
+
+                    <th ng-click="product.sort('CategoryId')" class="pointer">
                         Thuộc loại
-                        <span class="glyphicon sort-icon" ng-show="sortKey=='categoryName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        <span class="glyphicon sort-icon" ng-show="product.searchingVm.OrderBy=='CategoryId'"
+                              ng-class="{'glyphicon-chevron-up':product.searchingVm.SortBy,'glyphicon-chevron-down':!product.searchingVm.SortBy}"></span>
                     </th>
-                    <th ng-click="sort('PriceImport')" class="pointer">
+
+                    <th ng-click="product.sort('PriceImport')" class="pointer">
                         Giá nhập
-                        <span class="glyphicon sort-icon" ng-show="sortKey=='priceImport'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        <span class="glyphicon sort-icon" ng-show="product.searchingVm.OrderBy=='PriceImport'"
+                              ng-class="{'glyphicon-chevron-up':product.searchingVm.SortBy,'glyphicon-chevron-down':!product.searchingVm.SortBy}"></span>
                     </th>
-                    <th ng-click="sort('Price')" class="pointer">
+
+                    <th ng-click="product.sort('Price')" class="pointer">
                         Giá bán
-                        <span class="glyphicon sort-icon" ng-show="sortKey=='price'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        <span class="glyphicon sort-icon" ng-show="product.searchingVm.OrderBy=='Price'"
+                              ng-class="{'glyphicon-chevron-up':product.searchingVm.SortBy,'glyphicon-chevron-down':!product.searchingVm.SortBy}"></span>
                     </th>
-                    <th ng-click="sort('OrderedDate')" class="pointer">
+
+                    <th ng-click="product.sort('OrderedDate')" class="pointer">
                         Ngày ĐH
-                        <span class="glyphicon sort-icon" ng-show="sortKey=='orderedDate'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                        <span class="glyphicon sort-icon" ng-show="product.searchingVm.OrderBy=='OrderedDate'"
+                              ng-class="{'glyphicon-chevron-up':product.searchingVm.SortBy,'glyphicon-chevron-down':!product.searchingVm.SortBy}"></span>
                     </th>
                     <th>BH</th>
-                    <th ng-repeat="w in product.warehouses">{{w.WarehouseName}}</th>
+                    <th ng-repeat="w in product.warehouses">
+                        {{w.WarehouseName}}
+                    </th>
                     <th>Trạng thái</th>
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
-                <tr ng-repeat="p in product.list |orderBy: sortKey: reverse">
-                    <td>{{p.Name}}</td>
+            <tbody style="font-size:16px;">
+                <tr ng-repeat="p in product.list">
+                    <td>
+                        {{p.Name}}
+                        <span ng-if="p.IsOutOfStock" class="label label-danger pull-right">Hết hàng</span>
+                    </td>
                     <td>{{p.ProductCategory.Name}}</td>
-                    <td>{{p.PriceImport | currency : '': '0'}}</td>
-                    <td>{{p.Price | currency : '' : '0'}}</td>
+                    <td>{{p.PriceImport | number}}</td>
+                    <td>{{p.Price | number}}</td>
                     <td>{{p.OrderedDate | date : 'dd/MM/yyyy'}}</td>
                     <td>{{p.Warranty}}</td>
                     <td ng-repeat="w in p.WarehouseDetails">
-                        <span ng-class="{'label label-danger' : w.Quantity <= 2, 'label label-warning' : w.Quantity <= 5 && w.Quantity > 2, 'label label-success' : w.Quantity >= 10}">
+                        <div ng-class="product.setClass(w.Quantity)">
                             {{w.Quantity}}
-                        </span>
+                        </div>
                     </td>
+
                     <td>
                         <span ng-class="{'badge bg-green' : p.Status == true, 'badge bg-red' : p.Status == false}">
                             {{p.Status | statusFilter}}
                         </span>
                     </td>
                     <td>
-                        <i class="fa fa-pencil-square-o fa-lg pointer" style="color:#0b2641"
-                           title="Sửa SP này" ng-click="product.showModalEdit(p)"></i>
+                        <i tooltip-placement="top" uib-tooltip="Sửa SP này" class="ion-wrench pointer 24" style="color:#0b2641;font-size:20px;"
+                           ng-click="product.showModalEdit(p)"></i>
                     </td>
                 </tr>
             </tbody>
@@ -134,12 +164,6 @@
         <div class="row">
             <div class="col-md-6" pager-directive page="{{product.page}}" custom-path="{{product.customPath}}" pages-count="{{product.pagesCount}}"
                  total-count="{{product.totalCount}}" search-func="product.getPage(page)">
-            </div>
-
-            <div class="col-md-6">
-                <div class="text-right" style="margin-top:20px;">
-
-                </div>
             </div>
         </div>
     </div>

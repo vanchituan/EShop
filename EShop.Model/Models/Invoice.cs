@@ -20,7 +20,10 @@ namespace EShop.Model.Models
 
         public DateTime CreatedDate { get; set; }
 
-        public int CreatedBy { get; set; }
+        [MaxLength(50)]
+        public string CreatedBy { get; set; }
+
+        public virtual IEnumerable<InvoiceDetail> InvoiceDetails { get; set; }
 
     }
 }

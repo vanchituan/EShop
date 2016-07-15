@@ -5,18 +5,18 @@
 
     ProductEditController.$inject = [
         '$uibModalInstance',
+        '$filter',
         'apiService',
         'notificationService',
-        'currentProduct',
-        'categoriesPrepService'
+        'currentProduct'
     ];
 
-    function ProductEditController($uibModalInstance, apiService, notificationService, currentProduct, categoriesPrepService) {
+    function ProductEditController($uibModalInstance, $filter, apiService, notificationService, currentProduct) {
         var vm = this;
-        vm.categories = categoriesPrepService.data;
         vm.product = {
             Id: currentProduct.Id,
             CategoryId: currentProduct.CategoryId,
+            Alias : currentProduct.Alias,
             Name: currentProduct.Name,
             OrderedDate: currentProduct.OrderedDate,
             Price: currentProduct.Price,
@@ -24,6 +24,7 @@
             Status: currentProduct.Status,
             Unit: currentProduct.Unit,
             Warranty: currentProduct.Warranty,
+            OrderedDate : currentProduct.OrderedDate,
             WarehouseDetails: currentProduct.WarehouseDetails
         }
 
@@ -32,17 +33,35 @@
 
         function updateProduct(frmProduct) {
             if (frmProduct.$valid) {
-                var product = {
-                    CategoryId: vm.CategoryId,
-                    Name: vm.Name,
-                    OrderedDate: vm.OrderedDate,
-                    Price: vm.Price,
-                    PriceImport: vm.PriceImport,
-                    Status: vm.Status,
-                    Unit: vm.Unit,
-                    Warranty: vm.Warranty,
-                    WarehouseDetails: vm.WarehouseDetails
+                var array = new Array();
+                var whDetailList = vm.product.WarehouseDetails;
+                for (var item in whDetailList) {
+                    array.push({
+                        WarehouseId: whDetailList[item].Warehouse.WarehouseId,
+                        ProductId : vm.product.Id,
+                        Quantity : whDetailList[item].Quantity
+                    });
                 }
+
+                vm.product.WarehouseDetails = array;
+                console.log(vm.product);
+
+                apiService.put('/api/product/update', vm.product, function (res) {
+                    if (res.statusText === 'OK') {
+                        cancel();
+                        notificationService.displaySuccess(res.data.Name + ' đã được cập nhật');
+                    }
+                },function(error){
+                    if (error.statusText === 'Conflict') {
+                        notificationService.displayWarning('Trùng tên loại sản phẩm');
+                    }
+                    else if (error.statusText === 'BadRequest') {
+                        notificationService.displayWarning('Đối tượng gửi lên chưa chính xác')
+                    }
+                    else {
+                        notificationService.displayWarning('Thêm mới không thành công');
+                    }
+                })
             }
             else {
                 notificationService.displayWarning('Chưa điền đầy đủ thông tin!!');
@@ -52,5 +71,15 @@
         function cancel() {
             $uibModalInstance.dismiss();
         }
+
+        function loadCategories() {
+            apiService.get('/api/productcategory/getall', null, function (res) {
+                vm.categories = res.data;
+            }, function (error) {
+                notificationService.displayError(error);
+            })
+        }
+
+        loadCategories();
     };
 })(angular.module('eshop.products'));

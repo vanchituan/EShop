@@ -26,6 +26,8 @@ namespace EShop.Service
 
         IEnumerable<ProductCategory> GetByParentCategory(int id);
 
+        bool CheckContain(string name);
+
         void Save();
     }
 
@@ -79,6 +81,11 @@ namespace EShop.Service
         public IEnumerable<ProductCategory> GetAll()
         {
             return _productCategoryRepository.GetAll();
+        }
+
+        public bool CheckContain(string name)
+        {
+            return this._productCategoryRepository.CheckContains(q => q.Name == name);
         }
     }
 }

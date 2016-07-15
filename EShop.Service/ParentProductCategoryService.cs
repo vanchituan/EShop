@@ -13,12 +13,12 @@ namespace EShop.Service
     {
         IEnumerable<ParentProductCategory> GetAll();
 
-        ParentProductCategory Add();
+        ParentProductCategory Add(ParentProductCategory entity);
         void Update();
 
-        ParentProductCategory Delete(int id);
+        bool CheckContain(string name);
 
-        ParentProductCategory GetById(int id);
+        ParentProductCategory Delete(int id);
 
         void Save();
 
@@ -36,14 +36,15 @@ namespace EShop.Service
             this._unitOfWork = unitOfWork;
         }
 
-        public ParentProductCategory Add()
-        {
-            throw new NotImplementedException();
-        }
 
         public ParentProductCategory Add(ParentProductCategory entity)
         {
             return _parentCategoryRepository.Add(entity);
+        }
+
+        public bool CheckContain(string name)
+        {
+            return this._parentCategoryRepository.CheckContains(q => q.ParentCategoryName == name);
         }
 
         public ParentProductCategory Delete(int id)
@@ -56,14 +57,9 @@ namespace EShop.Service
             return _parentCategoryRepository.GetAll();
         }
 
-        public ParentProductCategory GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Save()
         {
-            throw new NotImplementedException();
+            this._unitOfWork.Commit();
         }
 
         public void Update()

@@ -40,7 +40,7 @@
             });
         }
 
-        function showModalEdit(currentProduct) {
+        function showModalEdit(currentCategory) {
             $uibModal.open({
                 templateUrl: '/app/components/categories/views/category-edit.view.html',
                 controller: 'CategoryEditController',
@@ -48,7 +48,7 @@
                 backdrop: 'static',
                 size: 'lg',
                 resolve: {
-                    currentProduct : currentProduct
+                    currentCategory: currentCategory
                 }
             });
         }

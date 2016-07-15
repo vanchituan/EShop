@@ -1,22 +1,26 @@
-﻿
-
-(function (app) {
+﻿(function (app) {
     'use strict';
 
     app.controller('ProductListController', ProductListController);
     ProductListController.$inject = [
         '$uibModal',
         'apiService',
-        'notificationService'
+        'commonService',
+        'notificationService',
+
     ];
 
-    function ProductListController($uibModal, apiService, notificationService) {
+    function ProductListController($uibModal, apiService, commonService, notificationService) {
         var vm = this
+        vm.sortKey = '';
+        vm.outOfStock = false;
         vm.searchingVm = {
             Page: 0,
             PageSize: 10,
-            IsHomePage: false
+            SortBy: true,
+            GetAll : false
         }
+        vm.setClass = setClass;
         //cause when routing over pages, ng-include losing script tag
         vm.modalIsOpened = false;
         //binding events
@@ -26,8 +30,17 @@
         vm.showModalUpdateWarehouse = showModalUpdateWarehouse;
         vm.loadProductList = loadProductList;
         vm.getProductByCategory = getProductByCategory;
-        vm.getProductByName = getProductByName;
         vm.changePageSize = changePageSize;
+        vm.sort = sort;
+        vm.checkOutOfStock = checkOutOfStock;
+
+        function checkOutOfStock(whDetailItem) {
+            return commonService.checkOutOfStock(whDetailItem);
+        }
+
+        function setClass(quantity) {
+            return commonService.setClassForQuantity(quantity);
+        }
 
         function getPage(page) {
             vm.searchingVm.Page = page;
@@ -36,6 +49,13 @@
 
         function changePageSize(pageSize) {
             vm.searchingVm.PageSize = pageSize;
+            loadProductList(vm.searchingVm);
+        }
+
+        function sort(keyName){
+            vm.searchingVm.SortBy = !vm.searchingVm.SortBy;
+            vm.searchingVm.OrderBy = keyName;
+            vm.keyName = keyName;
             loadProductList(vm.searchingVm);
         }
 
@@ -71,23 +91,13 @@
             loadProductList(vm.searchingVm);
         }
 
-        function getProductByName(product) {
-            vm.searchingVm.Name = product.Name;
-            loadProductList(vm.searchingVm);
-        }
-
         function showModalAdd() {
             $uibModal.open({
                 templateUrl: '/app/components/products/views/product-add.view.html',
                 controller: 'ProductAddController',
                 controllerAs: 'product',
                 backdrop: 'static',
-                size: 'lg',
-                resolve: {
-                    warehouseList: function () {
-                        return vm.warehouses;
-                    }
-                }
+                size: 'lg'
             });
         }
 
@@ -101,9 +111,6 @@
                 resolve: {
                     currentProduct: function () {
                         return currentProduct;
-                    },
-                    categoriesPrepService: function (prepService) {
-                        return prepService.get('/api/productcategory/getall', null);
                     }
                 }
             });

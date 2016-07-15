@@ -11,6 +11,7 @@
     function config($stateProvider, $urlRouterProvider) {
         $stateProvider.state('products', {
             url: '/products',
+            parent: 'base',
             templateUrl: '/app/components/products/views/product-list.view.html',
             controller: 'ProductListController',
             controllerAs: 'product'

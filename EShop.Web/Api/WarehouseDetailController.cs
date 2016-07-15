@@ -11,6 +11,7 @@ using EShop.Web.Infrastructure.Core;
 namespace EShop.Web.Api
 {
     [RoutePrefix("api/warehousedetail")]
+    //[Authorize]
     public class WarehouseDetailController : ApiControllerBase
     {
         private IWarehouseDetailService _whDetailService;
@@ -27,16 +28,24 @@ namespace EShop.Web.Api
         {
             return CreateHttpResponse(request, () =>
             {
-                foreach (var item in entity)
+                HttpResponseMessage response = null;
+                if (ModelState.IsValid)
                 {
-                    WarehouseDetail model = this._whDetailService.GetByPairOfKey(item.ProductId, item.WarehouseId);
-                    model.Quantity += item.Quantity;
-                    this._whDetailService.Update(model);
-                    this._whDetailService.Save();
-                }
+                    foreach (var item in entity)
+                    {
+                        WarehouseDetail model = this._whDetailService.GetByPairOfKey(item.ProductId, item.WarehouseId);
+                        model.Quantity += item.Quantity;
+                        this._whDetailService.Update(model);
+                        this._whDetailService.Save();
+                    }
 
-                string name = this._productService.GetById(entity.First().ProductId).Name;
-                var response = request.CreateResponse(HttpStatusCode.OK, name);
+                    string name = this._productService.GetById(entity.First().ProductId).Name;
+                    response = request.CreateResponse(HttpStatusCode.OK, name);
+                }
+                else
+                {
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
                 return response;
             });
         }

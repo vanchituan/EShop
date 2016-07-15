@@ -12,6 +12,7 @@ using EShop.Model.ViewModel.Admin.Product;
 namespace EShop.Web.Api
 {
     [RoutePrefix("api/product")]
+    //[Authorize]
     public class ProductController : ApiControllerBase
     {
         private IProductService _productService;
@@ -43,42 +44,63 @@ namespace EShop.Web.Api
             });
         }
 
-        //[Route("getbycategory/{categoryId:int}")]
-        //[HttpPost]
-        //public HttpResponseMessage GetByCategory(HttpRequestMessage request, SearchingViewModel search)
-        //{
-        //    return CreateHttpResponse(request, () =>
-        //    {
-        //        IEnumerable<Product> model = _productService.GetByCategory(categoryId);
-        //        var response = request.CreateResponse(HttpStatusCode.OK, model);
-        //        return response;
-        //    });
-        //}
 
-
-        [Route("add")]
+        [Route("getlistbycategory")]
         [HttpPost]
-        public HttpResponseMessage Create(HttpRequestMessage request, Product product)
+        public HttpResponseMessage GetListByCategory(HttpRequestMessage request, int categoryId)
         {
             return CreateHttpResponse(request, () =>
             {
-                Product model = _productService.Add(product);
-                _productService.Save();
-
-                WarehouseDetail whDetail = new WarehouseDetail
+                HttpResponseMessage response = null;
+                if (ModelState.IsValid)
                 {
-                    ProductId = model.Id
-                };
-
-                foreach (var item in product.WarehouseDetails)
-                {
-                    whDetail.Quantity = item.Quantity;
-                    whDetail.WarehouseId = item.WarehouseId;
-                    _whDetailService.Add(whDetail);
-                    _whDetailService.Save();
+                    var model = this._productService.GetListByCategoryId(categoryId);
+                    response = request.CreateResponse(HttpStatusCode.OK, model);
                 }
+                else
+                {
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+                return response;
+            });
+        }
 
-                var response = request.CreateResponse(HttpStatusCode.OK, model);
+        [Route("add")]
+        [HttpPost]
+        public HttpResponseMessage Add(HttpRequestMessage request, Product product)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                HttpResponseMessage response = null;
+                if (ModelState.IsValid)
+                {
+                    bool nameDuplicated = this._productService.CheckContain(product.Name);
+                    if (nameDuplicated)
+                    {
+                        response = request.CreateResponse(HttpStatusCode.Conflict);
+                    }
+                    else
+                    {
+                        Product model = _productService.Add(product);
+                        _productService.Save();
+
+                        foreach (var item in product.WarehouseDetails)
+                        {
+                            WarehouseDetail whDetail = new WarehouseDetail();
+
+                            whDetail.ProductId = model.Id;
+                            whDetail.WarehouseId = item.WarehouseId;
+                            whDetail.Quantity = item.Quantity;
+                            _whDetailService.Add(whDetail);
+                            _whDetailService.Save();
+                        }
+                        response = request.CreateResponse(HttpStatusCode.Created, model);
+                    }
+                }
+                else
+                {
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
                 return response;
             });
         }
@@ -89,23 +111,35 @@ namespace EShop.Web.Api
         {
             return CreateHttpResponse(request, () =>
             {
-                this._productService.Update(product);
-                this._productService.Save();
-
-                foreach (var item in product.WarehouseDetails)
+                HttpResponseMessage response = null;
+                if (ModelState.IsValid)
                 {
-                    WarehouseDetail whDetail = this._whDetailService.GetByPairOfKey(item.ProductId, item.WarehouseId);
-                    whDetail.Quantity = item.Quantity;
-                    this._whDetailService.Update(whDetail);
-                    this._whDetailService.Save();
+                    bool nameDuplicated = this._productService.CheckContain(product.Name);
+                    if (nameDuplicated)
+                    {
+                        response = request.CreateResponse(HttpStatusCode.Conflict);
+                    }
+                    else
+                    {
+                        this._productService.Update(product);
+                        this._productService.Save();
+
+                        foreach (var item in product.WarehouseDetails)
+                        {
+                            WarehouseDetail whDetail = this._whDetailService.GetByPairOfKey(item.ProductId, item.WarehouseId);
+                            whDetail.Quantity = item.Quantity;
+                            this._whDetailService.Update(whDetail);
+                            this._whDetailService.Save();
+                        }
+                        response = request.CreateResponse(HttpStatusCode.OK, product);
+                    }
                 }
-                var response = request.CreateResponse(HttpStatusCode.OK, product.Name);
+                else
+                {
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                }
                 return response;
             });
         }
-
-
-
-
     }
 }

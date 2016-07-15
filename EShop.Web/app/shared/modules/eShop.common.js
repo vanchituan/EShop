@@ -6,6 +6,9 @@
         'ngAnimate',
         'ui.bootstrap',
         'ngSanitize',
-        'ui.select'
+        'ui.select',
+        'angular-loading-bar',
+        'chart.js',
+        'countTo'
     ]);
 })();

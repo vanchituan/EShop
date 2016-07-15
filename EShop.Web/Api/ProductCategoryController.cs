@@ -15,14 +15,15 @@ using System.Web.Http;
 namespace EShop.Web.Api
 {
     [RoutePrefix("api/productcategory")]
+    //[Authorize]
     public class ProductCategoryController : ApiControllerBase
     {
         private IProductCategoryService _productCategoryService;
         private IParentProductCategoryService _parentCategoryService;
         public ProductCategoryController(
-            IErrorService errorService, 
-            IProductCategoryService productCategoryService, 
-            IParentProductCategoryService parentCategoryService )
+            IErrorService errorService,
+            IProductCategoryService productCategoryService,
+            IParentProductCategoryService parentCategoryService)
             : base(errorService)
         {
             this._productCategoryService = productCategoryService;
@@ -80,30 +81,13 @@ namespace EShop.Web.Api
             });
         }
 
-
-        [Route("getbyid/{id:int}")]
-        [HttpGet]
-        public HttpResponseMessage GetById(HttpRequestMessage request, int id)
-        {
-            return CreateHttpResponse(request, () =>
-            {
-                var model = _productCategoryService.GetById(id);
-
-                var responseData = Mapper.Map<ProductCategory, ProductCategoryViewModel>(model);
-
-                var response = request.CreateResponse(HttpStatusCode.OK, responseData);
-
-                return response;
-            });
-        }
-
         [Route("getbyparent/{parentCategory:int}")]
         [HttpPost]
         public HttpResponseMessage GetByParent(HttpRequestMessage request, int parentCategory)
         {
             return CreateHttpResponse(request, () =>
             {
-                
+
                 IEnumerable<ProductCategory> model = _productCategoryService.GetByParentCategory(parentCategory);
                 var response = request.CreateResponse(HttpStatusCode.OK, model);
                 return response;
@@ -111,29 +95,31 @@ namespace EShop.Web.Api
         }
 
 
-        [Route("create")]
+        [Route("add")]
         [HttpPost]
-        public HttpResponseMessage Create(HttpRequestMessage request, ProductCategoryViewModel productCategoryVm)
+        public HttpResponseMessage Add(HttpRequestMessage request, ProductCategory category)
         {
             return CreateHttpResponse(request, () =>
             {
                 HttpResponseMessage response = null;
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
-                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                    bool nameDuplicated = this._productCategoryService.CheckContain(category.Name);
+                    if (nameDuplicated)
+                    {
+                        response = request.CreateResponse(HttpStatusCode.Conflict);
+                    }
+                    else
+                    {
+                        var model = _productCategoryService.Add(category);
+                        _productCategoryService.Save();
+                        response = request.CreateResponse(HttpStatusCode.Created, model);
+                    }
                 }
                 else
                 {
-                    var newProductCategory = new ProductCategory();
-                    newProductCategory.UpdateProductCategory(productCategoryVm);
-
-                    _productCategoryService.Add(newProductCategory);
-                    _productCategoryService.Save();
-
-                    var responseData = Mapper.Map<ProductCategory, ProductCategoryViewModel>(newProductCategory);
-                    response = request.CreateResponse(HttpStatusCode.Created, responseData);
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
                 }
-
                 return response;
             });
         }
@@ -141,30 +127,30 @@ namespace EShop.Web.Api
 
         [Route("update")]
         [HttpPut]
-        [AllowAnonymous]
-        public HttpResponseMessage Update(HttpRequestMessage request, ProductCategoryViewModel productCategoryVm)
+        public HttpResponseMessage Update(HttpRequestMessage request, ProductCategory category)
         {
             return CreateHttpResponse(request, () =>
             {
                 HttpResponseMessage response = null;
-                if (!ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
-                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
+                    bool nameDuplicated = this._productCategoryService.CheckContain(category.Name);
+                    if (nameDuplicated)
+                    {
+                        response = request.CreateResponse(HttpStatusCode.Conflict, "Trùng tên loại sản phẩm");
+                    }
+                    else
+                    {
+                        _productCategoryService.Update(category);
+                        _productCategoryService.Save();
+
+                        response = request.CreateResponse(HttpStatusCode.OK, category);
+                    }
                 }
                 else
                 {
-                    var dbProductCategory = _productCategoryService.GetById(productCategoryVm.Id);
-
-                    dbProductCategory.UpdateProductCategory(productCategoryVm);
-                    dbProductCategory.UpdatedDate = DateTime.Now;
-
-                    _productCategoryService.Update(dbProductCategory);
-                    _productCategoryService.Save();
-
-                    var responseData = Mapper.Map<ProductCategory, ProductCategoryViewModel>(dbProductCategory);
-                    response = request.CreateResponse(HttpStatusCode.Created, responseData);
+                    response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
                 }
-
                 return response;
             });
         }

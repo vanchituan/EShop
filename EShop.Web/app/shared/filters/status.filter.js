@@ -6,10 +6,10 @@
     function statusFilter() {
         return function (input) {
             if (input) {
-                return 'Kích hoạt';
+                return 'Kinh doanh';
             }
             else {
-                return 'Khóa';
+                return 'Ngừng k.doanh';
             }
         }
     }

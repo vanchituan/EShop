@@ -1,96 +1,51 @@
-﻿<script type="text/ng-template" id="/app/components/products/views/category-edit.view.html">
+﻿<script type="text/ng-template" id="/app/components/categories/views/category-edit.view.html">
     <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title">{{currentCategory.Name}}</h3>
+        <div class="modal-header with-border">
+            <h4 class="box-title"><i class="fa fa-pencil-square-o"></i>
+            Sửa danh mục : <strong>{{currentCategory.category.Name}}</strong>
+            </h4>
         </div>
 
-        <form class="form-horizontal" novalidate name="frmUpdateProductCategory" role="form" ng-submit="UpdateProductCategory()">
-            <div class="box-body">
-                <div class="col-md-12">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Tên danh mục</label>
-                            <div class="col-md-8">
-                                <input class="form-control" name="name" type="text" ng-model="productCategory.Name" />
-                            </div>
+        <form class="form-horizontal" novalidate name="frmCategory" role="form" ng-submit="currentCategory.submitForm(frmCategory)">
+            <div class="modal-body">
+
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Danh mục cha</label>
+                        <div class="col-md-5">
+                            <select class="form-control" ng-model="currentCategory.category.ParentCategoryId" ng-required="true"
+                                    ng-options="p.ParentCategoryId as p.ParentCategoryName for p in currentCategory.parentCategories">
+                            </select>
                         </div>
                     </div>
 
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Tiêu đề Seo</label>
-                            <div class="col-md-8">
-                                <input type="text" name="alias" ng-model="productCategory.Alias" class="form-control" />
-                            </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Tên danh mục</label>
+                        <div class="col-md-5">
+                            <input ng-model="currentCategory.category.Name" ng-required="true" class="form-control" type="text" />
                         </div>
                     </div>
 
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Mô tả ngắn</label>
-                            <div class="col-md-8">
-                                <input name="description" class="form-control" type="text"
-                                       ng-model="productCategory.Description" required />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Thứ tự</label>
-                            <div class="col-md-8">
-                                <input name="description" class="form-control" type="text"
-                                       ng-model="productCategory.DisplayOrder" required />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Meta Keyword</label>
-                            <div class="col-md-8">
-                                <input name="description" class="form-control" type="text"
-                                       ng-model="productCategory.MetaKeyword" required />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Meta Description</label>
-                            <div class="col-md-8">
-                                <input name="description" class="form-control" type="text"
-                                       ng-model="productCategory.MetaDescription" required />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Danh mục cha</label>
-                            <div class="col-md-8">
-                                <select class="form-control" ng-model="productCategory.ParentProductCategory"
-                                        ng-options="p.ParentCategoryId as p.ParentCategoryName for p in parentCategories"></select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Kích hoạt</label>
-                            <div class="col-md-8">
-                                <input type="checkbox" ng-checked="productCategory.Status" ng-model="productCategory.Status" name="status" />
-                            </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3">Kích hoạt</label>
+                        <div class="col-md-5">
+                            <input type="checkbox" ng-checked="currentCategory.category.Status" 
+                                   ng-model="currentCategory.category.Status"  ng-required="true"/>
                         </div>
                     </div>
                 </div>
-            </div><!-- /.box-body -->
-            <div class="box-footer">
-                <button ui-sref="product_categories" class="btn btn-default">Hủy</button>
-                <button type="submit" class="btn btn-success pull-right">Lưu</button>
-            </div><!-- /.box-footer -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn bg-maroon" type="submit">
+                    <i class="fa fa-check" aria-hidden="true"></i>&nbsp;Lưu
+                </button>
+
+                <button class="btn bg-navy" type="button" ng-click="currentCategory.cancel()">
+                    <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Hủy
+                </button>
+            </div>
         </form>
     </div>
 </script>
-    
+
 

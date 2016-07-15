@@ -58,7 +58,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EShopDbContext.cs" />
-    <Compile Include="Extensions\ObjectQueryExtensions.cs" />
     <Compile Include="Infrastructure\DbFactory.cs" />
     <Compile Include="Infrastructure\Disposable.cs" />
     <Compile Include="Infrastructure\IDbFactory.cs" />
@@ -110,10 +109,24 @@
     <Compile Include="Migrations\201605281519100_addFK_WH.Designer.cs">
       <DependentUpon>201605281519100_addFK_WH.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607020514253_add-table-invoice.cs" />
+    <Compile Include="Migrations\201607020514253_add-table-invoice.Designer.cs">
+      <DependentUpon>201607020514253_add-table-invoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607020611464_addFK-forInvoice.cs" />
+    <Compile Include="Migrations\201607020611464_addFK-forInvoice.Designer.cs">
+      <DependentUpon>201607020611464_addFK-forInvoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607130903011_modify-createdby.cs" />
+    <Compile Include="Migrations\201607130903011_modify-createdby.Designer.cs">
+      <DependentUpon>201607130903011_modify-createdby.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ErrorRepository.cs" />
     <Compile Include="Repositories\FooterRepository.cs" />
+    <Compile Include="Repositories\InvoiceDetailRepository.cs" />
+    <Compile Include="Repositories\InvoiceRepository.cs" />
     <Compile Include="Repositories\MenuGroupRepository.cs" />
     <Compile Include="Repositories\MenuRepository.cs" />
     <Compile Include="Repositories\OrderDetailRepository.cs" />
@@ -181,6 +194,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605281519100_addFK_WH.resx">
       <DependentUpon>201605281519100_addFK_WH.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607020514253_add-table-invoice.resx">
+      <DependentUpon>201607020514253_add-table-invoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607020611464_addFK-forInvoice.resx">
+      <DependentUpon>201607020611464_addFK-forInvoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607130903011_modify-createdby.resx">
+      <DependentUpon>201607130903011_modify-createdby.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,11 +1,11 @@
 ﻿<script type="text/ng-template" id="/app/components/products/views/product-edit.view.html">
-    <div class="box box-success" >
+    <div class="box box-success">
         <div class="modal-header">
-            <h4 class="modal-title">Sửa sản phẩm : <strong>{{currentProduct.product.Name}}</strong></h4>
+            <h4 class="modal-title"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            Sửa sản phẩm : <strong>{{currentProduct.product.Name}}</strong></h4>
         </div>
         <form novalidate class="form-horizontal" name="frmProduct" ng-submit="currentProduct.updateProduct(frmProduct)">
             <div class="modal-body">
-
                 <div class="col-md-12">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -20,7 +20,8 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Loại</label>
                             <div class="col-md-8">
-                                <select ng-options="c.Id as c.Name for c in currentProduct.categories" ng-model="currentProduct.product.CategoryId" class="form-control"></select>
+                                <select ng-options="c.Id as c.Name for c in currentProduct.categories"
+                                        ng-model="currentProduct.product.CategoryId" class="form-control"></select>
                             </div>
                         </div>
                     </div>
@@ -29,7 +30,8 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Giá nhập</label>
                             <div class="col-md-8">
-                                <input ng-model="currentProduct.product.PriceImport" pattern="[0-9]+([\.,][0-9]+)*" format-currency type="text"class="form-control"/>
+                                <input ng-model="currentProduct.product.PriceImport" type="text" class="form-control" 
+                                        pattern="[0-9]+([\.,][0-9]+)*" format-currency />
                             </div>
                         </div>
                     </div>
@@ -65,7 +67,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">{{w.Warehouse.WarehouseName}}</label>
                             <div class="col-md-8">
-                                <input class="form-control" ng-model="w.Quantity" pattern="[0-9]+([\.,][0-9]+)*" format-currency type="text"  placeholder="Nhập SL.." />
+                                <input class="form-control" ng-model="w.Quantity" pattern="[0-9]+([\.,][0-9]+)*" format-currency type="text" placeholder="Nhập SL.." />
                             </div>
                         </div>
                     </div>
@@ -84,7 +86,8 @@
                             <label class="control-label col-md-4">Trạng thái</label>
                             <div class="col-md-8">
                                 <label>
-                                    <input type="checkbox" ng-checked="currentProduct.product.Status" ng-model="currentProduct.product.Status" />&nbsp;Đang kinh doanh
+                                    <input type="checkbox" ng-checked="currentProduct.product.Status"
+                                           ng-model="currentProduct.product.Status" />&nbsp;Đang kinh doanh
                                 </label>
                             </div>
                         </div>
