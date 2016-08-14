@@ -54,7 +54,7 @@
                     },
                     function (error) {
                         if (error.statusText === 'Conflict') {
-                            notificationService.displayWarning('Trùng tên sản phẩm');
+                            notificationService.displayWarning('Trùng tên sản phẩm, hoặc sản phẩm có thể đã có sẵn trong hệ thống..');
                         }
                         else if (error.statusText === 'BadRequest') {
                             notificationService.displayWarning('Đối tượng gửi lên chưa chính xác')
@@ -102,6 +102,7 @@
                     if (res.statusText === 'Created') {
                         cancel();
                         notificationService.displaySuccess(res.data.Name + ' đã được thêm thành công');
+                        $uibModalInstance.close(true);
                     }
                 }, function (error) {
                     if (error.statusText === 'Conflict') {
@@ -135,6 +136,7 @@
         function loadCategories() {
             apiService.get('/api/productcategory/getall', null, function (res) {
                 vm.productCategories = res.data;
+                vm.CategoryId = res.data[0]
             }, function (error) {
                 notificationService.displayWarning('Có lỗi gì đó rồi ông bạn ơi!!')
             })

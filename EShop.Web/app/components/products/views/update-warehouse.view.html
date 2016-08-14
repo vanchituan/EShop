@@ -6,42 +6,108 @@
         <form novalidate class="form-horizontal" name="frmProduct" ng-submit="product.updateWarehouse(frmProduct)">
             <div class="modal-body">
                 <div class="row">
-                    <div class="form-group">
-                        <label class="control-label col-md-3">Tên danh mục</label>
-                        <div class="col-md-5">
-                            <select class="form-control" ng-model="product.ParentCategory" required tabindex="1" 
-                                    ng-change="product.getCategoriesByParent(product.ParentCategory)" 
-                                    ng-options="p.ParentCategoryId as p.ParentCategoryName for p in product.parentCategories">
-                                <option value="" selected> -- Chọn tên danh mục -- </option>
-                            </select>
+                    <!--choose product so that update-->
+                    <div class="col-md-5" style="border-right: 1px inset #3883cc;">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Loại sản phẩm</label>
+                            <div class="col-md-8">
+                                <ui-select ng-model="product.ddlCategory" autofocus
+                                           on-select="product.getProductsByCategory($item)" tabindex="1"
+                                           ng-required="true">
+                                    <ui-select-match placeholder="Nhập loại SP.." autofocus>
+                                        {{$select.selected.Name}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="item in product.productCategories| filter: $select.search">
+                                        <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                    <ui-select-no-choice>
+                                        <div class="text-center" style="color:#d34242">
+                                            <em>Không tìm thấy..</em>
+                                        </div>
+                                    </ui-select-no-choice>
+                                </ui-select>
+                            </div>
                         </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Sản phẩm</label>
+                            <div class="col-md-8">
+                                <ui-select ng-model="product.ddlProduct" autofocus
+                                           on-select="product.addItemList($item)" tabindex="2"
+                                           ng-required="true">
+                                    <ui-select-match placeholder="Nhập tên SP.." autofocus>
+                                        {{$select.selected.Name}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="item in product.list| filter: $select.search">
+                                        <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                    <ui-select-no-choice>
+                                        <div class="text-center" style="color:#d34242">
+                                            <em>Không tìm thấy..</em>
+                                        </div>
+                                    </ui-select-no-choice>
+                                </ui-select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="box-title text-center" ng-if="product.ddlProduct == null" style="color:#691c1c;">Chưa chọn sản phẩm để nhập hàng..</h4>
+
+                            <div class="form-horizontal" ng-if="product.ddlProduct != null" style="border-top:1px solid #3883cc; padding: 10px 0;">
+                                <div class="form-group">
+                                    <strong class="col-md-4 text-right">Tên Sp</strong>
+                                    <div class="col-md-8">{{product.currentProduct.Name}}</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <strong class="col-md-4 text-right">Loại</strong>
+                                    <div class="col-md-8">{{product.currentProduct.ProductCategory.Name}}</div>
+                                </div>
+
+                                <div class="form-group" ng-repeat="item in product.currentProduct.WarehouseDetails">
+                                    <strong class="col-md-4 text-right">{{item.Warehouse.WarehouseName}}</strong>
+                                    <div>
+                                        <span ng-class="product.setClass(item.Quantity)">{{item.Quantity}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="form-group">
-                        <label class="control-label col-md-3">Loại sản phẩm</label>
-                        <div class="col-md-5">
-                            <select ng-options="c.Id as c.Name for c in product.productCategories"class="form-control" tabindex="2" required 
-                                    ng-model="product.ProductCategory" ng-change="product.getProductsByCategory(product.ProductCategory)">
-                                <option value="" selected> -- Chọn loại SP -- </option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-md-3">Sản phẩm</label>
-                        <div class="col-md-5">
-                            <select ng-model="product.ProductName" class="form-control" tabindex="3" required
-                                    ng-options="product.Id as product.Name for product in product.productList">
-                                <option value="" selected> -- Chọn sản phẩm -- </option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group" ng-repeat="w in product.warehouses">
-                        <label class="control-label col-md-3">{{w.WarehouseName}}</label>
-                        <div class="col-md-5">
-                            <input ng-model="w.Quantity" pattern="[0-9]+([\.,][0-9]+)*" format-currency type="text" class="form-control"  placeholder="Nhập SL.."/>
-                        </div>
+                    <!--product list needed update-->
+                    <div class="col-md-7" slimscroll="{height: '350px',alwaysVisible: true}">
+                        <table class="table table-bordered" style="width:485px;">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên SP</th>
+                                    <th>Loại</th>
+                                    <th ng-repeat="w in product.warehouses">{{w.WarehouseName}}</th>
+                                    <th>#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6"  ng-show="product.itemList.length == 0">
+                                        <div class="text-danger text-center">Chưa có sản phẩm nào được chọn !!</div>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="item in product.itemList">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{item.Name}}</td>
+                                    <td>{{item.ProductCategory.Name}}</td>
+                                    <td ng-repeat="i in item.WarehouseDetails">
+                                        <input ng-model="i.AddonQuantity" type="number" required min="1" style="width:70px;"
+                                               class="form-control" />
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-times pointer" ng-click="product.removeProduct(item.Name)"
+                                           tooltip-placement="left" uib-tooltip="Xóa khỏi danh sách nhập hàng"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

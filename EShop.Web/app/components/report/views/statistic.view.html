@@ -7,16 +7,40 @@
                 <i class="fa fa-area-chart"></i>
                 <h3 class="box-title">Biểu đồ doanh thu</h3>
             </div>
+
             <div class="box-body">
                 <canvas id="line" class="chart chart-line" chart-data="statistic.chart.dataChart"
                         chart-labels="statistic.chart.labels" chart-series="statistic.chart.series"
                         chart-options="statistic.chart.options" chart-colours="statistic.chart.colours"
                         chart-dataset-override="statistic.chart.datasetOverride"
-                        chart-hover="statistic.chart.hover">
-                </canvas>
+                        chart-hover="statistic.chart.hover"></canvas>
+            </div>
+
+            <div class="box-footer">
+                <table class="table">
+                    <tr>
+                        <td width="200">
+                            <strong>Doanh thu trong ngày</strong>
+                        </td>
+                        <td>
+                            <label style="color: #C76C6C;font-size:18px;" count-to="2500000" value="0"
+                                   duration="1" filter="number"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Lợi nhuận trong ngày</strong>
+                        </td>
+                        <td>
+                            <label style="color: #C76C6C;font-size:18px;" count-to="650000" value="0"
+                                   duration="1" filter="number"></label>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
+
     <div class="col-md-4">
         <div class="box box-success">
             <div class="box-header">
@@ -47,9 +71,9 @@
                             <div class="col-md-7">
                                 <p class="input-group">
                                     <input type="text" datepicker-popup uib-datepicker-popup="dd/MM/yyyy" readonly
-                                           clear-text="Xóa" is-open="statistic.toDatePopup.datePickerOpen" 
+                                           clear-text="Xóa" is-open="statistic.toDatePopup.datePickerOpen"
                                            close-text="Đóng" ng-model="statistic.toDate" class="form-control"
-                                           current-text="Hôm nay" ng-change="statistic.toDatePopup.selectedDate()" >
+                                           current-text="Hôm nay" ng-change="statistic.toDatePopup.selectedDate()">
                                     <span class="input-group-btn btn-">
                                         <button ng-click="statistic.toDatePopup.openDatePicker($event)" type="button" class="btn bg-navy">
                                             <i class="glyphicon glyphicon-calendar"></i>
@@ -61,22 +85,28 @@
                     </div>
                 </div>
                 <div class="row">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Ngày</th>
-                                <th>Tổng thu</th>
-                                <th>Lợi nhuận</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="item in statistic.dataTable">
-                                <td>{{item.Date | date : 'dd/MM/yyyy'}}</td>
-                                <td>{{item.Total | number}}</td>
-                                <td>{{item.Profit | number}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div>
+                        <table class="table table-condensed" style="table-layout:fixed;">
+                            <thead>
+                                <tr>
+                                    <th>Ngày</th>
+                                    <th>Tổng thu</th>
+                                    <th>Lợi nhuận</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div style="height:220px;overflow-y:auto;">
+                        <table class="table table-condensed" style="table-layout:fixed;">
+                            <tbody>
+                                <tr ng-repeat="item in statistic.dataTable">
+                                    <td>{{item.Date | date : 'dd/MM/yyyy'}}d</td>
+                                    <td>{{item.Total | number}}</td>
+                                    <td>{{item.Profit | number}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

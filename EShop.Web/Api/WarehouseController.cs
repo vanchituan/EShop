@@ -10,7 +10,6 @@ using EShop.Service;
 namespace EShop.Web.Api
 {
     [RoutePrefix("api/warehouse")]
-    //[Authorize]
     public class WarehouseController : ApiControllerBase
     {
         private IWarehouseService _warehouseService;

@@ -9,6 +9,7 @@
         'ui.select',
         'angular-loading-bar',
         'chart.js',
-        'countTo'
+        'countTo',
+        "ui.slimscroll"
     ]);
 })();

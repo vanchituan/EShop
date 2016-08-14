@@ -12,7 +12,7 @@ using EShop.Model.ViewModel.Admin.Product;
 namespace EShop.Web.Api
 {
     [RoutePrefix("api/product")]
-    //[Authorize]
+    [Authorize]
     public class ProductController : ApiControllerBase
     {
         private IProductService _productService;
@@ -44,7 +44,12 @@ namespace EShop.Web.Api
             });
         }
 
-
+        /// <summary>
+        /// for select2 input (product)
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="categoryId"></param>
+        /// <returns></returns>
         [Route("getlistbycategory")]
         [HttpPost]
         public HttpResponseMessage GetListByCategory(HttpRequestMessage request, int categoryId)
@@ -74,7 +79,7 @@ namespace EShop.Web.Api
                 HttpResponseMessage response = null;
                 if (ModelState.IsValid)
                 {
-                    bool nameDuplicated = this._productService.CheckContain(product.Name);
+                    bool nameDuplicated = this._productService.CheckContain(product.Name, product.Alias, product.PriceImport);
                     if (nameDuplicated)
                     {
                         response = request.CreateResponse(HttpStatusCode.Conflict);
@@ -114,7 +119,7 @@ namespace EShop.Web.Api
                 HttpResponseMessage response = null;
                 if (ModelState.IsValid)
                 {
-                    bool nameDuplicated = this._productService.CheckContain(product.Name);
+                    bool nameDuplicated = this._productService.CheckContain(product.Name, product.Alias, product.PriceImport);
                     if (nameDuplicated)
                     {
                         response = request.CreateResponse(HttpStatusCode.Conflict);
@@ -138,6 +143,18 @@ namespace EShop.Web.Api
                 {
                     response = request.CreateResponse(HttpStatusCode.BadRequest, ModelState);
                 }
+                return response;
+            });
+        }
+
+        [Route("getrelatedbyid")]
+        [HttpPost]
+        public HttpResponseMessage GetRelatedById(HttpRequestMessage request, int id)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                var model = this._productService.GetRelatedById(id);
+                var response = request.CreateResponse(HttpStatusCode.OK, model);
                 return response;
             });
         }

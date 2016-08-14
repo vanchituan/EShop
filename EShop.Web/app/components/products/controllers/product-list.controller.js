@@ -7,7 +7,6 @@
         'apiService',
         'commonService',
         'notificationService',
-
     ];
 
     function ProductListController($uibModal, apiService, commonService, notificationService) {
@@ -17,27 +16,24 @@
         vm.searchingVm = {
             Page: 0,
             PageSize: 10,
-            SortBy: true,
-            GetAll : false
+            SortBy: true
         }
         vm.setClass = setClass;
         //cause when routing over pages, ng-include losing script tag
         vm.modalIsOpened = false;
         //binding events
+        vm.clearCategory = clearCategory;
+        vm.clearProduct = clearProduct;
         vm.getPage = getPage;
-        vm.showModalAdd = showModalAdd;
-        vm.showModalEdit = showModalEdit;
-        vm.showModalUpdateWarehouse = showModalUpdateWarehouse;
         vm.loadProductList = loadProductList;
         vm.getProductByCategory = getProductByCategory;
         vm.changePageSize = changePageSize;
         vm.sort = sort;
-        vm.checkOutOfStock = checkOutOfStock;
 
-        function checkOutOfStock(whDetailItem) {
-            return commonService.checkOutOfStock(whDetailItem);
-        }
-
+        vm.showModalAdd = showModalAdd;
+        vm.showModalEdit = showModalEdit;
+        vm.showModalUpdateWarehouse = showModalUpdateWarehouse;
+        vm.showModalDeliveryOrder = showModalDeliveryOrder;
         function setClass(quantity) {
             return commonService.setClassForQuantity(quantity);
         }
@@ -61,10 +57,9 @@
 
         function loadProductList(searchingVm) {
             apiService.post('/api/product/getlist', searchingVm, function (res) {
-                vm.list = res.data.Items;
-                vm.page = res.data.Page;
-                vm.pagesCount = res.data.TotalPages;
-                vm.totalCount = res.data.TotalCount;
+                vm.list = commonService.addOutOfStockAttribute(res.data.Items);
+                vm.currentPage = res.data.Page;
+                vm.totalItems = res.data.TotalCount;
             }, function (error) {
                 notificationService.displayError(error);
             });
@@ -78,6 +73,17 @@
             })
         }
 
+        function clearProduct() {
+            vm.product.selected = null;
+            loadProductList(vm.searchingVm);
+        }
+
+        function clearCategory() {
+            vm.category.selected = null;
+            vm.searchingVm.CategoryId = null;
+            loadProductList(vm.searchingVm);
+        }
+
         function loadCategoryList() {
             apiService.get('/api/productcategory/getall', null, function (res) {
                 vm.categories = res.data;
@@ -87,17 +93,31 @@
         }
 
         function getProductByCategory(category) {
-            vm.searchingVm.CategoryId = category.Id;
-            loadProductList(vm.searchingVm);
+            var categoryId = category.Id;
+            vm.searchingVm.CategoryId = categoryId;
+            apiService.post('/api/product/getlistbycategory?categoryId=' + categoryId, null, function (res) {
+                vm.productsByCategory = commonService.addOutOfStockAttribute(res.data);
+                loadProductList(vm.searchingVm);
+            }, function (error) {
+                notificationService.displayWarning(error.data);
+            })
         }
 
         function showModalAdd() {
-            $uibModal.open({
+            var modalInstance = $uibModal.open({
                 templateUrl: '/app/components/products/views/product-add.view.html',
                 controller: 'ProductAddController',
                 controllerAs: 'product',
                 backdrop: 'static',
                 size: 'lg'
+            });
+
+            modalInstance.result.then(function (response) {
+                if (response) {
+                    loadProductList(vm.searchingVm);
+                }
+            }, function () {
+                console.log('Modal dismissed at: ' + new Date());
             });
         }
 
@@ -122,6 +142,17 @@
                 templateUrl: '/app/components/products/views/update-warehouse.view.html',
                 controller: 'UpdateWarehouseController',
                 controllerAs: 'product',
+                backdrop: 'static',
+                size: 'lg',
+            });
+        }
+
+        function showModalDeliveryOrder() {
+            vm.modalIsOpened = true;
+            $uibModal.open({
+                templateUrl: '/app/components/products/views/delivery-order.view.html',
+                controller: 'DeliveryOrderController',
+                controllerAs: 'deor',
                 backdrop: 'static',
                 size: 'lg',
             });

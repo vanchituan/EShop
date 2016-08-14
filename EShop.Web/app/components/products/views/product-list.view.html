@@ -1,10 +1,12 @@
-﻿<div class="box box-danger">
+﻿
+<div class="box box-danger">
     <div class="box-header">
         <div class="row">
             <form ng-submit="product.loadProductList()">
+                <!--search category-->
                 <div class="col-md-3">
                     <div class="input-group">
-                        <ui-select ng-model="product.category.selected" autofocus on-select="product.getProductByCategory($item)" tabindex="-1">
+                        <ui-select ng-model="product.category" autofocus on-select="product.getProductByCategory($item)" tabindex="1">
                             <ui-select-match placeholder="Nhập loại SP.." autofocus>
                                 {{$select.selected.Name}}
                             </ui-select-match>
@@ -12,40 +14,46 @@
                                 <div ng-bind-html="item.Name | highlight: $select.search"></div>
                             </ui-select-choices>
                             <ui-select-no-choice>
-                                <div class="text-center"><em>Không tìm thấy..</em></div>
+                                <div class="text-center" style="color:#d34242">
+                                    <em>Không tìm thấy..</em>
+                                </div>
                             </ui-select-no-choice>
                         </ui-select>
                         <span class="input-group-btn">
-                            <button type="button" ng-click="product.category.selected = undefined"
+                            <button type="button" ng-click="product.clearCategory()"
                                     class="btn btn-default" tooltip-placement="bottom" uib-tooltip="Xóa từ khóa này">
                                 <span class="fa fa-times"></span>
                             </button>
                         </span>
                     </div>
                 </div>
+
+                <!--search product base category-->
                 <div class="col-md-4">
                     <div class="input-group">
-                        <ui-select ng-model="product.product.selected" on-select="product.getProductByName($item)"
-                                   tabindex="2" ng-disabled="product.category.selected == null">
+                        <ui-select ng-model="product.product" on-select="product.showModalEdit($item)"
+                                   tabindex="2" ng-disabled="product.category == null">
                             <ui-select-match placeholder="Nhập tên SP..">
                                 {{$select.selected.Name}}
                             </ui-select-match>
-                            <ui-select-choices repeat="item in product.list| filter: $select.search">
+                            <ui-select-choices repeat="item in product.productsByCategory| filter: $select.search">
                                 <div class="row">
-                                    <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                    <div ng-bind-html="item.Name | highlight: $select.search" class="col-md-8"></div>
                                     <div class="col-md-4">
-                                        <span ng-if="item.IsOutOfStock" class="pull-right" style="color:#d34242;">
+                                        <span ng-if="item.IsOutOfStock" class="pull-right" style="color:#d34242; font-weight:bolder">
                                             Hết hàng
                                         </span>
                                     </div>
                                 </div>
                             </ui-select-choices>
                             <ui-select-no-choice>
-                                <div class="text-center"><em>Không tìm thấy..</em></div>
+                                <div class="text-center" style="color:#d34242">
+                                    <em>Không tìm thấy..</em>
+                                </div>
                             </ui-select-no-choice>
                         </ui-select>
                         <span class="input-group-btn">
-                            <button type="button" ng-click="product.category.selected = undefined"
+                            <button type="button" ng-click="product.clearProduct()"
                                     class="btn btn-default" tooltip-placement="bottom" uib-tooltip="Xóa từ khóa này">
                                 <span class="fa fa-times"></span>
                             </button>
@@ -60,6 +68,10 @@
                     <button type="button" class="btn bg-navy" ng-click="product.showModalUpdateWarehouse()">
                         <i class="ion-cube" style="font-size:15px;"></i>&nbsp; Nhập hàng
                     </button>
+
+                    <button type="button" class="btn bg-gray-light" ng-click="product.showModalDeliveryOrder()">
+                        <i class="fa fa-external-link"></i>&nbsp; Xuất kho
+                    </button>
                 </div>
             </form>
         </div>
@@ -68,7 +80,7 @@
 
         <div class="row" style="padding-top:10px;">
             <div class="col-md-4 pull-left">
-                <p>Hiện có <strong>{{product.totalCount}}</strong> sản phẩm ứng với điều kiện tìm kiếm</p>
+                <p>Hiện có <strong>{{product.totalItems}}</strong> sản phẩm ứng với điều kiện tìm kiếm</p>
             </div>
             <div class="pull-right col-md-3">
                 <label class="pull-right"> SP / trang</label>
@@ -161,11 +173,10 @@
             </tbody>
         </table>
         <!--paging control-->
-        <div class="row">
-            <div class="col-md-6" pager-directive page="{{product.page}}" custom-path="{{product.customPath}}" pages-count="{{product.pagesCount}}"
-                 total-count="{{product.totalCount}}" search-func="product.getPage(page)">
-            </div>
-        </div>
+        <uib-pagination first-text="trang đầu" last-text="trang cuối" next-text="tới" previous-text="lùi" max-size="5" rotate="false" boundary-links="true"
+                        total-items="product.totalItems" item-per-page="product.pageSize" ng-model="product.currentPage"
+                        ng-change="product.getPage(product.currentPage)" >
+        </uib-pagination>
     </div>
 </div>
 
@@ -177,3 +188,6 @@
 
 <!--modal update warehouse-->
 <div ng-include src="'/app/components/products/views/update-warehouse.view.html'" ng-show="modalIsOpened"></div>
+
+<!--modal delivery order-->
+<div ng-include src="'/app/components/products/views/delivery-order.view.html'" ng-show="modalIsOpened"></div>

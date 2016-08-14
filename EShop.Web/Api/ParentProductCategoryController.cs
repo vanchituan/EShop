@@ -11,7 +11,6 @@ using EShop.Model.Models;
 namespace EShop.Web.Api
 {
     [RoutePrefix("api/parentcategory")]
-    //[Authorize]
     public class ParentProductCategoryController : ApiControllerBase
     {
         IParentProductCategoryService _parentService;

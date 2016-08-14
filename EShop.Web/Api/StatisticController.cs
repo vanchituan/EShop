@@ -10,7 +10,7 @@ using EShop.Service;
 namespace EShop.Web.Api
 {
     [RoutePrefix("api/statistic")]
-    //[Authorize]
+    [Authorize]
     public class StatisticController : ApiControllerBase
     {
         private IErrorService _errorService;
@@ -24,18 +24,18 @@ namespace EShop.Web.Api
 
         [HttpGet]
         [Route("getrevenues")]
-        public HttpResponseMessage GetStatistic(HttpRequestMessage request, DateTime fromDate ,DateTime toDate )
+        public HttpResponseMessage GetStatistic(HttpRequestMessage request, DateTime? fromDate ,DateTime? toDate )
         {
             if (fromDate == null)
             {
-                fromDate = DateTime.Now.AddMonths(-6).Date;
+                fromDate = DateTime.Now.AddMonths(-1).Date;
             }
             if (toDate == null)
             {
-                toDate = DateTime.Now.Date;
+                toDate = DateTime.Now.AddDays(1).Date;
             }
 
-            var model = this._statisticService.GetRevenue(fromDate, toDate);
+            var model = this._statisticService.GetRevenue(fromDate.Value, toDate.Value);
             var response = request.CreateResponse(HttpStatusCode.OK, model);
             return response;
         }

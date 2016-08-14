@@ -23,7 +23,7 @@ namespace EShop.Web.Api
         [Route("TestMethod")]
         public string TestMethod()
         {
-            return "hello su phu giac nhan";
+            return "this is test for authorize";
         }
     }
 }

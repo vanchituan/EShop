@@ -9,24 +9,25 @@
 
     function CategoryListController($uibModal, apiService) {
         var vm = this;
-
+        vm.searchingVm = {
+            Page: 0,
+            PageSize : 8
+        }
         vm.loadCategoryList = loadCategoryList;
-
         vm.showModalAdd = showModalAdd;
-
         vm.showModalEdit = showModalEdit;
+        vm.getPage = getPage;
 
-        function loadCategoryList(page) {
-            var searchingVm = {
-                Page: page || 0,
-                PageSize : 5
-            }
+        function getPage(currentPage) {
+            vm.searchingVm.Page = currentPage;
+            loadCategoryList(vm.searchingVm);
+        }
 
+        function loadCategoryList(searchingVm) {
             apiService.post('/api/productcategory/getlist', searchingVm, function (res) {
                 vm.list = res.data.Items;
-                vm.page = res.data.Page;
-                vm.pagesCount = res.data.TotalPages;
-                vm.totalCount = res.data.TotalCount;
+                vm.currentPage = res.data.Page;
+                vm.totalItems = res.data.TotalCount;
             });
         }
 
@@ -53,6 +54,6 @@
             });
         }
 
-        loadCategoryList();
+        loadCategoryList(vm.searchingVm);
     }
 })(angular.module('eshop.categories'));

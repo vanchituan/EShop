@@ -260,6 +260,8 @@
     <Content Include="app\components\home\views\home.view.html" />
     <Content Include="app\components\home\root.controller.js" />
     <Content Include="app\components\login\login.view.html" />
+    <Content Include="app\components\products\controllers\delivery-order.controller.js" />
+    <Content Include="app\components\products\views\delivery-order.view.html" />
     <Content Include="app\components\report\controllers\investment.controller.js" />
     <Content Include="app\components\report\views\investment.view.html" />
     <Content Include="app\components\stockin\order.controller.js" />
@@ -294,7 +296,6 @@
     <Content Include="app\shared\constants\quantity.constants.js" />
     <Content Include="app\shared\directives\format-currency.directive.js" />
     <Content Include="app\shared\filters\capitalize.filter.js" />
-    <Content Include="app\shared\filters\pager.filter.js" />
     <Content Include="app\shared\filters\status.filter.js" />
     <Content Include="app\shared\modules\eShop.common.js" />
     <Content Include="app\shared\services\api.service.js" />
@@ -414,6 +415,7 @@
     <Content Include="Assets\admin\libs\angular-sanitize\angular-sanitize.js" />
     <Content Include="Assets\admin\libs\angular-sanitize\angular-sanitize.min.js" />
     <Content Include="Assets\admin\libs\angular-sanitize\index.js" />
+    <Content Include="Assets\admin\libs\angular-slimscroll\angular-slimscroll.js" />
     <Content Include="Assets\admin\libs\angular-ui-router\release\angular-ui-router.js" />
     <Content Include="Assets\admin\libs\angular-ui-router\release\angular-ui-router.min.js" />
     <Content Include="Assets\admin\libs\angular-ui-router\src\common.js" />
@@ -471,7 +473,6 @@
     <Content Include="Assets\admin\libs\bootstrap\js\transition.js" />
     <Content Include="Assets\admin\libs\bootstrap\package.js" />
     <Content Include="Assets\admin\libs\Chart.js\Chart.js" />
-    <Content Include="Assets\admin\libs\fastclick\lib\fastclick.js" />
     <Content Include="Assets\admin\libs\font-awesome\.gitignore" />
     <Content Include="Assets\admin\libs\font-awesome\css\font-awesome.css" />
     <Content Include="Assets\admin\libs\font-awesome\css\font-awesome.min.css" />
@@ -1815,26 +1816,26 @@
     <Content Include="Assets\admin\libs\ionicons\src\woman.svg" />
     <Content Include="Assets\admin\libs\ionicons\src\wrench.svg" />
     <Content Include="Assets\admin\libs\ionicons\src\xbox.svg" />
-    <Content Include="Assets\admin\libs\slimscroll\examples\allow-page-scroll.html" />
-    <Content Include="Assets\admin\libs\slimscroll\examples\chaining.html" />
-    <Content Include="Assets\admin\libs\slimscroll\examples\disable-fade-out.html" />
-    <Content Include="Assets\admin\libs\slimscroll\examples\dynamic-content.html" />
-    <Content Include="Assets\admin\libs\slimscroll\examples\height-width.html" />
-    <Content Include="Assets\admin\libs\slimscroll\examples\index.html" />
-    <Content Include="Assets\admin\libs\slimscroll\examples\libs\prettify\prettify.css" />
-    <Content Include="Assets\admin\libs\slimscroll\examples\libs\prettify\prettify.js" />
-    <Content Include="Assets\admin\libs\slimscroll\examples\mouse-wheel.html" />
-    <Content Include="Assets\admin\libs\slimscroll\examples\multiple-elements.html" />
-    <Content Include="Assets\admin\libs\slimscroll\examples\navigation.html" />
-    <Content Include="Assets\admin\libs\slimscroll\examples\nested.html" />
-    <Content Include="Assets\admin\libs\slimscroll\examples\programmatic-scrolling.html" />
-    <Content Include="Assets\admin\libs\slimscroll\examples\rail.html" />
-    <Content Include="Assets\admin\libs\slimscroll\examples\scroll-events.html" />
-    <Content Include="Assets\admin\libs\slimscroll\examples\scrollbar.html" />
-    <Content Include="Assets\admin\libs\slimscroll\examples\start-position.html" />
-    <Content Include="Assets\admin\libs\slimscroll\examples\style.css" />
-    <Content Include="Assets\admin\libs\slimscroll\jquery.slimscroll.js" />
-    <Content Include="Assets\admin\libs\slimscroll\jquery.slimscroll.min.js" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\allow-page-scroll.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\chaining.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\disable-fade-out.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\dynamic-content.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\height-width.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\index.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\libs\prettify\prettify.css" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\libs\prettify\prettify.js" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\mouse-wheel.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\multiple-elements.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\navigation.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\nested.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\programmatic-scrolling.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\rail.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\scroll-events.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\scrollbar.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\start-position.html" />
+    <Content Include="Assets\admin\libs\slimScroll\examples\style.css" />
+    <Content Include="Assets\admin\libs\slimScroll\jquery.slimscroll.js" />
+    <Content Include="Assets\admin\libs\slimScroll\jquery.slimscroll.min.js" />
     <Content Include="Assets\admin\libs\toastr\toastr.css" />
     <Content Include="Assets\admin\libs\toastr\toastr.js" />
     <Content Include="Assets\admin\libs\toastr\toastr.min.css" />
@@ -1985,6 +1986,14 @@
     <Content Include="Assets\admin\libs\angular-chart.js\README.md" />
     <Content Include="Assets\admin\libs\Chart.js\.bower.json" />
     <Content Include="Assets\admin\libs\Chart.js\bower.json" />
+    <Content Include="Assets\admin\libs\slimScroll\.bower.json" />
+    <Content Include="Assets\admin\libs\slimScroll\bower.json" />
+    <Content Include="Assets\admin\libs\slimScroll\package.json" />
+    <Content Include="Assets\admin\libs\slimScroll\README.md" />
+    <Content Include="Assets\admin\libs\angular-slimscroll\.bower.json" />
+    <Content Include="Assets\admin\libs\angular-slimscroll\bower.json" />
+    <Content Include="Assets\admin\libs\angular-slimscroll\LICENSE" />
+    <Content Include="Assets\admin\libs\angular-slimscroll\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\components\order_detail\" />
@@ -2122,13 +2131,6 @@
     <Content Include="Assets\admin\libs\bootstrap\nuget\MyGet.ps1" />
     <Content Include="Assets\admin\libs\bootstrap\package.json" />
     <Content Include="Assets\admin\libs\bootstrap\README.md" />
-    <Content Include="Assets\admin\libs\fastclick\.bower.json" />
-    <Content Include="Assets\admin\libs\fastclick\bower.json" />
-    <Content Include="Assets\admin\libs\fastclick\LICENSE" />
-    <Content Include="Assets\admin\libs\fastclick\README.md" />
-    <Content Include="Assets\admin\libs\slimscroll\.bower.json" />
-    <Content Include="Assets\admin\libs\slimscroll\package.json" />
-    <Content Include="Assets\admin\libs\slimscroll\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\admin\libs\toastr\.bower.json" />

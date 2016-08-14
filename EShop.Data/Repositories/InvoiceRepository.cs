@@ -23,8 +23,8 @@ namespace EShop.Data.Repositories
         public IEnumerable<RevenueStatisticViewModel> GetRevenueStatistic(DateTime fromDate, DateTime toDate)
         {
             var model = (from a in this.DbContext.Invoices
-                         where a.CreatedDate > fromDate &&
-                         a.CreatedDate < toDate
+                         where a.CreatedDate >= fromDate &&
+                         a.CreatedDate <= toDate
                          group a by new
                          {
                              date = EntityFunctions.TruncateTime(a.CreatedDate).Value

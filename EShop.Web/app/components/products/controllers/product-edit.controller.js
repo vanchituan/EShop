@@ -15,7 +15,10 @@
         var vm = this;
         vm.product = {
             Id: currentProduct.Id,
-            CategoryId: currentProduct.CategoryId,
+            CategoryId: {
+                Id: currentProduct.ProductCategory.Id,
+                Name: currentProduct.ProductCategory.Name
+            },
             Alias : currentProduct.Alias,
             Name: currentProduct.Name,
             OrderedDate: currentProduct.OrderedDate,

@@ -9,6 +9,7 @@
         'eshop.common'
     ])
         .config(config);
+        //.config(configAuthentication);
 
     config.$inject = [
         '$stateProvider',

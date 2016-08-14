@@ -15,6 +15,8 @@ namespace EShop.Data.Repositories
         IEnumerable<Product> GetList(SearchingViewModel search);
 
         IEnumerable<Product> GetListByCategoryId(int categoryId);
+
+        Product GetRelatedById(int id);
     }
 
     public class ProductRepository : RepositoryBase<Product>, IProductRepository
@@ -143,6 +145,7 @@ namespace EShop.Data.Repositories
                          where a.CategoryId == categoryId && a.Status == true
                          select new
                          {
+                             Id = a.Id,
                              Name = a.Name,
                              Price = a.Price,
                              WarehouseDetails = (from w in DbContext.WarehouseDetails
@@ -155,6 +158,7 @@ namespace EShop.Data.Repositories
                          }).AsEnumerable().
                       Select(m => new Product
                       {
+                          Id = m.Id,
                           Name = m.Name,
                           Price = m.Price,
                           WarehouseDetails = m.WarehouseDetails.Select(n => new WarehouseDetail
@@ -165,6 +169,38 @@ namespace EShop.Data.Repositories
                       });
 
             model = model.OrderBy(p => p.Name);
+
+            return model;
+        }
+
+        public Product GetRelatedById(int id)
+        {
+            var model = (from a in DbContext.Products
+                         where a.Id == id && a.Status == true
+                         select new
+                         {
+                             Id = a.Id,
+                             Name = a.Name,
+                             ProductCategory = DbContext.ProductCategories.FirstOrDefault(m => m.Id == a.CategoryId),
+                             WarehouseDetails = (from w in DbContext.WarehouseDetails
+                                                 where w.ProductId == a.Id
+                                                 select new
+                                                 {
+                                                     Quantity = w.Quantity,
+                                                     Warehouse = DbContext.Warehouses.FirstOrDefault(s => s.WarehouseId == w.WarehouseId)
+                                                 }).AsEnumerable()
+                         }).AsEnumerable().
+                      Select(m => new Product
+                      {
+                          Id = m.Id,
+                          Name = m.Name,
+                          ProductCategory = m.ProductCategory,
+                          WarehouseDetails = m.WarehouseDetails.Select(n => new WarehouseDetail
+                          {
+                              Quantity = n.Quantity,
+                              Warehouse = n.Warehouse
+                          })
+                      }).FirstOrDefault();
 
             return model;
         }

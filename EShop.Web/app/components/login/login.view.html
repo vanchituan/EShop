@@ -8,11 +8,13 @@
             <p class="login-box-msg">Đăng nhập hệ thống</p>
             <form role="form" method="post" ng-submit="loginSubmit()">
                 <div class="form-group has-feedback">
-                    <input ng-init="loginData.userName = 'vanchituan'" ng-model="loginData.userName" autofocus type="text" class="form-control" placeholder="Nhập tài khoản..">
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    <input ng-model="loginData.userName" autofocus type="text" class="form-control" 
+                           placeholder="Nhập tài khoản.." ng-init="loginData.userName = 'vanchituan'">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span> 
                 </div>
                 <div class="form-group has-feedback">
-                    <input ng-init="loginData.passWord = '123456'" ng-model="loginData.passWord" type="password" class="form-control" placeholder="Nhập mật khẩu..">
+                    <input  ng-model="loginData.passWord" type="password" class="form-control" 
+                           placeholder="Nhập mật khẩu.." ng-init="loginData.passWord = '123456'">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 <div class="row">

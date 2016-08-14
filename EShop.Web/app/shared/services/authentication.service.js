@@ -5,15 +5,16 @@
     authenticationService.$inect = [
         '$http',
         '$q',
-        '$window'
+        '$window',
+        'authDataService'
     ];
 
-    function authenticationService($http, $q, $window) {
+    function authenticationService($http, $q, $window, authDataService) {
         var tokenInfo;
 
         this.setTokenInfo = function (data) {
             tokenInfo = data;
-            $window.sessionStorage["TokenInfo"] = JSON.stringify(tokenInfo);
+            $window.localStorage["TokenInfo"] = JSON.stringify(tokenInfo);
         }
 
         this.getTokenInfo = function () {
@@ -22,12 +23,16 @@
 
         this.removeToken = function () {
             tokenInfo = null;
-            $window.sessionStorage["TokenInfo"] = null;
+            $window.localStorage["TokenInfo"] = null;
         }
 
         this.init = function () {
-            if ($window.sessionStorage["TokenInfo"]) {
-                tokenInfo = JSON.parse($window.sessionStorage["TokenInfo"]);
+            if ($window.localStorage["TokenInfo"]) {
+                tokenInfo = JSON.parse($window.localStorage["TokenInfo"]);
+                if (tokenInfo != null) {
+                    authDataService.authenticationData.IsAuthenticated = true;
+                    authDataService.authenticationData.userName = tokenInfo.userName;
+                }
             }
         }
 

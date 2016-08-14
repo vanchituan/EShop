@@ -20,8 +20,19 @@
                         <div class="form-group">
                             <label class="control-label col-md-4">Loại</label>
                             <div class="col-md-8">
-                                <select ng-options="c.Id as c.Name for c in currentProduct.categories"
-                                        ng-model="currentProduct.product.CategoryId" class="form-control"></select>
+                                <ui-select ng-model="currentProduct.product.CategoryId">
+                                    <ui-select-match placeholder="Nhập loại SP..">
+                                        {{$select.selected.Name}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="item in currentProduct.categories| filter: $select.search">
+                                        <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                    <ui-select-no-choice>
+                                        <div class="text-center" style="color:#d34242">
+                                            <em>Không tìm thấy...</em>
+                                        </div>
+                                    </ui-select-no-choice>
+                                </ui-select>
                             </div>
                         </div>
                     </div>

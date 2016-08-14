@@ -15,7 +15,7 @@ using System.Web.Http;
 namespace EShop.Web.Api
 {
     [RoutePrefix("api/productcategory")]
-    //[Authorize]
+    [Authorize]
     public class ProductCategoryController : ApiControllerBase
     {
         private IProductCategoryService _productCategoryService;
@@ -73,9 +73,6 @@ namespace EShop.Web.Api
             return CreateHttpResponse(request, () =>
             {
                 var model = _parentCategoryService.GetAll();
-
-                //var responseData = Mapper.Map<IEnumerable<ProductCategory>, IEnumerable<ProductCategoryViewModel>>(model);
-
                 var response = request.CreateResponse(HttpStatusCode.OK, model);
                 return response;
             });

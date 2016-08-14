@@ -11,7 +11,7 @@ using EShop.Model.Models;
 namespace EShop.Web.Api
 {
     [RoutePrefix("api/invoice")]
-    //[Authorize]
+    [Authorize]
     public class InvoiceController : ApiControllerBase
     {
         private IErrorService _errorService;

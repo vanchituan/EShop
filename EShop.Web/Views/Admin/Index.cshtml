@@ -27,16 +27,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="~/Assets/admin/libs/bootstrap/dist/js/bootstrap.js"></script>
-    <!-- SlimScroll -->
-    <script src="~/Assets/admin/libs/slimscroll/jquery.slimscroll.js"></script>
-    <!-- FastClick -->
-    <script src="~/Assets/admin/libs/fastclick/lib/fastclick.js"></script>
     <!-- AdminLTE App -->
     <script src="/Assets/admin/js/app.min.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <!-- AdminLTE for demo purposes -->
     <script src="/Assets/admin/js/demo.js"></script>
-
     <!-- Begin embed angularJS -->
     <script src="~/Assets/admin/libs/angular/angular.js"></script>
     <script src="~/Assets/admin/js/angular-locale_vi-vn.js"></script>
@@ -57,7 +52,9 @@
     <!--Chart-->
     <script src="~/Assets/admin/libs/Chart.js/Chart.js"></script>
     <script src="~/Assets/admin/libs/angular-chart.js/dist/angular-chart.min.js"></script>
-
+    <!--slimScroll-->
+    <script src="~/Assets/admin/libs/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Assets/admin/libs/angular-slimscroll/angular-slimscroll.js"></script>
 
     <!--begin custom JS-->
     <script src="~/app/shared/modules/eshop.common.js"></script>
@@ -76,16 +73,16 @@
     <script src="~/app/shared/filters/capitalize.filter.js"></script>
     <script src="~/app/shared/filters/status.filter.js"></script>
 
+    <!--Constant-->
+    <script src="~/app/shared/constants/label.constants.js"></script>
+    <script src="~/app/shared/constants/quantity.constants.js"></script>
+
     <!--Modules-->
     <script src="~/app/components/products/products.module.js"></script>
     <script src="~/app/components/orders/orders.module.js"></script>
     <script src="~/app/components/categories/categories.module.js"></script>
     <script src="~/app/components/report/reports.module.js"></script>
     <script src="~/app/app.js"></script>
-
-    <!--Constant-->
-    <script src="~/app/shared/constants/label.constants.js"></script>
-    <script src="~/app/shared/constants/quantity.constants.js"></script>
 
     <!--Controllers-->
     <script src="~/app/components/home/root.controller.js"></script>
@@ -96,6 +93,7 @@
     <script src="~/app/components/products/controllers/product-add.controller.js"></script>
     <script src="~/app/components/products/controllers/product-edit.controller.js"></script>
     <script src="~/app/components/products/controllers/update-warehouse.controller.js"></script>
+    <script src="~/app/components/products/controllers/delivery-order.controller.js"></script>
 
     <script src="~/app/components/categories/controllers/category.list.controller.js"></script>
     <script src="~/app/components/categories/controllers/category-add.controller.js"></script>

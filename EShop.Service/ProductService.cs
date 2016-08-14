@@ -20,9 +20,11 @@ namespace EShop.Service
 
         Product GetById(int id);
 
+        Product GetRelatedById(int id);
+
         Product Add(Product product);
 
-        bool CheckContain(string name);
+        bool CheckContain(string name, string alias, decimal priceImport);
 
         void Update(Product product);
 
@@ -46,9 +48,9 @@ namespace EShop.Service
             return _productRepository.Add(product);
         }
 
-        public bool CheckContain(string name)
+        public bool CheckContain(string name, string alias, decimal priceImport)
         {
-            return this._productRepository.CheckContains(q => q.Name == name);
+            return this._productRepository.CheckContains(q => q.Name == name || q.Alias.Contains(alias) || q.PriceImport == priceImport );
         }
 
         public Product Delete(int id)
@@ -74,6 +76,11 @@ namespace EShop.Service
         public IEnumerable<Product> GetListByCategoryId(int categoryId)
         {
             return this._productRepository.GetListByCategoryId(categoryId);
+        }
+
+        public Product GetRelatedById(int id)
+        {
+            return this._productRepository.GetRelatedById(id);
         }
 
         public void Save()

@@ -12,6 +12,7 @@ namespace EShop.Service
     {
         IEnumerable<RevenueStatisticViewModel> GetRevenue(DateTime fromDate, DateTime toDate);
     }
+
     public class StatisticService : IStatisticService
     {
         private IInvoiceRepository _invoiceRepository;

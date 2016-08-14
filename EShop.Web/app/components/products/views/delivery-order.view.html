@@ -1,0 +1,96 @@
+﻿<script type="text/ng-template" id="/app/components/products/views/delivery-order.view.html">
+    <div class="box box-success">
+        <div class="modal-header">
+            <h4 class="box-title">
+                <i class="fa fa-external-link"></i>&nbsp;&nbsp;Phiếu xuất kho
+            </h4>
+        </div>
+        <form class="form-horizontal" ng-submit="deor.submit()" novalidate>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6" style="border-right:1px inset #3883cc;">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Loại SP</label>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <ui-select ng-model="deor.ddlCategory" autofocus
+                                               on-select="deor.getProductsByCategory($item)" tabindex="1"
+                                               ng-required="true">
+                                        <ui-select-match placeholder="Nhập loại SP.." autofocus>
+                                            {{$select.selected.Name}}
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in deor.productCategories| filter: $select.search">
+                                            <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                        <ui-select-no-choice>
+                                            <div class="text-center" style="color:#d34242">
+                                                <em>Không tìm thấy..</em>
+                                            </div>
+                                        </ui-select-no-choice>
+                                    </ui-select>
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="deor.clearCategory()"
+                                                class="btn btn-default" tooltip-placement="bottom" uib-tooltip="Xóa từ khóa này">
+                                            <span class="fa fa-times"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Tên SP</label>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <ui-select ng-model="deor.ddlProduct" autofocus
+                                               on-select="deor.getProductByItem($item)" tabindex="2"
+                                               ng-required="true">
+                                        <ui-select-match placeholder="Nhập tên SP.." autofocus>
+                                            {{$select.selected.Name}}
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in deor.list| filter: $select.search">
+                                            <div ng-bind-html="item.Name | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                        <ui-select-no-choice>
+                                            <div class="text-center" style="color:#d34242">
+                                                <em>Không tìm thấy..</em>
+                                            </div>
+                                        </ui-select-no-choice>
+                                    </ui-select>
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="deor .clearProduct()"
+                                                class="btn btn-default" tooltip-placement="bottom" uib-tooltip="Xóa từ khóa này">
+                                            <span class="fa fa-times"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="col-md-6">
+                <div>Danh sách hàng xuất kho</div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn bg-maroon" type="submit">
+                    <i class="fa fa-check" aria-hidden="true"></i>&nbsp;Lưu
+                </button>
+
+                <button class="btn bg-navy" type="button" ng-click="product.cancel()">
+                    <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Hủy
+                </button>
+            </div>
+        </form>
+
+    </div>
+</script>

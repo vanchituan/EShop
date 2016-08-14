@@ -2,17 +2,28 @@
     app.controller('OrderController', OrderController);
 
     OrderController.$inject = [
-        'apiService', 
+        '$scope',
+        'apiService',
         'notificationService'
-        ];
+    ];
 
-    function OrderController(apiService, notificationService) {
-        var vm = this;
-        vm.datePickerOpen = false;
-        vm.dt = new Date('06/30/2016');
-        vm.openDatePicker = openDatePicker;
-        function openDatePicker($event) {
-            vm.datePickerOpen = true;
+    function OrderController($scope, apiService, notificationService) {
+
+        function loadCategories() {
+            apiService.get('/api/productcategory/getall', null, function (res) {
+                $scope.productCategories = res.data;
+                //$scope.categoryId = {
+                //    Id: 15,
+                //    Name: 'Dây xích'
+                //};
+            })
         }
+
+        $scope.changed = function (item,model) {
+            //console.log(item);
+            console.log(model);
+        }
+
+        loadCategories();
     }
 })(angular.module('eshop.orders'));

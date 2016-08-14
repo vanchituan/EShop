@@ -121,6 +121,10 @@
     <Compile Include="Migrations\201607130903011_modify-createdby.Designer.cs">
       <DependentUpon>201607130903011_modify-createdby.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608020625040_revenue.cs" />
+    <Compile Include="Migrations\201608020625040_revenue.Designer.cs">
+      <DependentUpon>201608020625040_revenue.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ErrorRepository.cs" />
@@ -203,6 +207,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607130903011_modify-createdby.resx">
       <DependentUpon>201607130903011_modify-createdby.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608020625040_revenue.resx">
+      <DependentUpon>201608020625040_revenue.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -10,9 +10,7 @@
             url: '/orders',
             parent: 'base',
             templateUrl: '/app/components/orders/order.view.html',
-            controller: 'OrderController',
-            controllerAs : 'order'
-
+            controller: 'OrderController'
         });
     }
 })();

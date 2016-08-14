@@ -11,7 +11,6 @@ using EShop.Web.Infrastructure.Core;
 namespace EShop.Web.Api
 {
     [RoutePrefix("api/warehousedetail")]
-    //[Authorize]
     public class WarehouseDetailController : ApiControllerBase
     {
         private IWarehouseDetailService _whDetailService;

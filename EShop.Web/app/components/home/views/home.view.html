@@ -9,9 +9,10 @@
             </div>
             <div class="box-body">
                 <div class="row" style="margin-bottom:25px;">
+                    <!--search category-->
                     <div class="col-md-5">
                         <div class="input-group">
-                            <ui-select ng-model="ctrl.category.selected" autofocus on-select="ctrl.getProductByCategory($item)" tabindex="1">
+                            <ui-select ng-model="ctrl.category" autofocus on-select="ctrl.getProductByCategory($item)" tabindex="1">
                                 <ui-select-match placeholder="Nhập loại SP.." autofocus>
                                     {{$select.selected.Name}}
                                 </ui-select-match>
@@ -19,7 +20,9 @@
                                     <div ng-bind-html="item.Name | highlight: $select.search"></div>
                                 </ui-select-choices>
                                 <ui-select-no-choice>
-                                    <div class="text-center" style="color:#d34242"><em>Không tìm thấy..</em></div>
+                                    <div class="text-center" style="color:#d34242">
+                                        <em>Không tìm thấy..</em>
+                                    </div>
                                 </ui-select-no-choice>
                             </ui-select>
                             <span class="input-group-btn">
@@ -30,10 +33,11 @@
                         </div>
                     </div>
 
+                    <!--search product base category-->
                     <div class="col-md-6">
                         <div class="input-group">
-                            <ui-select ng-model="ctrl.product.selected" on-select="ctrl.addToCart($item)" tabindex="2"
-                                       ng-disabled="ctrl.category.selected == null">
+                            <ui-select ng-model="ctrl.product" on-select="ctrl.addToCart($item)" tabindex="2"
+                                       ng-disabled="ctrl.category == null">
                                 <ui-select-match placeholder="Nhập tên SP..">
                                     {{$select.selected.Name}}
                                 </ui-select-match>
@@ -41,14 +45,16 @@
                                     <div class="row">
                                         <div ng-bind-html="item.Name | highlight: $select.search" class="col-md-8"></div>
                                         <div class="col-md-4">
-                                            <span ng-if="item.IsOutOfStock" class="pull-right" style="color:#d34242;">
+                                            <span ng-if="item.IsOutOfStock" class="pull-right" style="color:#d34242; font-weight:bolder">
                                                 Hết hàng
                                             </span>
                                         </div>
                                     </div>
                                 </ui-select-choices>
                                 <ui-select-no-choice>
-                                    <div class="text-center" style="color:#d34242"><em>Không tìm thấy..</em></div>
+                                    <div class="text-center" style="color:#d34242">
+                                        <em>Không tìm thấy..</em>
+                                    </div>
                                 </ui-select-no-choice>
                             </ui-select>
                             <span class="input-group-btn">

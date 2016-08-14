@@ -109,6 +109,6 @@
                 })
         }
 
-        getStatistic(vm.fromDate, vm.toDate);
+        getStatistic(null, null);
     }
 })(angular.module('eshop.reports'));

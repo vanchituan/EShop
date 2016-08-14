@@ -19,6 +19,6 @@
         }
 
         //check user login ?
-        //authenticationService.validateRequest();
+        authenticationService.validateRequest();
     }
 })(angular.module('eshop'));
