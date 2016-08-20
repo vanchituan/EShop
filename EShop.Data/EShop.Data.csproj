@@ -121,9 +121,9 @@
     <Compile Include="Migrations\201607130903011_modify-createdby.Designer.cs">
       <DependentUpon>201607130903011_modify-createdby.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201608020625040_revenue.cs" />
-    <Compile Include="Migrations\201608020625040_revenue.Designer.cs">
-      <DependentUpon>201608020625040_revenue.cs</DependentUpon>
+    <Compile Include="Migrations\201608160446536_removeProp-product.cs" />
+    <Compile Include="Migrations\201608160446536_removeProp-product.Designer.cs">
+      <DependentUpon>201608160446536_removeProp-product.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -208,8 +208,8 @@
     <EmbeddedResource Include="Migrations\201607130903011_modify-createdby.resx">
       <DependentUpon>201607130903011_modify-createdby.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608020625040_revenue.resx">
-      <DependentUpon>201608020625040_revenue.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201608160446536_removeProp-product.resx">
+      <DependentUpon>201608160446536_removeProp-product.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

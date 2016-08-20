@@ -47,12 +47,14 @@
                 }
 
                 vm.product.WarehouseDetails = array;
+                vm.product.CategoryId = vm.product.CategoryId.Id;
                 console.log(vm.product);
 
                 apiService.put('/api/product/update', vm.product, function (res) {
                     if (res.statusText === 'OK') {
                         cancel();
                         notificationService.displaySuccess(res.data.Name + ' đã được cập nhật');
+                        $uibModalInstance.close(true);
                     }
                 },function(error){
                     if (error.statusText === 'Conflict') {
@@ -62,7 +64,7 @@
                         notificationService.displayWarning('Đối tượng gửi lên chưa chính xác')
                     }
                     else {
-                        notificationService.displayWarning('Thêm mới không thành công');
+                        notificationService.displayWarning('Cập nhật không thành công');
                     }
                 })
             }

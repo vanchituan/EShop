@@ -115,14 +115,13 @@
             modalInstance.result.then(function (response) {
                 if (response) {
                     loadProductList(vm.searchingVm);
+                    console.log('load list again');
                 }
-            }, function () {
-                console.log('Modal dismissed at: ' + new Date());
             });
         }
 
         function showModalEdit(currentProduct) {
-            $uibModal.open({
+            var modalInstance = $uibModal.open({
                 backdrop: 'static',
                 templateUrl: '/app/components/products/views/product-edit.view.html',
                 controller: 'ProductEditController',
@@ -134,27 +133,48 @@
                     }
                 }
             });
+
+            modalInstance.result.then(function (response) {
+                if (response) {
+                    loadProductList(vm.searchingVm);
+                    console.log('load list again');
+                }
+            });
         }
 
         function showModalUpdateWarehouse() {
             vm.modalIsOpened = true;
-            $uibModal.open({
+            var modalInstance = $uibModal.open({
                 templateUrl: '/app/components/products/views/update-warehouse.view.html',
                 controller: 'UpdateWarehouseController',
                 controllerAs: 'product',
                 backdrop: 'static',
                 size: 'lg',
             });
+
+            modalInstance.result.then(function (response) {
+                if (response) {
+                    loadProductList(vm.searchingVm);
+                    console.log('load list again');
+                }
+            });
         }
 
         function showModalDeliveryOrder() {
             vm.modalIsOpened = true;
-            $uibModal.open({
+            var modalInstance = $uibModal.open({
                 templateUrl: '/app/components/products/views/delivery-order.view.html',
                 controller: 'DeliveryOrderController',
                 controllerAs: 'deor',
                 backdrop: 'static',
                 size: 'lg',
+            });
+
+            modalInstance.result.then(function (response) {
+                if (response) {
+                    loadProductList(vm.searchingVm);
+                    alert('load list again');
+                }
             });
         }
 

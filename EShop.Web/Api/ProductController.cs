@@ -79,7 +79,7 @@ namespace EShop.Web.Api
                 HttpResponseMessage response = null;
                 if (ModelState.IsValid)
                 {
-                    bool nameDuplicated = this._productService.CheckContain(product.Name, product.Alias, product.PriceImport);
+                    bool nameDuplicated = this._productService.CheckContain(product.Name, product.Alias);
                     if (nameDuplicated)
                     {
                         response = request.CreateResponse(HttpStatusCode.Conflict);
@@ -119,7 +119,7 @@ namespace EShop.Web.Api
                 HttpResponseMessage response = null;
                 if (ModelState.IsValid)
                 {
-                    bool nameDuplicated = this._productService.CheckContain(product.Name, product.Alias, product.PriceImport);
+                    bool nameDuplicated = this._productService.CheckContainForUpdate(product.Name, product.Alias, product.PriceImport);
                     if (nameDuplicated)
                     {
                         response = request.CreateResponse(HttpStatusCode.Conflict);

@@ -24,7 +24,9 @@ namespace EShop.Service
 
         Product Add(Product product);
 
-        bool CheckContain(string name, string alias, decimal priceImport);
+        bool CheckContain(string name, string alias);
+
+        bool CheckContainForUpdate(string name, string alias, decimal priceImport);
 
         void Update(Product product);
 
@@ -48,9 +50,25 @@ namespace EShop.Service
             return _productRepository.Add(product);
         }
 
-        public bool CheckContain(string name, string alias, decimal priceImport)
+        public bool CheckContain(string name, string alias)
         {
-            return this._productRepository.CheckContains(q => q.Name == name || q.Alias.Contains(alias) || q.PriceImport == priceImport );
+            return this._productRepository.CheckContains(q => q.Name == name || q.Alias.Contains(alias));
+        }
+
+        public bool CheckContainForUpdate(string name, string alias, decimal priceImport)
+        {
+            var list = this._productRepository.GetMulti(q => q.Name != name && q.Alias != alias);
+            var result = from a in list
+                         where a.Name == name || a.Alias.Contains(alias) || a.PriceImport == priceImport
+                         select a;
+            if (result.Any())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }    
         }
 
         public Product Delete(int id)

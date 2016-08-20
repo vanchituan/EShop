@@ -25,12 +25,6 @@ namespace EShop.Model.Models
 
 
         public int? ParentCategoryId { set; get; }
-        public int? DisplayOrder { set; get; } 
-
-        [MaxLength(256)]
-        public string Image { set; get; }
-
-        public bool? HomeFlag { set; get; }
 
         [ForeignKey("ParentCategoryId")]
         public virtual ParentProductCategory ParentProductCategory { set; get; }

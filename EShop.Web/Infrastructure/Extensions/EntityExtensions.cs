@@ -36,9 +36,6 @@ namespace EShop.Web.Infrastructure.Extensions
             productCategory.Description = productCategoryVm.Description;
             productCategory.Alias = productCategoryVm.Alias;
             productCategory.ParentCategoryId = productCategoryVm.ParentCategoryId;
-            productCategory.DisplayOrder = productCategoryVm.DisplayOrder;
-            productCategory.Image = productCategoryVm.Image;
-            productCategory.HomeFlag = productCategoryVm.HomeFlag;
 
             productCategory.CreatedDate = productCategoryVm.CreatedDate;
             productCategory.CreatedBy = productCategoryVm.CreatedBy;

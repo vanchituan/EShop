@@ -48,13 +48,13 @@
                             vm.frmCategory.ParentCategoryId == '';
                             notificationService.displaySuccess(result.data.Name + ' đã được lưu !!');
                             if (callback) {
-                                callback(result.data.Id);
+                                callback(result.data);
                             }
                         }
                     },
                     function (error) {
                         if (error.statusText === 'Conflict') {
-                            notificationService.displayWarning('Trùng tên sản phẩm, hoặc sản phẩm có thể đã có sẵn trong hệ thống..');
+                            notificationService.displayWarning('Trùng tên loại, hoặc loại này có thể đã có sẵn trong hệ thống..');
                         }
                         else if (error.statusText === 'BadRequest') {
                             notificationService.displayWarning('Đối tượng gửi lên chưa chính xác')
@@ -70,8 +70,13 @@
         }
 
         function addVsSelectCategory() {
+
             addCategory(function (result) {
-                vm.CategoryId = result;
+            console.log(result);
+                vm.CategoryId = {
+                    Id: result.Id,
+                    Name : result.Name
+                };
             });
         }
 
@@ -93,11 +98,12 @@
                     Status: vm.Status,
                     Price: vm.Price,
                     PriceImport: vm.PriceImport,
-                    CategoryId: vm.CategoryId,
+                    CategoryId: vm.CategoryId.Id,
                     Description: vm.Description || '',
                     WarehouseDetails: arr
                 }
-
+                //console.log(product);
+                //return;
                 apiService.post('/api/product/add', product, function (res) {
                     if (res.statusText === 'Created') {
                         cancel();

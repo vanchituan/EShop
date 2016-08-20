@@ -7,13 +7,13 @@ namespace EShop.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class revenue : IMigrationMetadata
+    public sealed partial class removePropproduct : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(revenue));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(removePropproduct));
         
         string IMigrationMetadata.Id
         {
-            get { return "201608020625040_revenue"; }
+            get { return "201608160446536_removeProp-product"; }
         }
         
         string IMigrationMetadata.Source
